@@ -1,0 +1,76 @@
+ <!DOCTYPE HTML>
+<html>
+	<head>
+	<meta name="viewport" content=" user-scalable=no" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Photoporc.js : Mobile Browser Photo Corp</title>
+	<link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+	<meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	</head>
+<body>
+
+
+  <button class="play-button" data-ogg-url="http://opengameart.org/sites/default/files/audio_preview/trance-menu_0.mp3.ogg" data-mp3-url="http://opengameart.org/sites/default/files/trance-menu_0.mp3" >play</button>
+
+  <a href="safari://google.com">Open Google in Safari</a>
+
+  <button onclick="javascript:window.open('http'+location.href.substring(4));"> Call Safari </button>
+
+
+  <script type="text/javascript" src="js/lib/zepto.min.js"></script>
+  <script>
+
+
+$(document).ready(function() {
+ function stopButton(b) {
+    $(b).addClass('play-button');
+    $(b).removeClass('stop-button');
+
+
+    b.audioElement.currentTime = 0;
+    b.audioElement.pause();
+  };
+  function playButton(b) {
+    $(b).addClass('stop-button');
+    $(b).removeClass('play-button');
+
+    if(!(b.audioElement)) {
+      
+      b.audioElement = document.createElement('audio');
+
+      if(b.audioElement.canPlayType) {
+        var url;
+        if(b.audioElement.canPlayType('audio/ogg; codecs="vorbis"')) {
+          url = $(b).attr('data-ogg-url');
+        } else if(b.audioElement.canPlayType('audio/mpeg')) {
+          url = $(b).attr('data-mp3-url');
+        }
+        
+        b.audioElement.setAttribute('src', url);
+        b.audioElement.load();
+      } else {
+        // flash fallback
+      }
+    }
+
+    if(b.audioElement.canPlayType) {
+      b.audioElement.play();
+    } else {
+      // flash fallback
+    }
+    
+  }
+
+
+
+  $('.play-button').on('click',function(){
+     playButton(this);
+  });
+
+
+});
+
+  </script>
+
+  </body>
+</html>

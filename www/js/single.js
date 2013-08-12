@@ -1,12 +1,35 @@
 var AppRouter = Backbone.Router.extend({  
     routes : {  
         '' : 'main', 
-        'index' : 'main', 
+        'intro' : 'main',
+        'energy' : 'energy',
+        'run' : 'run',
+        'run/:level' : 'run',
+        'user' : 'user',
+        'gift' : 'gift',
         '*error' : 'renderError'  
     },
     main : function() {
-    	console.log('home'); 
+    	console.log('Router home'); 
+    	$('#intro').show();
     }, 
+    energy : function() {
+    	console.log('Router energy'); 
+    	$('#energy').show();
+    },
+    run : function(level) {
+    	if(!level){ level = 'one';}
+    	console.log('Router run,level ' + level); 
+    	$('#run').show();
+    },
+    user : function() {
+    	console.log('Router user'); 
+    	$('#user').show();
+    },
+    gift : function() {
+    	console.log('Router gift'); 
+    	$('#run').show();
+    },
     renderError : function(error) {  
         console.log('URL错误, 错误信息: ' + error); 
         //$('.link_home').show(); 

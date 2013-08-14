@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>t5</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <style>
+    html, body { margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript">  
+     var w = 320;  
+     var h = 600;  
+     var x0 = 0;  
+     var y0 = 0;  
+     var x1 = 0;  
+     var y1 = 2*h;  
+     var x2 = 0;  
+     var y2 = h;  
+     var move = 50;  
+     var ctx0;  
+     var image0= new Image();  
+     image0.src = "../www/img/map_a_01.jpg";  
+     var image1 =  new Image();  
+     image1.src = "../www/img/map_a_02.jpg"  
+     var image2 =  new Image();  
+     image2.src = "../www/img/map_a_03.jpg"  
+  
+     function init()  
+        {  
+             ctx0 =  document.getElementById('canvas').getContext('2d');  
+            setInterval(paintback,100);  
+        }  
+  
+        function paintback()  
+        {  
+            ctx0.clearRect(0,0,w,h);  
+              
+            y0 +=move;  
+            y1 +=move;  
+            y2 +=move;  
+            if(y0>=2*h)  
+            {  
+                y0=move-h;  
+            }  
+            if(y1>=2*h)  
+            {  
+                y1=move-h;  
+            }  
+            if(y2>=2*h)  
+            {  
+                y2=move-h;  
+            }  
+            ctx0.drawImage(image0,x0,y0,w,h);  
+            ctx0.drawImage(image1,x1,y1,w,h);  
+            ctx0.drawImage(image2,x2,y2,w,h);  
+        }  
+    </script>  
+</head>  
+<body onload="init();">  
+<canvas id="canvas" width="320" height="600">I am sorry that YOU CAN'T USE the html5</canvas>  
+</body>  
+</html> 

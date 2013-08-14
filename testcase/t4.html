@@ -69,63 +69,79 @@ ol, ul ,li {
 // Properties _____________________________________________
 
 var map = $('.runbox');
-var xMin = 0;
-var xMax = map.height();
-var pos = 0;
-var dir = 1;
-var speed = 8;
+
 var fps = 60;
 var interval = 1000 / fps;
 
-     var w = 320;  
-     var h = 600;  
-     var x0 = 0;  
-     var y0 = 0;  
-     var x1 = 0;  
-     var y1 = 2*h;  
-     var x2 = 0;  
-     var y2 = h;  
-     var move = 15;  
-     var ctx0;  
-     var image0= new Image();  
-     image0.src = "../www/img/map_a_01.jpg";  
-     var image1 =  new Image();  
-     image1.src = "../www/img/map_a_02.jpg"  
-     var image2 =  new Image();  
-     image2.src = "../www/img/map_a_03.jpg"  
+  var w = 320;  
+  var h = 600;  
+  var x0 = 0;  
+  var y0 = 0;  
+  var x1 = 0;  
+  var y1 = 2*h;  
+  var x2 = 0;  
+  var y2 = h;  
+  var move = 12;  
+  var ctx0;  
+  var image0= new Image();  
+  var image1 =  new Image();  
+  var image2 =  new Image();
+  var requestId = 0;  
+      
 
 function initMap(){
   ctx0 =  document.getElementById('canvas').getContext('2d');
+  image0.src = "../www/img/map_a_01.jpg";  
+  image1.src = "../www/img/map_a_02.jpg";
+  image2.src = "../www/img/map_a_03.jpg";
 }
-
+    function stop() {
+        if (requestId)
+            window.cancelAFrame(requestId);        
+    }
+    window.cancelAFrame = (function () {
+        return window.cancelAnimationFrame ||
+                window.webkitCancelAnimationFrame ||
+                window.mozCancelAnimationFrame ||
+                window.oCancelAnimationFrame ||
+                function (id) {
+                    window.clearTimeout(id);
+                };
+    })();
 // Animation Logic ________________________________________
 
 function draw() {
     setTimeout(function() {
         window.requestAnimationFrame(draw);
+        //requestId = window.requestAnimationFrame(draw);
         //clear
         ctx0.clearRect(0,0,w,h);  
-
         //draw now
             y0 +=move;  
             y1 +=move;  
             y2 +=move;  
             if(y0>=2*h)  
             {  
-                y0=move-h;  
+                y0=Math.floor(move)-h;  
             }  
             if(y1>=2*h)  
             {  
-                y1=move-h;  
+                y1=Math.floor(move)-h;  
             }  
             if(y2>=2*h)  
             {  
-                y2=move-h;  
+                y2=Math.floor(move)-h;  
             }  
             ctx0.drawImage(image0,x0,y0,w,h);  
             ctx0.drawImage(image1,x1,y1,w,h);  
             ctx0.drawImage(image2,x2,y2,w,h); 
-        
+            move = move * 0.998;
+
+            console.log("move:" + move);
+            if(move<=3){
+              console.log("quit draw");
+              stop();
+            }
     }, interval);
 }
 initMap();

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title> t4 </title>
+  <title> t6 </title>
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
   
@@ -11,12 +11,12 @@
 ol, ul ,li {
   list-style: none; margin:0; padding: 0;
 }
-.runbox { width: 320px; height: 600px; position: relative; overflow: hidden; background: #ccc; margin-top: 60px;}
+.runbox { width: 320px; height: 600px; position: relative; overflow: hidden; background: #ccc; margin-top: 30px;}
 .map { width: 320px; height: auto; position: absolute; left: 0; top: 0;}
-a { display: inline-block; padding: 10px; margin-right: 10px;}
+a { display: inline-block; padding: 10px; margin: 10px;}
   </style>
 </head>
-<body onload="init();">
+<body >
           <a href="#" onclick="start()">Start</a>
         <a href="#" onclick="stop()">Stop</a>
   <div id="bg"></div>
@@ -41,30 +41,29 @@ a { display: inline-block; padding: 10px; margin-right: 10px;}
     var requestId = 0;
     var startime = 0;
     var ctx0;  
-    var image0= new Image();  
-    var image1 =  new Image();  
-    var image2 =  new Image();
+    var image0 = new Image();  
+    var image1 = new Image();  
+    var image2 = new Image();
 
     var w = 320;  
-    var h = 600;  
-    var x0 = 0;  
-    var y0 = 0;  
-    var x1 = 0;  
-    var y1 = 2*h;  
-    var x2 = 0;  
-    var y2 = h;  
-    var move = 12;  
+    var h = 500; 
+    var y0,y1,y2;  
+    var moveA = 50;  
 
 
-    function init() {
+    function runInit() {
       ctx0 =  document.getElementById('canvas').getContext('2d');
       image0.src = "../www/img/map_a_01.jpg";  
       image1.src = "../www/img/map_a_02.jpg";
       image2.src = "../www/img/map_a_03.jpg";
+      y0 = 0;
+      y1 = 2*h;
+      y2 = h;
     }
 
     function start() {
-      
+      runInit();
+      moveA = 50;
       //console.log("start");
       // if (window.performance.now) {
       //     startime = window.performance.now();
@@ -81,35 +80,38 @@ a { display: inline-block; padding: 10px; margin-right: 10px;}
 
     function render(time) {
       //elm.style.left = ((time - startime) / 4 % 600) + "px";
-              //clear
-        ctx0.clearRect(0,0,w,h);  
-        //draw now
-            y0 +=move;  
-            y1 +=move;  
-            y2 +=move;  
-            if(y0>=2*h)  
-            {  
-                y0=move-h;  
-            }  
-            if(y1>=2*h)  
-            {  
-                y1=move-h;  
-            }  
-            if(y2>=2*h)  
-            {  
-                y2=move-h;  
-            }  
-            ctx0.drawImage(image0,x0,y0,w,h);  
-            ctx0.drawImage(image1,x1,y1,w,h);  
-            ctx0.drawImage(image2,x2,y2,w,h); 
-            //move = move * 0.998;
+      //clear
+      ctx0.clearRect(0,0,w,h);  
+      //draw now
+      var move = Math.floor(moveA);
+      y0 +=move;  
+      y1 +=move;  
+      y2 +=move;  
+      if(y0>=2*h)  
+      {  
+          y0=move-h;  
+      }  
+      if(y1>=2*h)  
+      {  
+          y1=move-h;  
+      }  
+      if(y2>=2*h)  
+      {  
+          y2=move-h;  
+      }  
 
-            console.log("move:" + move);
-            if(move<=3){
-              console.log("quit draw");
-              stop();
-            }
+      ctx0.drawImage(image0,0,y0,w,h);  
+      ctx0.drawImage(image1,0,y1,w,h);  
+      ctx0.drawImage(image2,0,y2,w,h); 
+
       requestId = window.requestAFrame(render);
+      moveA = moveA * 0.992;
+
+      //console.log("move:" + move);
+      if(moveA<=0.2){
+        console.log("quit draw");
+        stop();
+      }
     }
     // handle multiple browsers for requestAnimationFrame()
     window.requestAFrame = (function () {
@@ -119,7 +121,7 @@ a { display: inline-block; padding: 10px; margin-right: 10px;}
                 window.oRequestAnimationFrame ||
                 // if all else fails, use setTimeout
                 function (callback) {
-                    return window.setTimeout(callback, 1000 / 60); // shoot for 60 fps
+                    return window.setTimeout(callback, 1000 / 31); // shoot for 60 fps
                 };
     })();
 
@@ -133,17 +135,11 @@ a { display: inline-block; padding: 10px; margin-right: 10px;}
                     window.clearTimeout(id);
                 };
     })();
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 
-// requestAnimationFrame polyfill by Erik Möller
-// fixes from Paul Irish and Tino Zijdel
+$(document).ready(function(){
 
-
-
-// Properties _____________________________________________
-
-
+  runInit();
+});
 
 
 </script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> t7 </title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  
+  <style type='text/css'>
+  html, body { width: 100%; height: 100%; margin:0; padding: 0; }
+ol, ul ,li {
+  list-style: none; margin:0; padding: 0;
+}
+.runbox { width: 320px; height: 600px; position: relative; overflow: hidden; background: #ccc; margin-top: 30px;}
+.map { width: 320px; height: auto; position: absolute; left: 0; top: 0;}
+a { display: inline-block; padding: 10px; margin: 10px;}
+  </style>
+</head>
+<body >
+
+  <div id="bg"></div>
+    <section id="run" class="clearfix">
+      <a href="#" class="start">Start</a>
+      <a href="#" class="stop">Stop</a>
+      <div class="runbox">
+        <div class="map" id="map">
+          <canvas id="canvas" width="320" height="500"></canvas>
+          <div class="player"></div>
+<!--             <ul>
+            <li><img src="../www/img/map_a_01.jpg" /></li>
+            <li><img src="../www/img/map_a_02.jpg" /></li>
+            <li><img src="../www/img/map_a_02.jpg" /></li>
+            <li><img src="../www/img/map_a_03.jpg" /></li>
+          </ul> -->
+        </div>
+        <div class="player"></div>
+
+      </div> 
+    </section>
+  <script type="text/javascript" src="../www/js/lib/zepto.min.js"></script>
+  <script type="text/javascript" src="../www/js/lib/underscore-min.js"></script>
+  <script type="text/javascript" src="../www/js/lib/backbone-min.js"></script>
+  <script type="text/javascript" src="../www/js/lib/hammer.min.js"></script>
+  <script type="text/javascript" src="../www/js/shake.js"></script> 
+  <script type="text/javascript" src="t7.js"></script>
+
+
+</body>
+
+
+</html>

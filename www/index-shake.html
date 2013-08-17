@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">  
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <title>shake game test</title>
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <script>
+    setTimeout(function(){window.scrollTo(0, 0);}, 0);
+    </script>
+  </head>
+  <body>
+    <div id="pagebody">  
+      <header id="toolbarnav">  
+          <a rel="external" href="#navmenu" id="menu-btn"></a>  
+        
+          <h1>Shake Me!</h1>  
+      </header>  
+        
+      <section id="content" class="clearfix">  
+          <h2>Come on!</h2>
+          <div class="txt">
+            <p>Are you ready?</p>
+
+          </div>
+          <button class="start">start</button>
+          <div id="ShowDiv"></div>
+      </section>  
+    </div>  
+      
+    <div id="navmenu">  
+      <header>  
+          <h1>Menu</h1>  
+      </header>  
+        
+<!--       <ul>  
+       <li><a rel="external" href="#homepage.html" class="navlink">Home</a></li>  
+       <li><a rel="external" href="#about.html" class="navlink">About Us</a></li>  
+       <li><a rel="external" href="#advertise.html" class="navlink">Advertise</a></li>  
+       <li><a rel="external" href="#write.html" class="navlink">Write for Us</a></li>  
+       <li><a rel="external" href="#contacts.html" class="navlink">Contacts</a></li>  
+       <li><a rel="external" href="#privacy.html" class="navlink">Privacy Policy</a></li>  
+      </ul>   -->
+      <button class="reset">Reset</button>
+    </div>
+    <script type="text/javascript" src="js/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="js/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="js/lib/backbone-min.js"></script>
+    <script type="text/javascript" src="js/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="js/shake.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+  </body>
+</html>  

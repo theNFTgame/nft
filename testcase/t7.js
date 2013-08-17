@@ -36,7 +36,7 @@ function fntRun(){
     fntA.image1 = new Image();  
     fntA.image2 = new Image();
     fntA.w = 320;  
-    fntA.h = 600; 
+    fntA.h = 491; 
     var ctx0;  
     var y0,y1,y2;  
     fntA.gameLevel = 1;
@@ -50,8 +50,9 @@ function fntRun(){
       '../www/img/map_c_01.jpg',
       '../www/img/map_c_02.jpg',
       '../www/img/map_c_03.jpg',
-      '../www/img/map_a_b.jpg',
-      '../www/img/map_b_c.jpg'];
+      '../www/img/map_a_b.jpg' ,
+      '../www/img/map_b_c.jpg' ,
+      '../www/img/map_c_a.jpg' ];
     fntA.allmove = 0;
     fntA.alltimes = 0;
 
@@ -59,32 +60,36 @@ function fntRun(){
       ctx0 =  document.getElementById('canvas').getContext('2d');
       fntA.mapArr = new Array();
       y0 = 0;
-      y1 = fntA.h;
-      y2 = 2*fntA.h;
+      y1 = -1*fntA.h;
+      y2 = -2*fntA.h;
       //generat map
       if(fntA.gameLevel === 1){
-        for (var i = 12 - 1; i >= 0; i--) {
+        for (var i = 14 - 1; i >= 0; i--) {
           if (i === 7){
             fntA.mapArr.push(fntA.imgArr[9]);
-          }else if (i === 3){
+          }else if (i === 2){
             fntA.mapArr.push(fntA.imgArr[10]);
           }else if (i>7){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          }else if (i<8 && i>3){
+          }else if (i<7 && i>2){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
-          }else if (i<3){
+          }else if (i<2){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
           }
         };
         console.log(fntA.mapArr);
       }
-      
+      //set map image
+      fntA.image0.src = fntA.mapArr[0];  
+      fntA.image1.src = fntA.mapArr[1];
+      fntA.image2.src = fntA.mapArr[2];
     }
 
     function start() {
       runInit();
-      fntA.moveA = 50;
+      fntA.moveA = 5;
       fntA.allmove = 0;
+      fntA.alltimes = 0;
       //console.log("start");
       // if (window.performance.now) {
       //     startime = window.performance.now();
@@ -105,25 +110,31 @@ function fntRun(){
       ctx0.clearRect(0,0,fntA.w,fntA.h);  
       //draw now
       var move = Math.floor(fntA.moveA);
+      
+      
       y0 +=move;  
       y1 +=move;  
-      y2 +=move;  
-      if(y0>=2*fntA.h)  
-      {  
-          y0=move-fntA.h;  
+      y2 +=move; 
+      //console.log("new: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.moveA=" + fntA.moveA); 
+      if(y0>=fntA.h){  
+          y0=move-2*fntA.h;  
+          fntA.alltimes++;
+          fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
+          console.log("y0 new image:" + fntA.image0.src);
       }  
-      if(y1>=2*fntA.h)  
-      {  
-          y1=move-fntA.h;  
+      if(y1>=fntA.h){  
+          y1=move-2*fntA.h;  
+          fntA.alltimes++;
+          fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+          console.log("y1 new image:" + fntA.image1.src);
       }  
-      if(y2>=2*fntA.h)  
-      {  
-          y2=move-fntA.h;  
+      if(y2>=fntA.h){  
+          y2=move-2*fntA.h; 
+          fntA.alltimes++; 
+          fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+          console.log("y2 new image:" + fntA.image2.src);
       }  
-      //set map image
-      fntA.image0.src = fntA.mapArr[0];  
-      fntA.image1.src = fntA.mapArr[1];
-      fntA.image2.src = fntA.mapArr[2];
+
       //draw now
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
@@ -133,19 +144,22 @@ function fntRun(){
       fntA.requestId = window.requestAFrame(render);
 
       //set stop process
-      fntA.moveA = fntA.moveA * 0.992;
+      if(fntA.alltimes > 8){
+        fntA.moveA = fntA.moveA * 0.98;
+      }
+      
 
-      console.log("y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move );
+      console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       if(fntA.moveA<=4){
         console.log("stop running at " + time + ", and allmove = " + fntA.allmove + ",fntA.alltimes= " +fntA.alltimes);
         stop();
       }
       fntA.allmove +=move; 
-      fntA.alltimes++
+      
     }
     // handle multiple browsers for requestAnimationFrame()
 
-    runInit();
+    //runInit();
     $('.start').on('click',function(){
       start();
     });

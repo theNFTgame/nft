@@ -67,13 +67,13 @@ function fntRun(){
         for (var i = 14 - 1; i >= 0; i--) {
           if (i === 7){
             fntA.mapArr.push(fntA.imgArr[9]);
-          }else if (i === 2){
+          }else if (i === 3){
             fntA.mapArr.push(fntA.imgArr[10]);
           }else if (i>7){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          }else if (i<7 && i>2){
+          }else if (i<7 && i>3){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
-          }else if (i<2){
+          }else if (i<3){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
           }
         };
@@ -145,11 +145,11 @@ function fntRun(){
 
       //set stop process
       if(fntA.alltimes > 8){
-        fntA.moveA = fntA.moveA * 0.98;
+        fntA.moveA = fntA.moveA * 0.998;
       }
       
 
-      console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
+      //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       if(fntA.moveA<=4){
         console.log("stop running at " + time + ", and allmove = " + fntA.allmove + ",fntA.alltimes= " +fntA.alltimes);
         stop();

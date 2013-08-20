@@ -16,7 +16,7 @@ var AppRouter = Backbone.Router.extend({
     	showSubFrame('homepage','introbox');
     }, 
     levelfun : function() {
-    	alert("111");
+    	//alert("111");
     	console.log('levelfun'); 
     	showSubFrame('homepage','levelbox');
     }, 
@@ -152,6 +152,7 @@ function fntRun(){
       fntA.moveA = 5;
       fntA.allmove = 0;
       fntA.alltimes = 0;
+      $('.player').addClass('running');
       //console.log("start");
       // if (window.performance.now) {
       //     startime = window.performance.now();
@@ -162,7 +163,8 @@ function fntRun(){
     }
     function stop() {
       if (fntA.requestId)
-        window.cancelAFrame(fntA.requestId);        
+        window.cancelAFrame(fntA.requestId); 
+      $('.player').removeClass('running');       
     }
 
     function render(time) {
@@ -246,34 +248,36 @@ $(document).ready(function(){
     	width  : $(window).width(),
     	height : $(window).height()
 	};
-	var gameLevel = 1;
-	var playerShakeRecord = 0;
+	fntA.gameLevel = 1;
+	fntA.shakerecord = 0;
   	var shakeTime = new Date(), newColor=255;
 
 	//window.addEventListener('shake', shakeEventDidOccur, false);
 	//define a custom method to fire when shake occurs.
 	function shakeEventDidOccur () {
 		//put your own code here etc.
-	    $('.txt').append('<p>Shake me again!</p>');
+	    $('.txt').append('<p>Shake me again! Power:' + fntA.shakerecord +'</p>');
 	    newColor = newColor - 8;
-	    if(playerShakeRecord === 0){
-	    	shakeTime = new Date();
-	    }
-	    playerShakeRecord = playerShakeRecord + 1;
-	    if( playerShakeRecord > 8){
-	    	var endTime = new Date();
-	    	var timeDifference = (endTime.getTime() - shakeTime.getTime());
 
-	    	alert( timeDifference);
-	    	//$('#content').css('background','gray');
-	    	//$('.txt').html('<img src="img/winner.png" />');
-	    	// $('#content h2').html('You Win!');
-	    	//$('#content h2').html('Power:' + playerShakeRecord);
-	    	//$('#content').html('Let\'s Run!');
-	    }else{
-	    	$('#content').css('background','rgb(255,'+newColor+','+newColor+')');
-	    	$('#content h2').html('Power:' + playerShakeRecord);
-	    }
+	    fntA.shakerecord = fntA.shakerecord + 1;
+      // if(fntA.shakerecord === 0){
+      //   shakeTime = new Date();
+      // }
+	    // if( fntA.shakerecord > 8){
+	    // 	var endTime = new Date();
+	    // 	var timeDifference = (endTime.getTime() - shakeTime.getTime());
+
+	    // 	//alert( timeDifference);
+	    // 	//$('#content').css('background','gray');
+	    // 	//$('.txt').html('<img src="img/winner.png" />');
+	    // 	// $('#content h2').html('You Win!');
+	    // 	//$('#content h2').html('Power:' + playerShakeRecord);
+	    // 	//$('#content').html('Let\'s Run!');
+	    // }else{
+	    	
+	    // }
+      $('#content').css('background','rgb(255,'+newColor+','+newColor+')');
+      $('#ShowDiv').html('Power:' + fntA.shakerecord);
 	}
 
 	$(".reset").live("click", function(e){
@@ -287,6 +291,7 @@ $(document).ready(function(){
 	function loadPower(secs) {
 		$('.start').remove();
 		secs = Number(secs);
+
 		window.addEventListener('shake', shakeEventDidOccur, false);
 		//define a custom method to fire when shake occurs.
 	    for (var i = secs; i >= 0; i--) {
@@ -303,7 +308,7 @@ $(document).ready(function(){
 	    $('#ShowDiv').html( num + '秒');
 	    if (num == 0) {
 	    	console.log("shake remove!");
-	    	$('#energy .txt').html('<a class="navlink linkrun" href="#/run">level 3</a>');
+	    	$('#energy .txt').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
 	        window.removeEventListener('shake', shakeEventDidOccur, false);
 	    }
 	}
@@ -326,7 +331,7 @@ $(document).ready(function(){
 	}
 
 	$(".start").live("click", function(e){
-		loadPower(gameLevel*10);
+		loadPower(fntA.gameLevel*10);
 	});
 	// checking whether to open or close nav menu
 	$("#menu-btn").live("click", function(e){

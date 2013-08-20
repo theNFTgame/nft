@@ -10,7 +10,7 @@ body
  font-family:Arial,  sans-serif;
  line-height:1.5;
  font-size:16px;
- background: #3c3c3c;
+ background: #f2f2f2;
  color: #000;
  word-wrap: break-word;
  -webkit-text-size-adjust: none;
@@ -21,6 +21,7 @@ p img { float: left; margin: 0 10px 5px 0; padding: 0; }
 li {list-style-type: none;}
 img { border: 0; max-width: 100%; }
 table { width:auto; border-collapse: collapse;border-spacing: 0; }
+a { color: #3c3c3c; text-decoration: underline;}
 /** @group core body **/  
 #pagebody {  
     position: relative;  
@@ -100,3 +101,19 @@ table { width:auto; border-collapse: collapse;border-spacing: 0; }
 .frame {display: none; position: relative; margin-top: 46px; padding-top: 6px; min-height: 452px; }
 .subframe {display: none;}
 .frame .subframe:first-child { display: block;}
+
+.runningbox .player { width: 150px; height: 200px; background: url('../img/player.png') 0px 0px no-repeat; position: absolute; display: block; top: 220px; left:80px; }
+.runningbox .running {     
+    -webkit-animation: play .8s steps(6) infinite;
+            animation: play .8s steps(6) infinite;
+}
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -900px; }
+}
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -900px; }
+}
+
+

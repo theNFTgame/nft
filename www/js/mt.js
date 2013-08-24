@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 
     console.log(key +"," + pageUrl);
-    $("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=300x300&cht=qr&chl="+ pageUrl +"/m.html?key=" + key + "&choe=UTF-8' />");
+    $("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=300x300&cht=qr&chl="+ pageUrl +"?key=" + key + "&choe=UTF-8' />");
 
     // NodeJS Server
     var nodejs_server = "222.73.241.58:8081";

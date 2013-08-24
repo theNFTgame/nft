@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Nodejs -  手機網頁</title>
+    <title>Shake Moblie</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <meta name="author" content="patw, Patrick Wang" />
         <script type="text/javascript" src="js/lib/zepto.min.js"></script>
@@ -34,6 +34,26 @@
                 act: "changebg"
             });
         });
+        function shakeEventDidOccur () {
+            "undefined" != typeof console && console.log("send change color command");
+            socket.emit("send", {
+                key: theKey,
+                act: "changebg"
+            });
+        }
+        function loadPower(secs) {
+            secs = Number(secs);
+            window.addEventListener('shake', shakeEventDidOccur, false);
+            //define a custom method to fire when shake occurs.
+            for (var i = secs; i >= 0; i--) {
+                (function(index) {
+                    setTimeout(function(){
+                        doUpdateTime(index);
+                    }, (secs - index) * 1000);
+                })(i);
+            }
+        }
+        loadPower(10);
  
     });
     </script>
@@ -42,7 +62,7 @@
  
 <p>双屏互动连接成功！请在电脑屏幕上点击开始！</p>
  
-<input id="change_btn" type="button" value="控制電腦端變背景色" />
+<input id="change_btn" type="button" value="晃动屏幕或者按按钮让PC窗口颜色变化" />
  
 </body>
 </html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+ 
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Nodejs -  手機網頁</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="author" content="patw, Patrick Wang" />
+        <script type="text/javascript" src="js/lib/zepto.min.js"></script>
+    <script src="http://222.73.241.58:8081/socket.io/socket.io.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/shake.js"></script>
+    <script type="text/javascript">
+    function getQueryStringRegExp(name)
+    {
+        var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");  
+        if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+    };
+    $(document).ready(function() {
+        var theKey = getQueryStringRegExp('key');
+
+        var socket = io.connect("http://222.73.241.58:8081");
+        "undefined" != typeof console && console.log("user enter via mobile");
+
+        "undefined" != typeof console && console.log("enter mobile page");
+        socket.emit("send", {
+            key: theKey,
+            act: "enter"
+        });
+ 
+        $("#change_btn").click(function(){
+            "undefined" != typeof console && console.log("send change color command");
+            socket.emit("send", {
+                key: theKey,
+                act: "changebg"
+            });
+        });
+ 
+    });
+    </script>
+</head>
+<body>
+ 
+<p>双屏互动连接成功！请在电脑屏幕上点击开始！</p>
+ 
+<input id="change_btn" type="button" value="控制電腦端變背景色" />
+ 
+</body>
+</html>

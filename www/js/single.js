@@ -1,47 +1,47 @@
 
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
-    routes : {  
-        '' : 'mainfun', 
-        'index' : 'mainfun', 
-        'intro' : 'mainfun',
-        'level' : 'levelfun',
-        'shake' : 'shakefun',
-        'shake/:level' : 'shakefun',
-        'run':'runfun',
-        '*error' : 'renderError'  
-    },
-    mainfun : function() {
-    	console.log('mainfun'); 
-    	showSubFrame('homepage','introbox');
-    }, 
-    levelfun : function() {
-    	//alert("111");
-    	console.log('levelfun'); 
-    	showSubFrame('homepage','levelbox');
-    }, 
-    shakefun : function (level){
-    	if(!level){ fntA.level = 1 };
-    	fntA.level = level;
-    	showFrame('energybox');
-    },
-    runfun : function (){
-    	showFrame('runbox');
-    	fntRun();
-    },
-    renderError : function(error) {  
-        console.log('URL错误, 错误信息: ' + error); 
-        //$('.link_home').show(); 
+  routes : {  
+    '' : 'mainfun', 
+    'index' : 'mainfun', 
+    'intro' : 'mainfun',
+    'level' : 'levelfun',
+    'shake' : 'shakefun',
+    'shake/:level' : 'shakefun',
+    'run':'runfun',
+    '*error' : 'renderError'  
+  },
+  mainfun : function() {
+   console.log('mainfun'); 
+   showSubFrame('homepage','introbox');
+ }, 
+ levelfun : function() {
+  	//alert("111");
+  	console.log('levelfun'); 
+  	showSubFrame('homepage','levelbox');
+  }, 
+  shakefun : function (level){
+  	if(!level){ fntA.level = 1 };
+  	fntA.level = level;
+  	showFrame('energybox');
+  },
+  runfun : function (){
+  	showFrame('runbox');
+  	fntRun();
+  },
+  renderError : function(error) {  
+    console.log('URL错误, 错误信息: ' + error); 
+      //$('.link_home').show(); 
     }  
-});  
-  
+  });  
+
 var router = new AppRouter();  
 Backbone.history.start(); 
 
 
 function showFrame(framename) {
   if(!framename){ framename = 'homepage'}
-  $('.frame').hide();
+    $('.frame').hide();
   //if(framename !=='homepage' ){ };
   $('.' + framename ).show();
   setTimeout(function(){window.scrollTo(0, 0);}, 0);
@@ -56,24 +56,24 @@ function showSubFrame(framename,subframename) {
 
 window.requestAFrame = (function () {
   return window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  window.mozRequestAnimationFrame ||
+  window.oRequestAnimationFrame ||
     // if all else fails, use setTimeout
     function (callback) {
       return window.setTimeout(callback, 1000 / 60); // shoot for 60 fps
     };
-})();
+  })();
 
 // handle multiple browsers for cancelAnimationFrame()
 window.cancelAFrame = (function () {
   return window.cancelAnimationFrame ||
-    window.webkitCancelAnimationFrame ||
-    window.mozCancelAnimationFrame ||
-    window.oCancelAnimationFrame ||
-    function (id) {
-      window.clearTimeout(id);
-    };
+  window.webkitCancelAnimationFrame ||
+  window.mozCancelAnimationFrame ||
+  window.oCancelAnimationFrame ||
+  function (id) {
+    window.clearTimeout(id);
+  };
 })();
 
 
@@ -89,41 +89,41 @@ function fRandomBy(under, over){
 } 
 function funMapload(){
 	fntA.imgArr = [
-	  'img/map_a_01.jpg',
-	  'img/map_a_02.jpg',
-	  'img/map_a_03.jpg',
-	  'img/map_b_01.jpg',
-	  'img/map_b_02.jpg',
-	  'img/map_b_03.jpg',
-	  'img/map_c_01.jpg',
-	  'img/map_c_02.jpg',
-	  'img/map_c_03.jpg',
-	  'img/map_a_b.jpg' ,
-	  'img/map_b_c.jpg' ,
-	  'img/map_c_a.jpg' ];
+ 'img/map_a_01.jpg',
+ 'img/map_a_02.jpg',
+ 'img/map_a_03.jpg',
+ 'img/map_b_01.jpg',
+ 'img/map_b_02.jpg',
+ 'img/map_b_03.jpg',
+ 'img/map_c_01.jpg',
+ 'img/map_c_02.jpg',
+ 'img/map_c_03.jpg',
+ 'img/map_a_b.jpg' ,
+ 'img/map_b_c.jpg' ,
+ 'img/map_c_a.jpg' ];
 }
 function fntRun(){
-    fntA.requestId = 0;
-    fntA.startime = 0;
-    fntA.image0 = new Image();  
-    fntA.image1 = new Image();  
-    fntA.image2 = new Image();
-    fntA.w = 320;  
-    fntA.h = 491; 
-    var ctx0;  
-    var y0,y1,y2;  
-    fntA.gameLevel = 1;
-    fntA.allmove = 0;
-    fntA.alltimes = 0;
+  fntA.requestId = 0;
+  fntA.startime = 0;
+  fntA.image0 = new Image();  
+  fntA.image1 = new Image();  
+  fntA.image2 = new Image();
+  fntA.w = 320;  
+  fntA.h = 491; 
+  var ctx0;  
+  var y0,y1,y2;  
+  fntA.gameLevel = 1;
+  fntA.allmove = 0;
+  fntA.alltimes = 0;
 
-    funMapload();
+  funMapload();
 
-    function runInit() {
-      ctx0 =  document.getElementById('canvas').getContext('2d');
-      fntA.mapArr = new Array();
-      y0 = 0;
-      y1 = -1*fntA.h;
-      y2 = -2*fntA.h;
+  function runInit() {
+    ctx0 =  document.getElementById('canvas').getContext('2d');
+    fntA.mapArr = new Array();
+    y0 = 0;
+    y1 = -1*fntA.h;
+    y2 = -2*fntA.h;
       //generat map
       if(fntA.gameLevel === 1){
         for (var i = 14 - 1; i >= 0; i--) {
@@ -157,7 +157,7 @@ function fntRun(){
       // if (window.performance.now) {
       //     startime = window.performance.now();
       // } else {
-          fntA.startime = Date.now();
+        fntA.startime = Date.now();
       // }
       fntA.requestId = window.requestAFrame(render);
     }
@@ -181,22 +181,22 @@ function fntRun(){
       y2 +=move; 
       //console.log("new: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.moveA=" + fntA.moveA); 
       if(y0>=fntA.h){  
-          y0=move-2*fntA.h;  
-          fntA.alltimes++;
-          fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
-          console.log("y0 new image:" + fntA.image0.src);
+        y0=move-2*fntA.h;  
+        fntA.alltimes++;
+        fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
+        console.log("y0 new image:" + fntA.image0.src);
       }  
       if(y1>=fntA.h){  
-          y1=move-2*fntA.h;  
-          fntA.alltimes++;
-          fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-          console.log("y1 new image:" + fntA.image1.src);
+        y1=move-2*fntA.h;  
+        fntA.alltimes++;
+        fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+        console.log("y1 new image:" + fntA.image1.src);
       }  
       if(y2>=fntA.h){  
-          y2=move-2*fntA.h; 
-          fntA.alltimes++; 
-          fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-          console.log("y2 new image:" + fntA.image2.src);
+        y2=move-2*fntA.h; 
+        fntA.alltimes++; 
+        fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+        console.log("y2 new image:" + fntA.image2.src);
       }  
 
       //draw now
@@ -231,7 +231,7 @@ function fntRun(){
       stop();
     });
 
-}
+  }
 
 
 
@@ -239,27 +239,27 @@ function fntRun(){
 
 
 
-$(document).ready(function(){
-	var pagebody = $("#pagebody");
-	var themenu  = $("#navmenu");
-	var topbar   = $("#toolbarnav");
-	var content  = $("#content");
-	var viewport = {
-    	width  : $(window).width(),
-    	height : $(window).height()
-	};
-	fntA.gameLevel = 1;
-	fntA.shakerecord = 0;
-  	var shakeTime = new Date(), newColor=255;
+  $(document).ready(function(){
+   var pagebody = $("#pagebody");
+   var themenu  = $("#navmenu");
+   var topbar   = $("#toolbarnav");
+   var content  = $("#content");
+   var viewport = {
+     width  : $(window).width(),
+     height : $(window).height()
+   };
+   fntA.gameLevel = 1;
+   fntA.shakerecord = 0;
+   var shakeTime = new Date(), newColor=255;
 
 	//window.addEventListener('shake', shakeEventDidOccur, false);
 	//define a custom method to fire when shake occurs.
 	function shakeEventDidOccur () {
 		//put your own code here etc.
-	    $('.txt').append('<p>Shake me again! Power:' + fntA.shakerecord +'</p>');
-	    newColor = newColor - 8;
+   $('.txt').append('<p>Shake me again! Power:' + fntA.shakerecord +'</p>');
+   newColor = newColor - 8;
 
-	    fntA.shakerecord = fntA.shakerecord + 1;
+   fntA.shakerecord = fntA.shakerecord + 1;
       // if(fntA.shakerecord === 0){
       //   shakeTime = new Date();
       // }
@@ -278,61 +278,61 @@ $(document).ready(function(){
 	    // }
       $('#content').css('background','rgb(255,'+newColor+','+newColor+')');
       $('#ShowDiv').html('Power:' + fntA.shakerecord);
-	}
+    }
 
-	$(".reset").live("click", function(e){
-		newColor=255;
-		$('#content').css('background','rgb(255,255,255)');
-		$('.txt').html('');
-		$('#content h2').html('Let\'s go!');
-		closeme();
-	})
+    $(".reset").live("click", function(e){
+      newColor=255;
+      $('#content').css('background','rgb(255,255,255)');
+      $('.txt').html('');
+      $('#content h2').html('Let\'s go!');
+      closeme();
+    })
 
-	function loadPower(secs) {
-		$('.start').remove();
-		secs = Number(secs);
+    function loadPower(secs) {
+      $('.start').remove();
+      secs = Number(secs);
 
-		window.addEventListener('shake', shakeEventDidOccur, false);
-		//define a custom method to fire when shake occurs.
-	    for (var i = secs; i >= 0; i--) {
-	        (function(index) {
-	        	setTimeout(function(){
-			  		doUpdateTime(index);
-			  	}, (secs - index) * 1000);
-			})(i);
-	    }
-	}
-	function doUpdateTime(num) {
-	    //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
-	    //alert(num);
-	    $('#ShowDiv').html( num + '秒');
-	    if (num == 0) {
-	    	console.log("shake remove!");
-	    	$('#energy .txt').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
-	        window.removeEventListener('shake', shakeEventDidOccur, false);
-	    }
-	}
-	
-	$(".run").on("click", function(e){
-		alert("Ok ok,let's run~~~");
-	})
+      window.addEventListener('shake', shakeEventDidOccur, false);
+		  //define a custom method to fire when shake occurs.
+      for (var i = secs; i >= 0; i--) {
+        (function(index) {
+          setTimeout(function(){
+          doUpdateTime(index);
+        }, (secs - index) * 1000);
+      })(i);
+    }
+  }
+  function doUpdateTime(num) {
+    //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
+    //alert(num);
+    $('#ShowDiv').html( num + '秒');
+    if (num == 0) {
+    	console.log("shake remove!");
+    	$('#energy .txt').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
+     window.removeEventListener('shake', shakeEventDidOccur, false);
+    }
+  }
 
-	function openme() { 
-		$(function () {
-			topbar.css({'left':'200px' });
-			pagebody.css({'left':'200px'});
-		});
-	}
-	function closeme() {
-		var closeme = $(function() {
-	    	topbar.css({'left':'0px'});
-	    	pagebody.css({'left':'0px' });
-		});
-	}
+   $(".run").on("click", function(e){
+    alert("Ok ok,let's run~~~");
+  })
 
-	$(".start").live("click", function(e){
-		loadPower(fntA.gameLevel*10);
-	});
+   function openme() { 
+    $(function () {
+     topbar.css({'left':'200px' });
+     pagebody.css({'left':'200px'});
+   });
+  }
+  function closeme() {
+    var closeme = $(function() {
+      topbar.css({'left':'0px'});
+      pagebody.css({'left':'0px' });
+    });
+  }
+
+  $(".start").live("click", function(e){
+    loadPower(fntA.gameLevel*10);
+  });
 	// checking whether to open or close nav menu
 	$("#menu-btn").live("click", function(e){
 		e.preventDefault();

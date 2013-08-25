@@ -108,7 +108,7 @@ function fntRun(){
   fntA.image2 = new Image();
   fntA.w = 320;  
   fntA.h = 491; 
-  var ctx0;  
+  var ctx0,ctx1;  
   var y0,y1,y2;  
   fntA.gameLevel = 1;
   fntA.allmove = 0;
@@ -118,6 +118,7 @@ function fntRun(){
 
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
+    ctx1 =  document.getElementById('canvas2').getContext('2d');
     fntA.mapArr = new Array();
     y0 = 0;
     y1 = -1*fntA.h;
@@ -144,7 +145,7 @@ function fntRun(){
       fntA.image1.src = fntA.mapArr[1];
       fntA.image2.src = fntA.mapArr[2];
     }
-
+  //}
     function start() {
       runInit();
       fntA.moveA = 5;
@@ -168,7 +169,8 @@ function fntRun(){
     function render(time) {
 
       //clear
-      ctx0.clearRect(0,0,fntA.w,fntA.h);  
+      ctx0.clearRect(0,0,fntA.w,fntA.h);
+      ctx1.clearRect(0,0,fntA.w,fntA.h);  
       //draw now
       var move = Math.floor(fntA.moveA);
       y0 +=move;  
@@ -196,7 +198,10 @@ function fntRun(){
       //draw now
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
-      ctx0.drawImage(fntA.image2,0,y2,fntA.w,fntA.h); 
+      ctx0.drawImage(fntA.image2,0,y2,fntA.w,fntA.h);
+      ctx1.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image2,0,y2,fntA.w,fntA.h); 
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process

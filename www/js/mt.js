@@ -106,10 +106,13 @@ function fntRun(){
   fntA.image0 = new Image();  
   fntA.image1 = new Image();  
   fntA.image2 = new Image();
+  fntA.image3 = new Image();  
+  fntA.image4 = new Image();  
+  fntA.image5 = new Image();
   fntA.w = 320;  
   fntA.h = 491; 
   var ctx0,ctx1;  
-  var y0,y1,y2;  
+  var y0,y1,y2,y3,y4,y5;  
   fntA.gameLevel = 1;
   fntA.allmove = 0;
   fntA.alltimes = 0;
@@ -123,6 +126,9 @@ function fntRun(){
     y0 = 0;
     y1 = -1*fntA.h;
     y2 = -2*fntA.h;
+    y3 = 0;
+    y4 = -1*fntA.h;
+    y5 = -2*fntA.h;
       //generat map
       if(fntA.gameLevel === 1){
         for (var i = 14 - 1; i >= 0; i--) {
@@ -144,13 +150,18 @@ function fntRun(){
       fntA.image0.src = fntA.mapArr[0];  
       fntA.image1.src = fntA.mapArr[1];
       fntA.image2.src = fntA.mapArr[2];
+      fntA.image3.src = fntA.mapArr[0];  
+      fntA.image4.src = fntA.mapArr[1];
+      fntA.image5.src = fntA.mapArr[2];
     }
   //}
     function start() {
       runInit();
       fntA.moveA = 5;
+      fntA.moveB = 5;
       fntA.allmove = 0;
       fntA.alltimes = 0;
+      fntA.alltimesB = 0;
       $('.player').addClass('running');
       //console.log("start");
       // if (window.performance.now) {
@@ -173,6 +184,9 @@ function fntRun(){
       ctx1.clearRect(0,0,fntA.w,fntA.h);  
       //draw now
       var move = Math.floor(fntA.moveA);
+      var moveB = Math.floor(fntA.moveB);
+
+      //ctx a
       y0 +=move;  
       y1 +=move;  
       y2 +=move; 
@@ -181,27 +195,53 @@ function fntRun(){
         y0=move-2*fntA.h;  
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
-        console.log("y0 new image:" + fntA.image0.src);
+        console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
         y1=move-2*fntA.h;  
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-        console.log("y1 new image:" + fntA.image1.src);
+        console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
         y2=move-2*fntA.h; 
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-        console.log("y2 new image:" + fntA.image2.src);
+        console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       //draw now
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image2,0,y2,fntA.w,fntA.h);
-      ctx1.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
-      ctx1.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
-      ctx1.drawImage(fntA.image2,0,y2,fntA.w,fntA.h); 
+
+      //ctx b
+      y3 = y3 + moveB;  
+      y4 = y4 + moveB;  
+      y5 = y5 + moveB; 
+      
+      //console.log("new: y3=" + y3 + ",y4=" + y4 + ",y5=" + y5 + ",moveB=" + moveB + ",fntA.moveB=" + fntA.moveB); 
+      if(y3>=fntA.h){  
+        y3=moveB-2*fntA.h;  
+        fntA.alltimesB++;
+        fntA.image3.src = fntA.mapArr[(Number(fntA.alltimesB)+3)]; 
+        console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
+      }  
+      if(y4>=fntA.h){  
+        y4=moveB-2*fntA.h;  
+        fntA.alltimesB++;
+        fntA.image4.src = fntA.mapArr[(Number(fntA.alltimesB)+3)];
+        console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
+      }  
+      if(y5>=fntA.h){  
+        y5=moveB-2*fntA.h; 
+        fntA.alltimesB++; 
+        fntA.image5.src = fntA.mapArr[(Number(fntA.alltimesB)+3)];
+        console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
+      }  
+      ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image4,0,y4,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image5,0,y5,fntA.w,fntA.h); 
+
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process

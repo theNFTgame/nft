@@ -116,6 +116,7 @@ function fntRun(){
   fntA.gameLevel = 1;
   fntA.allmove = 0;
   fntA.alltimes = 0;
+  fntA.mapitem = 16;
 
   funMapload();
 
@@ -131,16 +132,18 @@ function fntRun(){
     y5 = -2*fntA.h;
       //generat map
       if(fntA.gameLevel === 1){
-        for (var i = 14 - 1; i >= 0; i--) {
-          if (i === 7){
+        for (var i = fntA.mapitem - 1; i >= 0; i--) {
+          if (i === 9){
             fntA.mapArr.push(fntA.imgArr[9]);
-          }else if (i === 3){
+          }else if (i === 4){
             fntA.mapArr.push(fntA.imgArr[10]);
-          }else if (i>7){
+          }else if (i === 0){
+            fntA.mapArr.push(fntA.imgArr[11]);
+          }else if (i>9){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          }else if (i<7 && i>3){
+          }else if (i<9 && i>4){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
-          }else if (i<3){
+          }else if (i<4){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
           }
         };
@@ -157,8 +160,8 @@ function fntRun(){
   //}
     function start() {
       runInit();
-      fntA.moveA = 5;
-      fntA.moveB = 5;
+      fntA.moveA = 15;
+      fntA.moveB = 15;
       fntA.allmove = 0;
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
@@ -175,6 +178,12 @@ function fntRun(){
       if (fntA.requestId)
         window.cancelAFrame(fntA.requestId); 
       $('.player').removeClass('running');       
+    }
+    function wayRoll(e) {
+      if((e+1) > fntA.mapitem ){
+        e = e % fntA.mapitem;
+      }
+      return e;
     }
 
     function render(time) {
@@ -194,19 +203,19 @@ function fntRun(){
       if(y0>=fntA.h){  
         y0=move-2*fntA.h;  
         fntA.alltimes++;
-        fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
+        fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
         console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
         y1=move-2*fntA.h;  
         fntA.alltimes++;
-        fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+        fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
         console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
         y2=move-2*fntA.h; 
         fntA.alltimes++; 
-        fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
+        fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
         console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       //draw now
@@ -223,19 +232,19 @@ function fntRun(){
       if(y3>=fntA.h){  
         y3=moveB-2*fntA.h;  
         fntA.alltimesB++;
-        fntA.image3.src = fntA.mapArr[(Number(fntA.alltimesB)+3)]; 
+        fntA.image3.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))]; 
         console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y4>=fntA.h){  
         y4=moveB-2*fntA.h;  
         fntA.alltimesB++;
-        fntA.image4.src = fntA.mapArr[(Number(fntA.alltimesB)+3)];
+        fntA.image4.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
         console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y5>=fntA.h){  
         y5=moveB-2*fntA.h; 
         fntA.alltimesB++; 
-        fntA.image5.src = fntA.mapArr[(Number(fntA.alltimesB)+3)];
+        fntA.image5.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
         console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
@@ -245,7 +254,7 @@ function fntRun(){
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process
-      if(fntA.alltimes > 8){
+      if(fntA.alltimes > 99){
         fntA.moveA = fntA.moveA * 0.998;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);

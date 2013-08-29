@@ -276,7 +276,7 @@ function fntRun(){
 $(document).ready(function(){
 	var key = NewGuid();
 	var pageUrl = window.location.href;
-	pageUrl=pageUrl.replace(/pc.html/g,"m.html");
+	pageUrl=pageUrl.replace(/pc.html#\/run/g,"m.html");
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;
@@ -290,7 +290,7 @@ $(document).ready(function(){
 
 	//run
 	console.log(key +"," + pageUrl);
-	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=300x300&cht=qr&chl="+ pageUrl +"?key=" + key + "&choe=UTF-8' />");
+	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ pageUrl +"?key=" + key + "&choe=UTF-8' />");
   // NodeJS Server
   var nodejs_server = "222.73.241.58:8081";
 

@@ -10,12 +10,12 @@ body
  font-family:Arial,  sans-serif;
  line-height:1.5;
  font-size:16px;
- background: #f2f2f2;
  color: #000;
  word-wrap: break-word;
  -webkit-text-size-adjust: none;
  height: 100%;
  min-height: 500px;
+ background:#fcfcfc url(../img/mt_body_bg.jpg) top center no-repeat;
 }
 h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
 p img { float: left; margin: 0 10px 5px 0; padding: 0; }
@@ -25,14 +25,13 @@ table { width:auto; border-collapse: collapse;border-spacing: 0; }
 a { color: #3c3c3c; text-decoration: underline;}
 /** @group core body **/  
 #pagebody {  
-    position: relative;  
-    left: 0;  
-    max-width: 640px;  
-    min-width: 320px;  
-    z-index: 99999;  
-    
-    height: 100%;  
+    position: relative;   
+    max-width: 928px;  
+    min-width: 600px;  
+    background: url(../img/mt_pagebody_bg.jpg) 32px 0px no-repeat; 
     display: block; 
+    margin: 0 auto; 
+    overflow: hidden;
 }  
   
 #navmenu {  
@@ -98,11 +97,17 @@ a { color: #3c3c3c; text-decoration: underline;}
 	border-color: #5ca941;
 }
 /**/
-#pagebody section { width: 100%; height: 100%; min-height: 400px;  }
-.frame {display: none; position: relative; margin-top: 46px; padding-top: 6px; min-height: 452px; }
+#pagebody section {   }
+.frame {display: none; position: relative;  padding: 32px 0 0 68px; width: 780px; height: 600px; margin: 0 auto; }
 .subframe {display: none;}
 .frame .subframe:first-child { display: block;}
 
+/**/
+#qrcode { width: 338px; height: 338px; text-align: center; line-height: 338px;
+    background: url(../img/qr_bg.png) no-repeat; padding-top: 10px;
+}
+#qrcode img { width: 320px; height: 320px; }
+/**/
 .runningbox .player { width: 150px; height: 200px; background: url('../img/player.png') 0px 0px no-repeat; position: absolute; display: block; top: 220px; left:80px; }
 .runningbox .running {     
     -webkit-animation: play .8s steps(6) infinite;

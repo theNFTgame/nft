@@ -114,7 +114,8 @@ function fntRun(){
   var ctx0,ctx1;  
   var y0,y1,y2,y3,y4,y5;  
   fntA.gameLevel = 1;
-  fntA.allmove = 0;
+  fntA.allmoveA = 0;
+  fntA.allmoveB = 0;
   fntA.alltimes = 0;
   fntA.mapitem = 16;
 
@@ -162,7 +163,8 @@ function fntRun(){
       runInit();
       fntA.moveA = 1;
       fntA.moveB = 2;
-      fntA.allmove = 0;
+      fntA.allmoveA = 0;
+      fntA.allmoveB = 0;
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
       fntA.shaketimes = 0;
@@ -178,7 +180,9 @@ function fntRun(){
     function stop() {
       if (fntA.requestId)
         window.cancelAFrame(fntA.requestId); 
-      $('.player').removeClass('running');       
+      $('.player').removeClass('running'); 
+      $('.gameover').html('游戏结束！fntA.allmoveA :'+ fntA.allmoveA + ',fntA.allmoveB:' +fntA.allmoveB);
+      $('.gameover').show();      
     }
     function wayRoll(e) {
       if((e+1) > fntA.mapitem ){
@@ -255,17 +259,19 @@ function fntRun(){
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process
-      if(fntA.shaketimes < 10){
+      if(fntA.shaketimes < 3){
         fntA.moveA = fntA.moveA * 0.995;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       //if(fntA.moveA<=4){
-      if(fntA.allmove>50000){
-        console.log("stop running at " + time + ", and allmove = " + fntA.allmove + ",fntA.alltimes= " +fntA.alltimes);
+      if(fntA.allmoveA>9000){
+        console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
         stop();
       }
-      fntA.allmove +=move; 
+      fntA.allmoveA +=move; 
+      fntA.allmoveB +=moveB; 
       fntA.shaketimes = fntA.shaketimes -1;
+      $("#main").html('玩家跑了'+ fntA.allmoveA + '米,电脑跑了' +fntA.allmoveB + '米。倒计时还有' + 30 + '秒');
     }
     // handle multiple browsers for requestAnimationFrame()
     //runInit();
@@ -282,16 +288,16 @@ function fntRun(){
 
   socket.on("get_response", function (b) {
     var combine = b.key + "_" + b.act;
-    console.log(combine);
+    //console.log(combine);
     switch (combine) {
 
       // when open m.page，call enter event，then show the game
       case fntA.key + "_enter":
       setTimeout(function () {
         showSubFrame('runbox','rundivbox');
-        start();
-
-
+        if(fntA.moveA!==0){
+          start();
+        }
       }, 500);
       break;
 
@@ -299,16 +305,12 @@ function fntRun(){
       case fntA.key + "_changebg":
       setTimeout(function () {
 
-        var str = "0123456789abcdef", t = "";
-        for (j = 0; j < 6; j++) {
-          t = t + str.charAt(Math.random() * str.length);
+        if(fntA.moveA<4){
+          fntA.moveA = fntA.moveA * 1.09;
         }
-        if(fntA.moveA<8){
-          fntA.moveA = fntA.moveA * 1.1;
-        }
-        $("#main").html("background-color:" + t);
-        console.log('background-color:' + t);
-        $("body").css("background-color", "#"+t);
+        
+        //console.log('background-color:' + t);
+
         fntA.shaketimes = fntA.shaketimes + 1 ;
       }, 500);
       break;

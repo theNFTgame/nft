@@ -23,7 +23,7 @@ var AppRouter = Backbone.Router.extend({
   	showFrame('energybox');
   },
   runfunc : function (){
-  	showFrame('runbox');
+  	showSubFrame('runbox','qrcodebox');
   	fntRun();
   },
   renderError : function(error) {  
@@ -160,11 +160,12 @@ function fntRun(){
   //}
     function start() {
       runInit();
-      fntA.moveA = 15;
-      fntA.moveB = 15;
+      fntA.moveA = 1;
+      fntA.moveB = 2;
       fntA.allmove = 0;
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
+      fntA.shaketimes = 0;
       $('.player').addClass('running');
       //console.log("start");
       // if (window.performance.now) {
@@ -254,15 +255,17 @@ function fntRun(){
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process
-      if(fntA.alltimes > 99){
-        fntA.moveA = fntA.moveA * 0.998;
+      if(fntA.shaketimes < 10){
+        fntA.moveA = fntA.moveA * 0.995;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
-      if(fntA.moveA<=4){
+      //if(fntA.moveA<=4){
+      if(fntA.allmove>50000){
         console.log("stop running at " + time + ", and allmove = " + fntA.allmove + ",fntA.alltimes= " +fntA.alltimes);
         stop();
       }
       fntA.allmove +=move; 
+      fntA.shaketimes = fntA.shaketimes -1;
     }
     // handle multiple browsers for requestAnimationFrame()
     //runInit();
@@ -272,9 +275,52 @@ function fntRun(){
     $('.stop').on('click',function(){
       stop();
     });
+  // NodeJS Server
+  var nodejs_server = "222.73.241.58:8081";
+  // connect
+  var socket = io.connect("http://" + nodejs_server);
+
+  socket.on("get_response", function (b) {
+    var combine = b.key + "_" + b.act;
+    console.log(combine);
+    switch (combine) {
+
+      // when open m.page，call enter event，then show the game
+      case fntA.key + "_enter":
+      setTimeout(function () {
+        showSubFrame('runbox','rundivbox');
+        start();
+
+
+      }, 500);
+      break;
+
+      // shake event
+      case fntA.key + "_changebg":
+      setTimeout(function () {
+
+        var str = "0123456789abcdef", t = "";
+        for (j = 0; j < 6; j++) {
+          t = t + str.charAt(Math.random() * str.length);
+        }
+        if(fntA.moveA<8){
+          fntA.moveA = fntA.moveA * 1.1;
+        }
+        $("#main").html("background-color:" + t);
+        console.log('background-color:' + t);
+        $("body").css("background-color", "#"+t);
+        fntA.shaketimes = fntA.shaketimes + 1 ;
+      }, 500);
+      break;
+
+    }
+  });
+
+
+
 }
 $(document).ready(function(){
-	var key = NewGuid();
+	fntA.key = NewGuid();
 	var pageUrl = window.location.href;
 	pageUrl=pageUrl.replace(/pc.html#\/run/g,"m.html");
 
@@ -289,47 +335,11 @@ $(document).ready(function(){
 
 
 	//run
-	console.log(key +"," + pageUrl);
-	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ pageUrl +"?key=" + key + "&choe=UTF-8' />");
-  // NodeJS Server
-  var nodejs_server = "222.73.241.58:8081";
+	console.log(fntA.key +"," + pageUrl);
+	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ pageUrl +"?key=" + fntA.key + "&choe=UTF-8' />");
 
-  // connect
-  var socket = io.connect("http://" + nodejs_server);
 
-  socket.on("get_response", function (b) {
-  	var combine = b.key + "_" + b.act;
-  	console.log(combine);
-  	switch (combine) {
 
-      // when open m.page，call enter event，then show the game
-      case key + "_enter":
-      setTimeout(function () {
-
-      	$("#qrcode").hide();
-      	$("#main").show();
-
-      }, 500);
-      break;
-
-      // shake event
-      case key + "_changebg":
-      setTimeout(function () {
-
-      	var str = "0123456789abcdef", t = "";
-      	for (j = 0; j < 6; j++) {
-      		t = t + str.charAt(Math.random() * str.length);
-      	}
-
-      	$("#main").html("background-color:" + t);
-      	console.log('background-color:' + t);
-      	$("body").css("background-color", "#"+t);
-
-      }, 500);
-      break;
-
-    }
-  });
   //run for pc
   $(".start").live("click", function(e){
     loadPower(fntA.gameLevel*10);

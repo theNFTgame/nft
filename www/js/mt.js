@@ -325,6 +325,7 @@ $(document).ready(function(){
 	fntA.key = NewGuid();
 	var pageUrl = window.location.href;
 	pageUrl=pageUrl.replace(/pc.html#\/run/g,"m.html");
+  pageUrl=pageUrl.replace(/pc.html/g,"m.html");
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;

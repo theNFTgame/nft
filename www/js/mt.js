@@ -2,8 +2,8 @@
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
-    '' : 'runfunc', 
-    'index' : 'runfunc', 
+    '' : 'mainfunc', 
+    'index' : 'mainfunc', 
     'reg' : 'regfunc',
     'run':'runfunc',
     '*error' : 'renderError'  
@@ -14,7 +14,7 @@ var AppRouter = Backbone.Router.extend({
   }, 
   regfunc : function() {
   	//alert("111");
-  	console.log('levelfunc'); 
+  	//console.log('levelfunc'); 
   	showSubFrame('homepage','registerbox');
   }, 
   shakefunc : function (level){
@@ -34,6 +34,8 @@ var AppRouter = Backbone.Router.extend({
 
 var router = new AppRouter();  
 Backbone.history.start(); 
+
+
 function showFrame(framename) {
   if(!framename){ framename = 'homepage'}
     $('.frame').hide();
@@ -98,10 +100,12 @@ function fRandomBy(under, over){
 }
 
 function postGameRecord(id,name,record,result){ 
-  var postData = '?game_type=0&score='+record + '&user_id=' + id + '&user_name=' + name + '&result=' +result ;
+  var postData = 'game_type=0&score='+record + '&user_id=' + id + '&user_name=' + name + '&result=' +result ;
   console.log(postData);
-  $.ajax({type:'GET',url:'/game/save',data:postData,
+  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
+  $.ajax({type:'POST',url: tempIp +'game/save',data:postData,
     success:function(json){
+      console.log(json);
       var jsdata = eval('('+json+')');  
       console.log('status='+ jsdata.status);
       if(result==='win'){
@@ -121,8 +125,81 @@ function postGameRecord(id,name,record,result){
     }
   })
 }
+function postLogin(){
+  console.log('post login');
+  var userName  = $('#uname').val()
+  ,   userPwd = $('#upwd').val()
+  ,   postData;
+  if (!userName || !userPwd){
+    alert("请完整填写信息！")
+    return false;
+  }
+  var reMail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+  console.log(userName.match(reMail));
+  if(userName.match(reMail)){
+    postData = 'email=' + userName + '&password=' + userPwd ;
+  }else{
+    postData = 'name=' + userName + '&password=' + userPwd ;
+  }
+  console.log(postData);
+  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
+  $.ajax({type:'POST',url: tempIp +'user/login',data:postData,
+    success:function(json){
+      console.log(json);
+      var jsdata = eval('('+json+')');  
+      console.log('status='+ jsdata.status);
+      fntA.playerName = jsdata.user_name;
+      fntA.playerId = jsdata.user_id;
+      fntA.playerAvatar = 'http://tnf-avatar.b0.upaiyun.com/'+jsdata.user_avatar;
+      router.navigate('run');
+      showSubFrame('runbox','qrcodebox');
+      //console.log('mid='+ jsdata.data.mid );
+    },
+    error: function(xhr, type){
+      console.log('Ajax error!')
+    }
+  })
 
+}
+function postRegister(){
+  
+  var userName  = $('#reguname').val()
+  ,   userMail  = $('#regumail').val()
+  ,   userPwd = $('#regupwd').val()
+  ,   postData;
+  if (!userName || !userPwd || !userMail){
+    alert("请完整填写信息！")
+    return false;
+  }
+  var reMail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 
+  console.log('post register, regumail=' + userMail + ', valmail=' + userMail.match(reMail));
+  
+  // if(userMail.match(reMail)){
+  //   alert("请正确填写邮箱信息！")
+  //   return false;
+  // }
+  postData = 'name=' + userName + '&email=' + userMail + '&password=' + userPwd ;
+  console.log(postData);
+  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
+  $.ajax({type:'POST',url: tempIp +'user/register',data:postData,
+    success:function(json){
+      console.log(json);
+      var jsdata = eval('('+json+')');  
+      console.log('status='+ jsdata.status);
+      fntA.playerName = jsdata.user_name;
+      fntA.playerId = jsdata.user_id;
+      fntA.playerAvatar = jsdata.user_avatar;
+      router.navigate('run');
+      showSubFrame('runbox','qrcodebox');
+      //console.log('mid='+ jsdata.data.mid );
+    },
+    error: function(xhr, type){
+      console.log('Ajax error!')
+    }
+  })
+
+}
 function funMapload(){
 	fntA.imgArr = [
 		'img/map_a_01.jpg',
@@ -375,7 +452,15 @@ $(document).ready(function(){
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;
-  fntA.playerId = '';
+  fntA.playerId = '277454';
+  fntA.playerName = 'rayfox';
+
+  var loadedImages = 0;
+  //loading func
+
+
+
+
 	//run
 	function shakeEventDidOccur () {
 		//put your own code here etc.
@@ -388,12 +473,19 @@ $(document).ready(function(){
 	console.log(fntA.key +"," + pageUrl);
 	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ pageUrl +"?key=" + fntA.key + "&choe=UTF-8' />");
 
-
-
+  //postRegiste
+  $(".btn_register").live("click", function(){
+    postRegister();
+  });
+  //login
+  $(".btn_login").live("click", function(){
+    postLogin();
+  });
   //run for pc
   $(".start").live("click", function(e){
     loadPower(fntA.gameLevel*10);
   });
+
 
 });
 

@@ -119,14 +119,14 @@ a { color: #3c3c3c; text-decoration: underline;}
 
 .header .playerinfob { float: right; text-align: right;}
 .header .playerinfob img { float: right; margin: 0 0 0 10px; }
-.header .playrecord { font-size: 140%; color: red; display: block;}
+.header .playrecord { font-size: 140%; color: red; display: block; line-height: 32px;}
 
 /*gametime*/
 .gametime { width: 105px; height: 50px; background: url(../img/header_time_bg.jpg) no-repeat; position: absolute; top: 0; left: 327px; font-size: 32px;
 line-height: 50px; text-align: center; color: #fff;}
 
 /**/
-.runningbox .map { padding: 10px; }
+.runningbox .map { padding: 6px; background: url(../img/mt_run_bg.jpg) no-repeat; width: 760px; height: 475px;}
 
 /**/
 .runningbox .player { width: 150px; height: 200px; background: url('../img/player.png') 0px 0px no-repeat; position: absolute; display: block; top: 220px; left:80px; }
@@ -144,8 +144,18 @@ line-height: 50px; text-align: center; color: #fff;}
 }
 
 /**/
-.maskbox { /*display: none;*/ }
-.gamemask { width: 760px; height: 462px; position: absolute; top: 108px; left: 78px; background: black; opacity: 0.4;}
-.submask { display: none; width: 300px; height: 200px; margin: 100px auto; background: #fff; opacity: 1;}
+.maskbox { display: none; }
+.gamemask { width: 760px; height: 475px; position: absolute; top: 104px; left: 78px; background: url(../img/bg_gamemask.png);}
+.submask { display: none; width: 370px; height: 260px; margin: 100px auto 0; background: #fff; opacity: 1; }
+.gamemask .howplay { background: url(../img/bg_howplay.jpg) no-repeat;}
+.gamemask .connection { background: url(../img/bg_connection.jpg) no-repeat;}
+.gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat;}
+.gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;}
+.gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;}
+.gamemask .lost { width:440px; height:350px; background: url(../img/bg_lost.jpg) no-repeat;}
+
+
+
+
 
 

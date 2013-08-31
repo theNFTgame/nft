@@ -10,14 +10,10 @@
     <div id="pagebody"> 
       <section id="intro" class="clearfix frame homepage">
         <div class="subframe loginbox">
-          <p>game intro</p>
-          <a class="navlink linklevel" href="#/run">start game</a>
+<!--           <p>game intro</p>
+          <a class="navlink linklevel" href="#/run">start game</a> -->
         </div>
         <div class="subframe registerbox">
-          <p>select level</p>
-          <a class="navlink linkshake" href="#/shake/1">level 1</a>
-          <a class="navlink linkshake" href="#/shake/2">level 2</a>
-          <a class="navlink linkshake" href="#/shake/3">level 3</a>
         </div>
       </section>
       <section id="run" class="clearfix frame runbox">
@@ -40,17 +36,17 @@
                 <span class="playrecord"></span>
               </div>
               <div class="gametime">
-                <span class="countdown">30</span>
+                <span class="countdown">20</span>
                 <span id="main" ></span>
               </div>
             </div>
             <div class="map">
-              <canvas id="canvas" width="320" height="450"></canvas>
-              <canvas id="minimap" width="50" height="450"></canvas>
-              <canvas id="canvas2" width="320" height="450"></canvas>
+              <canvas id="canvas" width="320" height="456"></canvas>
+              <canvas id="minimap" width="100" height="456"></canvas>
+              <canvas id="canvas2" width="320" height="456"></canvas>
             </div>
-            <div class="player"></div>
-            
+            <div class="player playera"></div>
+            <div class="player playerb"></div>
           </div>
           <div class="maskbox gamemask ">
             <div class="submask howplay">
@@ -70,6 +66,9 @@
             </div>
             <div class="submask lost">
               You lost
+            </div>
+            <div class="submask loading">
+              loading...
             </div>
           </div>
         </div>

@@ -2,8 +2,8 @@
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
-    '' : 'mainfunc', 
-    'index' : 'mainfunc', 
+    '' : 'runfunc', 
+    'index' : 'runfunc', 
     'reg' : 'regfunc',
     'run':'runfunc',
     '*error' : 'renderError'  
@@ -95,7 +95,34 @@ function fRandomBy(under, over){
     case 2: return parseInt(Math.random()*(over-under+1) + under);  
     default: return 0; 
   } 
-} 
+}
+
+function postGameRecord(id,name,record,result){ 
+  var postData = '?game_type=0&score='+record + '&user_id=' + id + '&user_name=' + name + '&result=' +result ;
+  console.log(postData);
+  $.ajax({type:'GET',url:'/game/save',data:postData,
+    success:function(json){
+      var jsdata = eval('('+json+')');  
+      console.log('status='+ jsdata.status);
+      if(result==='win'){
+        if (jsdata.point === "success"){
+          showSubMask('gamemask','winwithpoint');
+        }else{
+          showSubMask('gamemask','winwithoutpoint');
+        } 
+      }else{
+        showSubMask('gamemask','lost');
+      }
+
+      //console.log('mid='+ jsdata.data.mid );
+    },
+    error: function(xhr, type){
+      console.log('Ajax error!')
+    }
+  })
+}
+
+
 function funMapload(){
 	fntA.imgArr = [
 		'img/map_a_01.jpg',
@@ -283,12 +310,16 @@ function fntRun(){
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
 
       //game resort
-      if(fntA.allmoveA>2000 && fntA.allmoveB>2000){
+      if( fntA.allmoveA > 2000 || fntA.allmoveB > 2000 ){
         console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
-        
-        showSubMask('gamemask','winwithpoint');
-
         stop();
+        showSubMask('gamemask','loading');
+        if(fntA.allmoveA>fntA.allmoveB){
+          //id,name,record,result
+          postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,'win');
+        }else{
+          postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,'lost');
+        }
       }
     }
     // handle multiple browsers for requestAnimationFrame()
@@ -329,14 +360,11 @@ function fntRun(){
         
         //console.log('background-color:' + t);
 
-        fntA.shaketimes = fntA.shaketimes + 1 ;
+        fntA.shaketimes = fntA.shaketimes + 3 ;
       }, 500);
       break;
-
     }
   });
-
-
 
 }
 $(document).ready(function(){
@@ -347,6 +375,7 @@ $(document).ready(function(){
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;
+  fntA.playerId = '';
 	//run
 	function shakeEventDidOccur () {
 		//put your own code here etc.

@@ -98,15 +98,36 @@ a { color: #3c3c3c; text-decoration: underline;}
 }
 /**/
 #pagebody section {   }
-.frame {display: none; position: relative;  padding: 32px 0 0 68px; width: 780px; height: 600px; margin: 0 auto; }
+.frame {display: none; position: relative;  padding: 34px 0 0 68px; width: 780px; height: 600px; margin: 0 auto; }
 .subframe {display: none;}
 .frame .subframe:first-child { display: block;}
 
 /**/
 #qrcode { width: 338px; height: 338px; text-align: center; line-height: 338px;
-    background: url(../img/qr_bg.png) no-repeat; padding-top: 10px;
+    background: url(../img/qr_bg.png) no-repeat; padding-top: 10px; margin: 20px auto 0;
 }
 #qrcode img { width: 320px; height: 320px; }
+.qrcodebox {}
+.qrcodebox .qrinfo { width: 610px; height: 162px; background: url(../img/qr_info.png) no-repeat; margin: 0 auto;}
+
+/*runningbox*/
+.runningbox { width: 760px; height: 534px; position: relative; margin: 10px auto;}
+.runningbox .header { width: 760px; height: 59px; position: relative; overflow: hidden;}
+
+.header .playerinfo { width: 300px; height: 50px; float: left; line-height: 1em;}
+.header .playerinfo img { float: left; width: 50px; height: 50px; margin-right: 10px;}
+
+.header .playerinfob { float: right; text-align: right;}
+.header .playerinfob img { float: right; margin: 0 0 0 10px; }
+.header .playrecord { font-size: 140%; color: red; display: block;}
+
+/*gametime*/
+.gametime { width: 105px; height: 50px; background: url(../img/header_time_bg.jpg) no-repeat; position: absolute; top: 0; left: 327px; font-size: 32px;
+line-height: 50px; text-align: center; color: #fff;}
+
+/**/
+.runningbox .map { padding: 10px; }
+
 /**/
 .runningbox .player { width: 150px; height: 200px; background: url('../img/player.png') 0px 0px no-repeat; position: absolute; display: block; top: 220px; left:80px; }
 .runningbox .running {     
@@ -121,5 +142,10 @@ a { color: #3c3c3c; text-decoration: underline;}
    from { background-position:    0px; }
      to { background-position: -900px; }
 }
+
+/**/
+.maskbox { /*display: none;*/ }
+.gamemask { width: 760px; height: 462px; position: absolute; top: 108px; left: 78px; background: black; opacity: 0.4;}
+.submask { display: none; width: 300px; height: 200px; margin: 100px auto; background: #fff; opacity: 1;}
 
 

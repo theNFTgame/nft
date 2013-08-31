@@ -23,15 +23,55 @@
       <section id="run" class="clearfix frame runbox">
         <div class="subframe qrcodebox">
           <div id="qrcode"></div>
+          <div class="qrinfo"></div>
         </div>
         <div class="subframe rundivbox">
           <div class="runningbox">
             <!-- <a class="startrun">Start Run!</a> -->
-            <div class="map"><canvas id="canvas" width="320" height="450"></canvas><canvas id="canvas2" width="320" height="450"></canvas></div>
+            <div class="header">
+              <div class="playerinfo playerinfoa">
+                <img src="img/player/default.jpg" />
+                <span class="playername">Mr_阿温</span>
+                <span class="playrecord"></span>
+              </div>
+              <div class="playerinfo playerinfob">
+                <img src="img/player/01.jpg" />
+                <span class="playername">你的对手</span>
+                <span class="playrecord"></span>
+              </div>
+              <div class="gametime">
+                <span class="countdown">30</span>
+                <span id="main" ></span>
+              </div>
+            </div>
+            <div class="map">
+              <canvas id="canvas" width="320" height="450"></canvas>
+              <canvas id="minimap" width="50" height="450"></canvas>
+              <canvas id="canvas2" width="320" height="450"></canvas>
+            </div>
             <div class="player"></div>
-            <span id="main" ></span>
+            
           </div>
-          <div class="gameover"></div>
+          <div class="maskbox gamemask ">
+            <div class="submask howplay">
+              how to play
+            </div>
+            <div class="submask connection">
+              Successful connection
+            </div>
+            <div class="submask countdown">
+              countdown
+            </div>
+            <div class="submask winwithpoint">
+              win with point
+            </div>
+            <div class="submask winwithoutpoint">
+              win without point
+            </div>
+            <div class="submask lost">
+              You lost
+            </div>
+          </div>
         </div>
       </section>
 

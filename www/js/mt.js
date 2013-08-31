@@ -48,7 +48,18 @@ function showSubFrame(framename,subframename) {
   $('.' + framename + ' .subframe').hide();
   $('.' + framename + ' .' + subframename).show();
 }
-
+function showMask(framename) {
+  if(!framename){ framename = 'gamemask'}
+    $('.maskbox').hide();
+  //if(framename !=='homepage' ){ };
+  $('.' + framename ).show();
+}
+function showSubMask(framename,subframename) {
+  if(!framename && !subframename) {return false;};
+  showMask(framename);
+  $('.' + framename + ' .submask').hide();
+  $('.' + framename + ' .' + subframename).show();
+}
 window.requestAFrame = (function () {
   return window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
@@ -264,14 +275,21 @@ function fntRun(){
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       //if(fntA.moveA<=4){
-      if(fntA.allmoveA>9000){
-        console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
-        stop();
-      }
+
       fntA.allmoveA +=move; 
       fntA.allmoveB +=moveB; 
       fntA.shaketimes = fntA.shaketimes -1;
-      $("#main").html('玩家跑了'+ fntA.allmoveA + '米,电脑跑了' +fntA.allmoveB + '米。倒计时还有' + 30 + '秒');
+      $(".playerinfoa .playrecord").html(fntA.allmoveA + '米');
+      $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
+
+      //game resort
+      if(fntA.allmoveA>2000 && fntA.allmoveB>2000){
+        console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
+        
+        showSubMask('gamemask','winwithpoint');
+
+        stop();
+      }
     }
     // handle multiple browsers for requestAnimationFrame()
     //runInit();

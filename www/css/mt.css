@@ -18,11 +18,19 @@ body
  background:#fcfcfc url(../img/mt_body_bg.jpg) top center no-repeat;
 }
 h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
-p img { float: left; margin: 0 10px 5px 0; padding: 0; }
+p img { margin: 0 ; padding: 0; }
 li {list-style-type: none;}
 img { border: 0; max-width: 100%; }
 table { width:auto; border-collapse: collapse;border-spacing: 0; }
 a { color: #3c3c3c; text-decoration: underline;}
+ul{
+    -webkit-margin-before: 0em;
+-webkit-margin-after: 0em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 0px;
+
+}
 /** @group core body **/  
 #pagebody {  
     position: relative;   
@@ -117,5 +125,47 @@ line-height: 50px; text-align: center; color: #fff;}
 .righticon .link { width: 78px; display: block; height: 82px; text-indent: -9999em;}
 
 
+/*homepage*/
+.homepage { position: absolute; width: 100%; height: 100%; background: #3c3c3c; opacity: 0.9; z-index: 20; margin: 0; padding: 0}
+.homepage .subframe { width: 512px; height: 336px; margin:120px auto; background: #fff; }
 
+.homepage .loginbox { background: url(../img/bg_login.gif) no-repeat;}
+.homepage  ul {display: block; padding-top: 80px;}
+.homepage  li { height: 70px;}
+.homepage label {display: none;}
+.homepage input {
+    padding-left: 10px;
+    width: 290px;
+    height: 32px;
+    margin-left: 102px;
+    line-height: 32px;
+    background: #fff;
+    border: solid 1px #c8c8c8;
+    font-size: 13px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    outline: none;
 
+}
+
+.homepage .btn_login , .homepage .btn_register{
+    display: block;
+    width: 165px;
+    height: 50px;
+    font-size: 18px;
+    color: #fff;
+    background: url(http://s.qybimg.com/sites/all/themes/custom/img/btn-login.png) no-repeat;
+    align-items: flex-start;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 102px;
+    float: left;
+}
+.homepage .btn_login:hover {}
+.homepage  .navlink { font-size: 80%; line-height: 50px; float: left; margin-left: 10px;}

@@ -282,6 +282,25 @@ function fntRun(){
       }
     }
   }
+  function countdownGameTime(secs) {
+    //countdown
+    secs = Number(secs);
+    for (var i = secs; i >= 0; i--) {
+      (function(index) {
+        setTimeout(function(){
+        doUpdateGameTime(index);
+      }, (secs - index) * 1000);
+    })(i);
+    }
+  }
+  function doUpdateGameTime(num) {
+    $('.gametime .countdown').html('<span class="'+ num + '">' + num + '</span>');
+    if(num === 0) {
+      if(!fntA.gameFinish){
+        fntA.gameFinish = true;
+      }
+    }
+  }
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
     ctx1 =  document.getElementById('canvas2').getContext('2d');
@@ -292,8 +311,16 @@ function fntRun(){
     y3 = 0;
     y4 = -1*fntA.h;
     y5 = -2*fntA.h;
+
+    //the hard game level
+    var defLevel = fRandomBy(1,100);
+    if(defLevel>70){
+      fntA.gameLevel = 2;
+    }
+    //the hard game level
+
       //generat map
-      if(fntA.gameLevel === 1){
+      if(fntA.gameLevel != 3){
         for (var i = fntA.mapitem - 1; i >= 0; i--) {
           if (i === 9){
             fntA.mapArr.push(fntA.imgArr[9]);
@@ -346,6 +373,8 @@ function fntRun(){
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
       fntA.shakeEng = 0;
+      countdownGameTime(20);
+
       $('.player').addClass('running');
       //console.log("start");
       // if (window.performance.now) {
@@ -439,7 +468,6 @@ function fntRun(){
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       //if(fntA.moveA<=4){
-
       fntA.allmoveA +=move; 
       fntA.allmoveB +=moveB; 
       fntA.shakeEng = fntA.shakeEng -1;
@@ -447,7 +475,7 @@ function fntRun(){
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
 
       //game resort
-      if( fntA.allmoveA > 2000 || fntA.allmoveB > 2000 ){
+      if( fntA.gameFinish ){
         console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
         stop();
         showSubMask('gamemask','loading');
@@ -460,6 +488,28 @@ function fntRun(){
         postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,fntA.gameResult);
         fntA.gameFinish = true;
       }
+      //Game AI
+      if(fntA.gameLevel ===1 ){
+        if( (fntA.allmoveA - fntA.allmoveB) >300 ){
+          fntA.moveB = fntA.moveB * 1.12;
+        }
+        if( (fntA.allmoveB - fntA.allmoveA) >50 ){
+          fntA.moveB = fntA.moveB * 0.992;
+        }
+        fntA.moveB = Math.min( 3, Math.max(1,fntA.moveB));
+      }else if(fntA.gameLevel ===2){
+        if( (fntA.allmoveA - fntA.allmoveB) >200 ){
+          fntA.moveB = fntA.moveB * 1.22;
+        }
+        if( (fntA.allmoveB - fntA.allmoveA) >200 ){
+          fntA.moveB = fntA.moveB * 0.998;
+        }
+        fntA.moveB = Math.min( 4, Math.max(2,fntA.moveB));
+      }
+
+      //the hard game level
+
+
     }
     // handle multiple browsers for requestAnimationFrame()
     //runInit();
@@ -497,12 +547,12 @@ function fntRun(){
           countdownNewTime(3);
         }
         shakeEventDidOccur();
-        setTimeout(function () {
-          if(fntA.moveA<5){
-            fntA.moveA = fntA.moveA * 1.09;
-          }
-          fntA.shakeEng = fntA.shakeEng + 3 ;
-        }, 100);
+
+        if(fntA.moveA<4){
+          fntA.moveA = fntA.moveA * 1.09;
+        }
+        fntA.shakeEng = fntA.shakeEng + 3 ;
+
         break;
     }
   });

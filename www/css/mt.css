@@ -114,10 +114,10 @@ a { color: #3c3c3c; text-decoration: underline;}
 .runningbox { width: 760px; height: 534px; position: relative; margin: 10px auto;}
 .runningbox .header { width: 760px; height: 59px; position: relative; overflow: hidden;}
 
-.header .playerinfo { width: 300px; height: 50px; float: left; line-height: 1em;}
+.header .playerinfo { width: 300px; height: 50px; float: left; line-height: 20px; }
 .header .playerinfo img { float: left; width: 50px; height: 50px; margin-right: 10px;}
 
-.header .playerinfob { float: right; text-align: right;}
+.header .playerinfob { float: right; text-align: right; }
 .header .playerinfob img { float: right; margin: 0 0 0 10px; }
 .header .playrecord { font-size: 140%; color: red; display: block; line-height: 32px;}
 
@@ -126,21 +126,23 @@ a { color: #3c3c3c; text-decoration: underline;}
 line-height: 50px; text-align: center; color: #fff;}
 
 /**/
-.runningbox .map { padding: 6px; background: url(../img/mt_run_bg.jpg) no-repeat; width: 760px; height: 475px;}
-
+.runningbox .map { padding: 10px 0 0 10px; background: url(../img/mt_run_bg.jpg) no-repeat; width: 760px; height: 475px;}
+.runningbox .map canvas { display: block; float: left;}
+#minimap {width: 100px; height: 456px; background: url(../img/bg_minmap.jpg) no-repeat;}
 /**/
-.runningbox .player { width: 150px; height: 200px; background: url('../img/player.png') 0px 0px no-repeat; position: absolute; display: block; top: 220px; left:80px; }
+.runningbox .player { width: 68px; height: 133px; background: url('../img/player/player_a.png') 0px 0px no-repeat; position: absolute; display: block; top: 320px; left:148px; }
+.runningbox .playerb { left:564px; background: url('../img/player/player_b.png') 0px 0px no-repeat;}
 .runningbox .running {     
     -webkit-animation: play .8s steps(6) infinite;
             animation: play .8s steps(6) infinite;
 }
 @-webkit-keyframes play {
    from { background-position:    0px; }
-     to { background-position: -900px; }
+     to { background-position: -400px; }
 }
 @keyframes play {
    from { background-position:    0px; }
-     to { background-position: -900px; }
+     to { background-position: -400px; }
 }
 
 /**/
@@ -149,13 +151,14 @@ line-height: 50px; text-align: center; color: #fff;}
 .submask { display: none; width: 370px; height: 260px; margin: 100px auto 0; background: #fff; opacity: 1; }
 .gamemask .howplay { background: url(../img/bg_howplay.jpg) no-repeat;}
 .gamemask .connection { background: url(../img/bg_connection.jpg) no-repeat;}
-.gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat;}
-.gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;}
-.gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;}
-.gamemask .lost { width:440px; height:350px; background: url(../img/bg_lost.jpg) no-repeat;}
+.gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat; font-weight: bold; font-size: 40px; color: #fff; text-align: center; line-height: 200px;}
+.gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;margin-top: 60px;}
+.gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;margin-top: 60px;}
+.gamemask .lost { width:440px; height:350px; background: url(../img/bg_lost.jpg) no-repeat;margin-top: 60px;}
+.gamemask .loading { background: url(../img/load.gif) center center no-repeat;}
 
-
-
-
+.gamemask .playagain { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
+.gamemask .gameshear { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
+.winwithoutpoint .gameshear { width: 100%;}
 
 

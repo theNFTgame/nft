@@ -6,6 +6,7 @@ var AppRouter = Backbone.Router.extend({
     'index' : 'mainfunc', 
     'reg' : 'regfunc',
     'run':'runfunc',
+    'run/:action':'runfunc',
     '*error' : 'renderError'  
   },
   mainfunc : function() {
@@ -22,7 +23,15 @@ var AppRouter = Backbone.Router.extend({
   	fntA.level = level;
   	showFrame('energybox');
   },
-  runfunc : function (){
+  runfunc : function (action){
+    if(action === 'replay'){
+      fntA.gameOn =  false;
+      fntA.gameFinish =  false;
+      fntA.shakerecord = 0;
+      fntA.shakeEng = 0;
+      $('.playrecord').html();
+      router.navigate('run');
+    }
   	showSubFrame('runbox','qrcodebox');
   	fntRun();
   },
@@ -43,7 +52,6 @@ function showFrame(framename) {
   $('.' + framename ).show();
   setTimeout(function(){window.scrollTo(0, 0);}, 0);
 }
-
 function showSubFrame(framename,subframename) {
   if(!framename && !subframename) {return false;};
   showFrame(framename);
@@ -57,10 +65,14 @@ function showMask(framename) {
   $('.' + framename ).show();
 }
 function showSubMask(framename,subframename) {
-  if(!framename && !subframename) {return false;};
-  showMask(framename);
-  $('.' + framename + ' .submask').hide();
-  $('.' + framename + ' .' + subframename).show();
+  if(!subframename) {
+    $('.' + framename + ' .submask').hide();
+    $('.maskbox').hide();
+  }else{
+    showMask(framename);
+    $('.' + framename + ' .submask').hide();
+    $('.' + framename + ' .' + subframename).show();
+  }
 }
 window.requestAFrame = (function () {
   return window.requestAnimationFrame ||
@@ -106,7 +118,8 @@ function postGameRecord(id,name,record,result){
   $.ajax({type:'POST',url: tempIp +'game/save',data:postData,
     success:function(json){
       console.log(json);
-      var jsdata = eval('('+json+')');  
+      //var jsdata = eval('('+json+')');  
+      var jsdata = json;
       console.log('status='+ jsdata.status);
       if(result==='win'){
         if (jsdata.point === "success"){
@@ -121,9 +134,9 @@ function postGameRecord(id,name,record,result){
       //console.log('mid='+ jsdata.data.mid );
     },
     error: function(xhr, type){
-      console.log('Ajax error!')
+      showSubMask('gamemask','lost');
     }
-  })
+  });
 }
 function postLogin(){
   console.log('post login');
@@ -146,7 +159,8 @@ function postLogin(){
   $.ajax({type:'POST',url: tempIp +'user/login',data:postData,
     success:function(json){
       console.log(json);
-      var jsdata = eval('('+json+')');  
+      //var jsdata = eval('('+json+')');  
+      var jsdata = json;
       console.log('status='+ jsdata.status);
       fntA.playerName = jsdata.user_name;
       fntA.playerId = jsdata.user_id;
@@ -158,11 +172,9 @@ function postLogin(){
     error: function(xhr, type){
       console.log('Ajax error!')
     }
-  })
-
+  });
 }
 function postRegister(){
-  
   var userName  = $('#reguname').val()
   ,   userMail  = $('#regumail').val()
   ,   userPwd = $('#regupwd').val()
@@ -172,9 +184,7 @@ function postRegister(){
     return false;
   }
   var reMail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-
   console.log('post register, regumail=' + userMail + ', valmail=' + userMail.match(reMail));
-  
   // if(userMail.match(reMail)){
   //   alert("请正确填写邮箱信息！")
   //   return false;
@@ -202,19 +212,36 @@ function postRegister(){
 }
 function funMapload(){
 	fntA.imgArr = [
-		'img/map_a_01.jpg',
-		'img/map_a_02.jpg',
-		'img/map_a_03.jpg',
-		'img/map_b_01.jpg',
-		'img/map_b_02.jpg',
-		'img/map_b_03.jpg',
-		'img/map_c_01.jpg',
-		'img/map_c_02.jpg',
-		'img/map_c_03.jpg',
-		'img/map_a_b.jpg' ,
-		'img/map_b_c.jpg' ,
-		'img/map_c_a.jpg' ];
+		'img/map/map_a_01.jpg',
+		'img/map/map_a_02.jpg',
+		'img/map/map_a_03.jpg',
+		'img/map/map_b_01.jpg',
+		'img/map/map_b_02.jpg',
+		'img/map/map_b_03.jpg',
+		'img/map/map_c_01.jpg',
+		'img/map/map_c_02.jpg',
+		'img/map/map_c_03.jpg',
+		'img/map/map_a_b.jpg' ,
+		'img/map/map_b_c.jpg' ,
+		'img/map/map_c_a.jpg' ];
+  fntA.pcplayerName = [
+    '何川',
+    '李北基',
+    '李赞',
+    '刘洋',
+    '孙斌',
+    '孙少轩',
+    '覃巍巍',
+    '王小源',
+    '王智珣',
+    '王子健' ,
+    '魏广广' ,
+    '运艳桥' ,
+    '周鹏' ,
+    '邢如伶' ];
 }
+
+//main run
 function fntRun(){
   fntA.requestId = 0;
   fntA.startime = 0;
@@ -225,7 +252,7 @@ function fntRun(){
   fntA.image4 = new Image();  
   fntA.image5 = new Image();
   fntA.w = 320;  
-  fntA.h = 491; 
+  fntA.h = 490; 
   var ctx0,ctx1;  
   var y0,y1,y2,y3,y4,y5;  
   fntA.gameLevel = 1;
@@ -235,7 +262,26 @@ function fntRun(){
   fntA.mapitem = 16;
 
   funMapload();
-
+  function countdownNewTime(secs) {
+    //countdown
+    secs = Number(secs);
+    for (var i = secs; i >= 0; i--) {
+      (function(index) {
+        setTimeout(function(){
+        doUpdateTime(index);
+      }, (secs - index) * 1000);
+    })(i);
+    }
+  }
+  function doUpdateTime(num) {
+    $('.gamemask .countdown').html('<span class="'+ num + '">' + num + '</span>');
+    if(num === 0) {
+      if(!fntA.startime){
+        showSubMask('gamemask');
+        start();
+      }
+    }
+  }
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
     ctx1 =  document.getElementById('canvas2').getContext('2d');
@@ -272,17 +318,34 @@ function fntRun(){
       fntA.image3.src = fntA.mapArr[0];  
       fntA.image4.src = fntA.mapArr[1];
       fntA.image5.src = fntA.mapArr[2];
-    }
+    var i = fntA.pcplayerName.length;
+    var t = fRandomBy(0,i);
+    $('.playerinfob .playername').html('TNF运动员  '+fntA.pcplayerName[t]);
+    $('.playerinfob img').attr('src','img/player/' + fntA.pcplayerName[t] + '.jpg');
+
+    setTimeout(function () {
+      ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
+      ctx0.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
+      ctx0.drawImage(fntA.image2,0,y2,fntA.w,fntA.h);
+      ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image4,0,y4,fntA.w,fntA.h);  
+      ctx1.drawImage(fntA.image5,0,y5,fntA.w,fntA.h); 
+      console.log('draw default map image');
+    }, 100);
+
+
+  }
   //}
+  runInit();
     function start() {
-      runInit();
+      
       fntA.moveA = 1;
       fntA.moveB = 2;
       fntA.allmoveA = 0;
       fntA.allmoveB = 0;
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
-      fntA.shaketimes = 0;
+      fntA.shakeEng = 0;
       $('.player').addClass('running');
       //console.log("start");
       // if (window.performance.now) {
@@ -305,16 +368,13 @@ function fntRun(){
       }
       return e;
     }
-
     function render(time) {
-
       //clear
       ctx0.clearRect(0,0,fntA.w,fntA.h);
       ctx1.clearRect(0,0,fntA.w,fntA.h);  
       //draw now
       var move = Math.floor(fntA.moveA);
       var moveB = Math.floor(fntA.moveB);
-
       //ctx a
       y0 +=move;  
       y1 +=move;  
@@ -374,7 +434,7 @@ function fntRun(){
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process
-      if(fntA.shaketimes < 3){
+      if(fntA.shakeEng < 3){
         fntA.moveA = fntA.moveA * 0.995;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
@@ -382,7 +442,7 @@ function fntRun(){
 
       fntA.allmoveA +=move; 
       fntA.allmoveB +=moveB; 
-      fntA.shaketimes = fntA.shaketimes -1;
+      fntA.shakeEng = fntA.shakeEng -1;
       $(".playerinfoa .playrecord").html(fntA.allmoveA + '米');
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
 
@@ -391,12 +451,14 @@ function fntRun(){
         console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
         stop();
         showSubMask('gamemask','loading');
-        if(fntA.allmoveA>fntA.allmoveB){
-          //id,name,record,result
-          postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,'win');
+        if(fntA.allmoveA>fntA.allmoveB){ 
+          fntA.gameResult = 'win';
         }else{
-          postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,'lost');
+          fntA.gameResult = 'lost';
         }
+        //id,name,record,result
+        postGameRecord(fntA.playerId,fntA.playerName,fntA.allmoveA,fntA.gameResult);
+        fntA.gameFinish = true;
       }
     }
     // handle multiple browsers for requestAnimationFrame()
@@ -416,63 +478,63 @@ function fntRun(){
     var combine = b.key + "_" + b.act;
     //console.log(combine);
     switch (combine) {
-
       // when open m.page，call enter event，then show the game
       case fntA.key + "_enter":
-      setTimeout(function () {
-        showSubFrame('runbox','rundivbox');
-        if(fntA.moveA!==0){
-          start();
-        }
-      }, 500);
-      break;
-
+        setTimeout(function () {
+          showSubFrame('runbox','rundivbox');
+          showSubMask('gamemask','howplay');
+        }, 500);
+        break;
       // shake event
       case fntA.key + "_changebg":
-      setTimeout(function () {
-
-        if(fntA.moveA<4){
-          fntA.moveA = fntA.moveA * 1.09;
+        console.log('fntA.gameOn:' + fntA.gameOn +'fntA.shakerecord:' + fntA.shakerecord +'fntA.gameFinish:' + fntA.gameFinish );
+        if(!fntA.gameOn && fntA.shakerecord<5){
+          showSubMask('gamemask','connection');
+          fntA.gameOn = true;
+        }else if(fntA.gameOn && fntA.shakerecord===5 && !fntA.gameFinish){
+          showSubMask('gamemask','countdown');
+          //console.log('call 1 countdown');
+          countdownNewTime(3);
         }
-        
-        //console.log('background-color:' + t);
-
-        fntA.shaketimes = fntA.shaketimes + 3 ;
-      }, 500);
-      break;
+        shakeEventDidOccur();
+        setTimeout(function () {
+          if(fntA.moveA<5){
+            fntA.moveA = fntA.moveA * 1.09;
+          }
+          fntA.shakeEng = fntA.shakeEng + 3 ;
+        }, 100);
+        break;
     }
   });
 
 }
+function shakeEventDidOccur() {
+  //put your own code here etc.
+  fntA.shakerecord = fntA.shakerecord + 1;
+}
+
+
 $(document).ready(function(){
 	fntA.key = NewGuid();
 	var pageUrl = window.location.href;
 	pageUrl=pageUrl.replace(/pc.html#\/run/g,"m.html");
+  pageUrl=pageUrl.replace(/pc.html#run/g,"m.html");
   pageUrl=pageUrl.replace(/pc.html/g,"m.html");
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;
   fntA.playerId = '277454';
   fntA.playerName = 'rayfox';
+  fntA.gameOn = false ;
+  fntA.gameOn = false ;
 
   var loadedImages = 0;
-  //loading func
-
-
-
 
 	//run
-	function shakeEventDidOccur () {
-		//put your own code here etc.
-		fntA.shakerecord = fntA.shakerecord + 1;
-		$('#ShowDiv').html('Power:' + fntA.shakerecord);
-   }
-
-
-	//run
-	console.log(fntA.key +"," + pageUrl);
-	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ pageUrl +"?key=" + fntA.key + "&choe=UTF-8' />");
-
+	
+  var newUrl = pageUrl +"?key=" +fntA.key;
+	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ newUrl + "&choe=UTF-8' />");
+  console.log( newUrl);
   //postRegiste
   $(".btn_register").live("click", function(){
     postRegister();
@@ -481,10 +543,7 @@ $(document).ready(function(){
   $(".btn_login").live("click", function(){
     postLogin();
   });
-  //run for pc
-  $(".start").live("click", function(e){
-    loadPower(fntA.gameLevel*10);
-  });
+  
 
 
 });

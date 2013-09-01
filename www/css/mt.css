@@ -26,63 +26,12 @@ a { color: #3c3c3c; text-decoration: underline;}
 /** @group core body **/  
 #pagebody {  
     position: relative;   
-    max-width: 928px;  
-    min-width: 600px;  
+    width: 928px;  
     background: url(../img/mt_pagebody_bg.jpg) 32px 0px no-repeat; 
     display: block; 
     margin: 0 auto; 
-    overflow: hidden;
+    /*overflow: hidden;*/
 }  
-  
-#navmenu {  
-    background: #475566;  
-    height: 100%;  
-    display: block;  
-    position: fixed;  
-    width: 200px;  
-    left: 0px;  
-    top: 0px;  
-    z-index: 0;  
-}
-#toolbarnav {   
-    display: block;   
-    position: fixed;   
-    left: 0px;   
-    top: 0px;   
-    z-index: 9999;   
-    background-image: -moz-linear-gradient(#829aa8, #405a6a);
-	background-image: -webkit-linear-gradient(#829aa8, #405a6a);
-	background-image: linear-gradient(#829aa8, #405a6a); 
-    border-radius: 2px 2px 0 0;   
-    -moz-border-radius: 2px 2px 0 0;   
-    -webkit-border-radius: 2px 2px 0 0;   
-    -o-border-radius: 2px 2px 0 0;   
-    border-bottom-rightright-radius: 0;   
-    -moz-border-radius-bottomright: 0;   
-    -webkit-border-bottom-rightright-radius: 0;   
-    border-bottom-left-radius: 0;   
-    -moz-border-radius-bottomleft: 0;   
-    -webkit-border-bottom-left-radius: 0;   
-    height: 44px;   
-    width: 100%;   
-    max-width: 640px;   
-}
-#toolbarnav h1 {   
-    text-align: center;    
-    padding-right: 40px;   
-    color: #e6e8f2;   
-    font-weight: bold;   
-    font-size: 2.1em;   
-    text-shadow: 1px 1px 0px #313131;  
-}
-#content {
-	height: 100%;
-	min-height: 600px;
-	background: #fff;
-	padding: 44px 10px 10px;
-	background: #fff;
-	margin-top: 20px;
-}
 .txt {
 	padding: 10px 0;
 }
@@ -149,8 +98,8 @@ line-height: 50px; text-align: center; color: #fff;}
 .maskbox { display: none; }
 .gamemask { width: 760px; height: 475px; position: absolute; top: 104px; left: 78px; background: url(../img/bg_gamemask.png);}
 .submask { display: none; width: 370px; height: 260px; margin: 100px auto 0; background: #fff; opacity: 1; }
-.gamemask .howplay { background: url(../img/bg_howplay.jpg) no-repeat;}
-.gamemask .connection { background: url(../img/bg_connection.jpg) no-repeat;}
+.gamemask .connection { background: url(../img/bg_howplay.jpg) no-repeat;}
+.gamemask .howplay { background: url(../img/bg_connection.jpg) no-repeat;}
 .gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat; font-weight: bold; font-size: 40px; color: #fff; text-align: center; line-height: 200px;}
 .gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;margin-top: 60px;}
 .gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;margin-top: 60px;}
@@ -160,5 +109,13 @@ line-height: 50px; text-align: center; color: #fff;}
 .gamemask .playagain { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
 .gamemask .gameshear { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
 .winwithoutpoint .gameshear { width: 100%;}
+
+/**/
+
+.lefticon { position: absolute; left: -30px; background: url(../img/icon.png) no-repeat; width: 130px; height: 212px; top: 30px;}
+.righticon { position: absolute; right: -45px;background: url(../img/icon.png) right top no-repeat; width:78px; height: 212px; top: 30px;}
+.righticon .link { width: 78px; display: block; height: 82px; text-indent: -9999em;}
+
+
 
 

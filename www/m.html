@@ -4,14 +4,46 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="description" content="去野吧是The North Face®品牌精心为你打造的一站式购买，分享，摄影，旅游，户外的平台。这里还有最新的社交机制，你向寻找自己，贴近自然踏出的每一步，The North Face®都准备了惊喜和激励，与你的户外旅程一起成长。" />
-    <title>去野吧，发现、探索、分享我的探索生活—全新互动一站式户外交流平台  | 去野吧——The North Face®官方平台</title>
+    <title>TheNorthFace</title>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
 	<meta name="author" content="Vitrum.Zhu" />
 	<script type="text/javascript" src="js/lib/zepto.min.js"></script>
 	<script src="http://222.73.241.58:8081/socket.io/socket.io.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/shake.js"></script>
+	<style>
+	/* CSS Mobile Reset */
+html, body
+{
+ margin: 0;
+ padding: 0; 
+ border: 0;
+}
+body 
+{
+ font-family:Arial,  sans-serif;
+ line-height:1.5;
+ font-size:16px;
+ color: #000;
+ word-wrap: break-word;
+ -webkit-text-size-adjust: none;
+ height: 100%;
+ min-height: 500px;
+ background:#fcfcfc url(img/m_bg.jpg) top center no-repeat;
+}
+h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
+p img { float: left; margin: 0 10px 5px 0; padding: 0; }
+li {list-style-type: none;}
+img { border: 0; max-width: 100%; }
+table { width:auto; border-collapse: collapse;border-spacing: 0; }
+a { color: #3c3c3c; text-decoration: underline;}
+/** @group core body **/  
+.gameinfo { width: 320px; height: 366px; background:#fcfcfc url(img/m_01.jpg) top center no-repeat; margin: 0 auto;}
+.gamestart {background-image:url(img/m_02.jpg);}
+	</style>
 	<script type="text/javascript">
+
+
 	function getQueryStringRegExp(name)
 	{
 		var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");  
@@ -21,6 +53,9 @@
 		var theKey = getQueryStringRegExp('key');
 
 		var socket = io.connect("http://222.73.241.58:8081");
+
+		var shakerecord = 0;
+
 		"undefined" != typeof console && console.log("user enter via mobile");
 
 		"undefined" != typeof console && console.log("enter mobile page");
@@ -29,42 +64,35 @@
 			act: "enter"
 		});
 
-		$("#change_btn").click(function(){
-			"undefined" != typeof console && console.log("send change color command");
-			socket.emit("send", {
-				key: theKey,
-				act: "changebg"
-			});
-		});
 		function shakeEventDidOccur () {
 			"undefined" != typeof console && console.log("send change color command");
 			socket.emit("send", {
 				key: theKey,
 				act: "changebg"
 			});
+			if(shakerecord ==5){
+				$('.gameinfo').addClass('gamestart');
+			}
+			shakerecord = shakerecord +1 ;
 		}
 		function loadPower(secs) {
 			secs = Number(secs);
 			window.addEventListener('shake', shakeEventDidOccur, false);
-            //define a custom method to fire when shake occurs.
-            for (var i = secs; i >= 0; i--) {
-            	(function(index) {
-            		setTimeout(function(){
-            			doUpdateTime(index);
-            		}, (secs - index) * 1000);
-            	})(i);
-            }
-          }
-          loadPower(10);
 
-        });
+    }
+    loadPower(10);
+	})
 </script>
 </head>
 <body>
-
-	<p>双屏互动连接成功！请在电脑屏幕上点击开始！</p>
-
-	<input id="change_btn" type="button" value="晃动屏幕或者按按钮让PC窗口颜色变化" />
+	<div class="gameinfo">
+	</div>
 
 </body>
 </html>
+
+
+
+
+
+

@@ -104,7 +104,7 @@ line-height: 50px; text-align: center; color: #fff;}
 
 /**/
 .maskbox { display: none; }
-.gamemask { width: 760px; height: 475px; position: absolute; top: 104px; left: 78px; background: url(../img/bg_gamemask.png);}
+.gamemask { width: 760px; height: 475px; position: absolute; top: 104px; left: 78px; background: url(../img/bg_gamemask.png); }
 .submask { display: none; width: 370px; height: 260px; margin: 100px auto 0; background: #fff; opacity: 1; }
 .gamemask .connection { background: url(../img/bg_howplay.jpg) no-repeat;}
 .gamemask .howplay { background: url(../img/bg_connection.jpg) no-repeat;}

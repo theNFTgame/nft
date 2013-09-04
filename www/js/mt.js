@@ -481,8 +481,11 @@ function fntRun(){
       fntA.requestId = window.requestAFrame(render);
       //set stop process
       if(fntA.shakeEng < 3){
-        fntA.moveA = fntA.moveA * 0.99;
+        fntA.moveA = fntA.moveA * 0.977;
         if (fntA.moveA<0.8) {fntA.moveA=0.8};
+      }else{
+        if (fntA.moveA<6) {fntA.moveA = fntA.moveA * 1.12;}
+        
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       //if(fntA.moveA<=4){
@@ -515,7 +518,7 @@ function fntRun(){
         if( (fntA.allmoveB - fntA.allmoveA) >350 ){
           fntA.moveB = fntA.moveB * 0.9992;
         }
-        fntA.moveB = Math.min( 6, Math.max(1,fntA.moveB));
+        fntA.moveB = Math.min( 5, Math.max(1,fntA.moveB));
       }else if(fntA.gameLevel ===2){
         if( (fntA.allmoveA - fntA.allmoveB) >30 ){
           fntA.moveB = fntA.moveB * 1.05;
@@ -523,17 +526,17 @@ function fntRun(){
         if( (fntA.allmoveB - fntA.allmoveA) >800 ){
           fntA.moveB = fntA.moveB * 0.9992;
         }
-        fntA.moveB = Math.min( 7, Math.max(4,fntA.moveB));
+        fntA.moveB = Math.min( 6, Math.max(4,fntA.moveB));
       }
-      var tmpPlayerTopa , tmpPlayerTopb;
-      tmpPlayerTopa = 320 - fntA.moveA*8;
-      tmpPlayerTopb = 320 - fntA.moveB*10;
-      $('.playera').css('top',tmpPlayerTopa+'px');
-      $('.playerb').css('top',tmpPlayerTopb+'px');
+      // var tmpPlayerTopa , tmpPlayerTopb;
+      // tmpPlayerTopa = 320 - fntA.moveA*8;
+      // tmpPlayerTopb = 320 - fntA.moveB*10;
+      // $('.playera').css('top',tmpPlayerTopa+'px');
+      // $('.playerb').css('top',tmpPlayerTopb+'px');
       //the hard game level
       //mini map
-      var tmpMinia = 430 - (fntA.allmoveA * fntA.h/9600)
-      ,   tmpMinib = 430 - (fntA.allmoveB * fntA.h/9600);
+      var tmpMinia = 430 - (fntA.allmoveA * fntA.h/8600)
+      ,   tmpMinib = 430 - (fntA.allmoveB * fntA.h/8600);
       //console.log('tmpMinib:' +tmpMinia+',tmpMinib:' + tmpMinia);
       ctxMini.drawImage( fntA.imageMini,9,tmpMinia,29,28);
       ctxMini.drawImage( fntA.imageMini,59,tmpMinib,29,28);
@@ -575,9 +578,8 @@ function fntRun(){
           countdownNewTime(3);
         }
         shakeEventDidOccur();
-
-        if(fntA.moveA<7){
-          fntA.moveA = fntA.moveA * 1.16;
+        if(fntA.shakeEng<3 && fntA.moveA <1){
+          fntA.moveA = 2;
         }
         fntA.shakeEng = fntA.shakeEng + 4 ;
         

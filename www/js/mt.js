@@ -513,7 +513,7 @@ function fntRun(){
       //Game AI
       if(fntA.gameLevel ===1 ){
         if( (fntA.allmoveA - fntA.allmoveB) >100 ){
-          fntA.moveB = fntA.moveB * 1.01;
+          fntA.moveB = fntA.moveB * 1.10;
         }
         if( (fntA.allmoveB - fntA.allmoveA) >350 ){
           fntA.moveB = fntA.moveB * 0.9992;
@@ -521,7 +521,7 @@ function fntRun(){
         fntA.moveB = Math.min( 5, Math.max(1,fntA.moveB));
       }else if(fntA.gameLevel ===2){
         if( (fntA.allmoveA - fntA.allmoveB) >30 ){
-          fntA.moveB = fntA.moveB * 1.05;
+          fntA.moveB = fntA.moveB * 1.15;
         }
         if( (fntA.allmoveB - fntA.allmoveA) >800 ){
           fntA.moveB = fntA.moveB * 0.9992;
@@ -617,11 +617,11 @@ $(document).ready(function(){
 	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ newUrl + "&choe=UTF-8' />");
   console.log( newUrl);
   //postRegiste
-  $(".btn_register").live("click", function(){
+  $(".btn_register").on("click", function(){
     postRegister();
   });
   //login
-  $(".btn_login").live("click", function(){
+  $(".btn_login").on("click", function(){
     postLogin();
   });
   

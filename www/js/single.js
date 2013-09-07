@@ -89,18 +89,19 @@ function fRandomBy(under, over){
 } 
 function funMapload(){
 	fntA.imgArr = [
- 'img/map_a_01.jpg',
- 'img/map_a_02.jpg',
- 'img/map_a_03.jpg',
- 'img/map_b_01.jpg',
- 'img/map_b_02.jpg',
- 'img/map_b_03.jpg',
- 'img/map_c_01.jpg',
- 'img/map_c_02.jpg',
- 'img/map_c_03.jpg',
- 'img/map_a_b.jpg' ,
- 'img/map_b_c.jpg' ,
- 'img/map_c_a.jpg' ];
+    'img/map/map_a_01.jpg',
+    'img/map/map_a_02.jpg',
+    'img/map/map_a_03.jpg',
+    'img/map/map_b_01.jpg',
+    'img/map/map_b_02.jpg',
+    'img/map/map_b_03.jpg',
+    'img/map/map_c_01.jpg',
+    'img/map/map_c_02.jpg',
+    'img/map/map_c_03.jpg',
+    'img/map/map_a_b.jpg' ,
+    'img/map/map_b_c.jpg' ,
+    'img/map/map_c_a.jpg' ,
+    'img/player-mini.png'];
 }
 function fntRun(){
   fntA.requestId = 0;

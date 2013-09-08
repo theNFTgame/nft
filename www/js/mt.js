@@ -493,6 +493,7 @@ function fntRun(){
       fntA.allmoveB +=moveB; 
       fntA.shakeEng = fntA.shakeEng -1;
       if (fntA.shakeEng<1) { fntA.shakeEng = 1};
+      if (fntA.allmoveA===fntA.allmoveB){fntA.allmoveA=fntA.allmoveA+1;}
       $(".playerinfoa .playrecord").html(fntA.allmoveA + '米');
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
 
@@ -501,7 +502,7 @@ function fntRun(){
         console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
         stop();
         showSubMask('gamemask','loading');
-        if(fntA.allmoveA>fntA.allmoveB){ 
+        if(fntA.allmoveA>=fntA.allmoveB){ 
           fntA.gameResult = 'win';
         }else{
           fntA.gameResult = 'lost';

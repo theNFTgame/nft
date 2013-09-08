@@ -2,60 +2,82 @@
 <html>
   <head>
     <meta charset="utf-8">  
-
+    <meta name="description" content="去野吧是The North Face®品牌精心为你打造的一站式购买，分享，摄影，旅游，户外的平台。这里还有最新的社交机制，你向寻找自己，贴近自然踏出的每一步，The North Face®都准备了惊喜和激励，与你的户外旅程一起成长。" />
+    <title>TheNorthFace</title>
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
-    <title>shake game test</title>
-    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
-    <script>
-    setTimeout(function(){window.scrollTo(0, 0);}, 0);
-    </script>
+    <link rel="stylesheet" href="css/single.css" media="screen" type="text/css" />
   </head>
   <body>
     <div id="pagebody">  
       <section id="intro" class="clearfix frame homepage">
-        <div class="subframe introbox">
+<!--         <div class="subframe introbox">
           <p>intro</p>
           <a class="navlink linklevel" href="#/level">start game</a>
-        </div>
+        </div> -->
         <div class="subframe levelbox">
-
-          <p>select level</p>
-          <a class="navlink linkshake" href="#/shake/1">level 1</a>
-          <a class="navlink linkshake" href="#/shake/2">level 2</a>
-          <a class="navlink linkshake" href="#/shake/3">level 3</a>
+          <p class="title notext">select level</p>
+          <div class="levelnav">
+            <a class="navlink linkshake level01 notext" href="#/shake/1"><span>level 1</span></a>
+            <a class="navlink linkshake level02 notext" href="#/shake/2"><span>level 2</span></a>
+            <a class="navlink linkshake level03 notext" href="#/shake/3"><span>level 3</span></a>
+          </div>
+          <p class="intro notext">intro</p>
         </div>
       </section> 
       <section id="energy" class="clearfix frame energybox">
-        <h2>Come on!</h2>
-          <div class="txt">
-          </div>
-          <button class="start">start</button>
-          <div id="ShowDiv"></div>
+        <div class="redbg"></div>
+        <div class="subframe introbox">
+          <div class="txt1 notext"></div>
+          <div class="txt2 notext"></div>
+          <div class="txt3 notext"></div>
+        </div>
+        <div class="subframe powerbox">
+          <div class="countdown"></div>
+          <a class="reload notext" href="#/repower"><span></span></a>
+          <div class="debuginfo"></div>
+        </div>
+        <div class="subframe readybox">
+          <a class="btn startrun notext">Start Run!</a>
+          <a class="reload notext" href="#/repower"><span></span></a>
+          <div class="debuginfo"></div>
+        </div>
       </section>
       <section id="run" class="clearfix frame runbox">
-        <div class="runbox">
-          <a href="#" class="startrun">Start Run!</a>
-          <div class="map"></div>
+        <div class="runningbox">
+          <div class="map"><canvas id="canvas" width="320" height="456"></canvas></div>
           <div class="player"></div>
         </div> 
       </section>
-      <section id="user" class="clearfix frame userbox">
-        user
+      <section id="share" class="clearfix mask recordbox">
+        <div class="gameinfo">
+          <div class="mi"></div>
+          <div class="px"></div>
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getcoupon notext" href="#/coupon"><span></span></a></li>
+        </ul>
       </section>
-      <section id="gift" class="clearfix frame giftbox">
-        gift
+      <section id="coupon" class="clearfix mask couponbox">
+        <div class="gameinfo">
+          <div class="cp"></div>
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getmore notext" href="#/more"><span></span></a></li>
+        </ul>
       </section>
-      <section id="share" class="clearfix frame sharebox">
-        share
+      <section id="nocoupon" class="clearfix mask nocouponbox">
+        <div class="gameinfo">
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getmore notext" href="#/more"><span></span></a></li>
+        </ul>
       </section>
+      <div class="logo"></div>
     </div> 
-    <div id="navmenu">  
-      <header>  
-          <h1>Debug</h1>  
-      </header>
-      <button class="reset">Reset</button>
-    </div>
     <script type="text/javascript" src="js/lib/zepto.min.js"></script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/backbone-min.js"></script>

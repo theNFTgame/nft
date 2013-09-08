@@ -2,32 +2,57 @@
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
-    '' : 'mainfun', 
-    'index' : 'mainfun', 
-    'intro' : 'mainfun',
+    '' : 'levelfun', 
+    'index' : 'levelfun', 
+    'intro' : 'levelfun',
+    'replay' : 'levelfun',
+    'repower' : 'repowerfun',
     'level' : 'levelfun',
     'shake' : 'shakefun',
     'shake/:level' : 'shakefun',
     'run':'runfun',
+    'coupon':'couponfun',
+    'more':'morefun',
     '*error' : 'renderError'  
   },
   mainfun : function() {
-   console.log('mainfun'); 
-   showSubFrame('homepage','introbox');
- }, 
- levelfun : function() {
+
+  }, 
+  couponfun : function(){
+    $('.mask').hide();
+    $('.couponbox').show();
+
+  },
+  morefun : function(){
+    $('.mask').hide();
+  },
+  levelfun : function() {
   	//alert("111");
   	console.log('levelfun'); 
   	showSubFrame('homepage','levelbox');
+    $('.energybox').removeClass('energybox_on');
+    $('.logo').show();
+    $('.mask').hide();
+    $('.redbg').css('opacity',0);
+  }, 
+  repowerfun : function() {
+    loadPower = null;
+    showSubFrame('energybox','introbox');
+    loadPower(fntA.gameLevel*10);
   }, 
   shakefun : function (level){
   	if(!level){ fntA.level = 1 };
-  	fntA.level = level;
-  	showFrame('energybox');
+    fntA.gameLevel = level;
+    $('.introbox .txt1').removeClass('txt1_l1 txt1_l2 txt1_l3').addClass('txt1_l'+fntA.gameLevel);
+    $('.energybox').addClass('energybox_on');
+    fntA.shakerecord = 0;
+    showSubFrame('energybox','introbox');
+    loadPower(fntA.gameLevel*10);
+    fntRun();
   },
   runfun : function (){
   	showFrame('runbox');
-  	fntRun();
+  	
   },
   renderError : function(error) {  
     console.log('URL错误, 错误信息: ' + error); 
@@ -44,7 +69,7 @@ function showFrame(framename) {
     $('.frame').hide();
   //if(framename !=='homepage' ){ };
   $('.' + framename ).show();
-  setTimeout(function(){window.scrollTo(0, 0);}, 0);
+  //setTimeout(function(){window.scrollTo(0, 0);}, 0);
 }
 
 function showSubFrame(framename,subframename) {
@@ -103,6 +128,7 @@ function funMapload(){
     'img/map/map_c_a.jpg' ,
     'img/player-mini.png'];
 }
+
 function fntRun(){
   fntA.requestId = 0;
   fntA.startime = 0;
@@ -113,9 +139,10 @@ function fntRun(){
   fntA.h = 491; 
   var ctx0;  
   var y0,y1,y2;  
-  fntA.gameLevel = 1;
+  if( !fntA.gameLevel ){ fntA.gameLevel = 1; };
   fntA.allmove = 0;
   fntA.alltimes = 0;
+  fntA.mapitem = 16;
 
   funMapload();
 
@@ -126,20 +153,22 @@ function fntRun(){
     y1 = -1*fntA.h;
     y2 = -2*fntA.h;
       //generat map
-      if(fntA.gameLevel === 1){
-        for (var i = 14 - 1; i >= 0; i--) {
-          if (i === 7){
+
+        for (var i = fntA.mapitem - 1; i >= 0; i--) {
+          if (i === 9){
             fntA.mapArr.push(fntA.imgArr[9]);
-          }else if (i === 3){
+          }else if (i === 4){
             fntA.mapArr.push(fntA.imgArr[10]);
-          }else if (i>7){
+          }else if (i === 0){
+            fntA.mapArr.push(fntA.imgArr[11]);
+          }else if (i>9){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          }else if (i<7 && i>3){
+          }else if (i<9 && i>4){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
-          }else if (i<3){
+          }else if (i<4){
             fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
           }
-        };
+
         console.log(fntA.mapArr);
       }
       //set map image
@@ -150,10 +179,11 @@ function fntRun(){
 
     function start() {
       runInit();
-      fntA.moveA = 5;
+      fntA.moveA = Math.max((fntA.gameLevel*2.9 - 0.6), 3);
       fntA.allmove = 0;
       fntA.alltimes = 0;
       $('.player').addClass('running');
+      showSubFrame('runbox','runningbox');
       //console.log("start");
       // if (window.performance.now) {
       //     startime = window.performance.now();
@@ -167,7 +197,12 @@ function fntRun(){
         window.cancelAFrame(fntA.requestId); 
       $('.player').removeClass('running');       
     }
-
+    function wayRoll(e) {
+      if((e+1) > fntA.mapitem ){
+        e = e % fntA.mapitem;
+      }
+      return e;
+    }
     function render(time) {
 
       //clear
@@ -182,23 +217,24 @@ function fntRun(){
       y2 +=move; 
       //console.log("new: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.moveA=" + fntA.moveA); 
       if(y0>=fntA.h){  
-        y0=move-2*fntA.h;  
+        //y0=move-2*fntA.h;  
+        y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
-        fntA.image0.src = fntA.mapArr[(Number(fntA.alltimes)+3)]; 
-        console.log("y0 new image:" + fntA.image0.src);
+        fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
-        y1=move-2*fntA.h;  
+        y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
-        fntA.image1.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-        console.log("y1 new image:" + fntA.image1.src);
+        fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
+        console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
-        y2=move-2*fntA.h; 
+        y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
-        fntA.image2.src = fntA.mapArr[(Number(fntA.alltimes)+3)];
-        console.log("y2 new image:" + fntA.image2.src);
-      }  
+        fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
+        console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
+      } 
 
       //draw now
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
@@ -209,15 +245,19 @@ function fntRun(){
       fntA.requestId = window.requestAFrame(render);
 
       //set stop process
-      if(fntA.alltimes > 8){
-        fntA.moveA = fntA.moveA * 0.998;
+      if(fntA.allmove > fntA.shakerecord * fRandomBy(70,79)){
+        fntA.moveA = fntA.moveA * 0.98;
       }
-      
-
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
-      if(fntA.moveA<=4){
+      
+      if(fntA.moveA<=0.9){
         console.log("stop running at " + time + ", and allmove = " + fntA.allmove + ",fntA.alltimes= " +fntA.alltimes);
         stop();
+        $('.recordbox').show();
+        $('.logo').hide();
+        $('.recordbox .mi').html(fntA.allmove);
+        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*5123));
+        $('.recordbox .px').html(newPx.toFixed(2)*100 + '%');
       }
       fntA.allmove +=move; 
       
@@ -234,118 +274,58 @@ function fntRun(){
 
   }
 
+  fntA.gameLevel = 1;
+  fntA.shakerecord = 0;
+  var shakeTime = new Date(), newColor=70;
 
+//window.addEventListener('shake', shakeEventDidOccur, false);
+//define a custom method to fire when shake occurs.
+function shakeEventDidOccur () {
+  //put your own code here etc.
 
+  fntA.shakerecord = fntA.shakerecord + 1;
 
-
-
-
-  $(document).ready(function(){
-   var pagebody = $("#pagebody");
-   var themenu  = $("#navmenu");
-   var topbar   = $("#toolbarnav");
-   var content  = $("#content");
-   var viewport = {
-     width  : $(window).width(),
-     height : $(window).height()
-   };
-   fntA.gameLevel = 1;
-   fntA.shakerecord = 0;
-   var shakeTime = new Date(), newColor=255;
-
-	//window.addEventListener('shake', shakeEventDidOccur, false);
-	//define a custom method to fire when shake occurs.
-	function shakeEventDidOccur () {
-		//put your own code here etc.
-   $('.txt').append('<p>Shake me again! Power:' + fntA.shakerecord +'</p>');
-   newColor = newColor - 8;
-
-   fntA.shakerecord = fntA.shakerecord + 1;
-      // if(fntA.shakerecord === 0){
-      //   shakeTime = new Date();
-      // }
-	    // if( fntA.shakerecord > 8){
-	    // 	var endTime = new Date();
-	    // 	var timeDifference = (endTime.getTime() - shakeTime.getTime());
-
-	    // 	//alert( timeDifference);
-	    // 	//$('#content').css('background','gray');
-	    // 	//$('.txt').html('<img src="img/winner.png" />');
-	    // 	// $('#content h2').html('You Win!');
-	    // 	//$('#content h2').html('Power:' + playerShakeRecord);
-	    // 	//$('#content').html('Let\'s Run!');
-	    // }else{
-	    	
-	    // }
-      $('#content').css('background','rgb(255,'+newColor+','+newColor+')');
-      $('#ShowDiv').html('Power:' + fntA.shakerecord);
-    }
-
-    $(".reset").live("click", function(e){
-      newColor=255;
-      $('#content').css('background','rgb(255,255,255)');
-      $('.txt').html('');
-      $('#content h2').html('Let\'s go!');
-      closeme();
-    })
-
-    function loadPower(secs) {
-      $('.start').remove();
-      secs = Number(secs);
-
-      window.addEventListener('shake', shakeEventDidOccur, false);
-		  //define a custom method to fire when shake occurs.
-      for (var i = secs; i >= 0; i--) {
-        (function(index) {
-          setTimeout(function(){
-          doUpdateTime(index);
-        }, (secs - index) * 1000);
-      })(i);
-    }
+  if (fntA.shakerecord === 1 ){
+    showSubFrame('energybox','powerbox');
   }
-  function doUpdateTime(num) {
-    //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
-    //alert(num);
-    $('#ShowDiv').html( num + '秒');
-    if (num == 0) {
-    	console.log("shake remove!");
-    	$('#energy .txt').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
-     window.removeEventListener('shake', shakeEventDidOccur, false);
-    }
-  }
+  var opacity = fntA.shakerecord / newColor*fntA.gameLevel ;
+  $('.redbg').css('opacity',opacity);
 
-   $(".run").on("click", function(e){
-    alert("Ok ok,let's run~~~");
-  })
+}
 
-   function openme() { 
-    $(function () {
-     topbar.css({'left':'200px' });
-     pagebody.css({'left':'200px'});
-   });
-  }
-  function closeme() {
-    var closeme = $(function() {
-      topbar.css({'left':'0px'});
-      pagebody.css({'left':'0px' });
-    });
-  }
 
-  $(".start").live("click", function(e){
-    loadPower(fntA.gameLevel*10);
-  });
-	// checking whether to open or close nav menu
-	$("#menu-btn").live("click", function(e){
-		e.preventDefault();
-		var leftval = pagebody.css('left');
-		if(leftval == "0px") {
-			openme();
-		}
-		else { 
-			closeme(); 
-		}
-	});
-	
+function loadPower(secs) {
+    
+    secs = Number(secs);
+
+    window.addEventListener('shake', shakeEventDidOccur, false);
+	  //define a custom method to fire when shake occurs.
+    for (var i = secs; i >= 0; i--) {
+      (function(index) {
+        setTimeout(function(){
+        doUpdateTime(index);
+      }, (secs - index) * 1000);
+    })(i);
+  }
+}
+
+function doUpdateTime(num) {
+  //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
+  //alert(num);
+  $('.debuginfo').html( num + '秒,power:' + fntA.shakerecord );
+  $('.powerbox .countdown').html( num );
+  
+  if (num == 0) {
+  	console.log("shake remove!");
+  	$('.debuginfo').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
+    window.removeEventListener('shake', shakeEventDidOccur, false);
+    showSubFrame('energybox','readybox');
+  }
+}
+
+
+$(document).ready(function(){
+
 
 });
 

@@ -10,8 +10,9 @@ var AppRouter = Backbone.Router.extend({
     '*error' : 'renderError'  
   },
   mainfunc : function() {
-   console.log('mainfunc'); 
+   //  console.log('mainfunc'); 
    showSubFrame('homepage','loginbox');
+   $('.errormsg').hide();
   }, 
   regfunc : function() {
   	//alert("111");
@@ -36,7 +37,7 @@ var AppRouter = Backbone.Router.extend({
   	fntRun();
   },
   renderError : function(error) {  
-    console.log('URL错误, 错误信息: ' + error); 
+    //  console.log('URL错误, 错误信息: ' + error); 
     //$('.link_home').show(); 
   }  
 });  
@@ -113,14 +114,14 @@ function fRandomBy(under, over){
 
 function postGameRecord(id,name,record,result){ 
   var postData = 'game_type=0&score='+record + '&user_id=' + id + '&user_name=' + name + '&result=' +result ;
-  console.log(postData);
+  //  console.log(postData);
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
   $.ajax({type:'POST',url: tempIp +'game/save',data:postData,
     success:function(json){
-      console.log(json);
+      //  console.log(json);
       //var jsdata = eval('('+json+')');  
       var jsdata = json;
-      console.log('status='+ jsdata.status);
+      //  console.log('status='+ jsdata.status);
       if(result==='win'){
         if (jsdata.point === "success"){
           showSubMask('gamemask','winwithpoint');
@@ -139,7 +140,7 @@ function postGameRecord(id,name,record,result){
   });
 }
 function postLogin(){
-  console.log('post login');
+  //  console.log('post login');
   var userName  = $('#uname').val()
   ,   userPwd = $('#upwd').val()
   ,   postData;
@@ -148,20 +149,24 @@ function postLogin(){
     return false;
   }
   var reMail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-  console.log(userName.match(reMail));
+  //  console.log(userName.match(reMail));
   if(userName.match(reMail)){
     postData = 'email=' + userName + '&password=' + userPwd ;
   }else{
     postData = 'name=' + userName + '&password=' + userPwd ;
   }
-  console.log(postData);
+  //  console.log(postData);
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
   $.ajax({type:'POST',url: tempIp +'user/login',data:postData,
     success:function(json){
-      console.log(json);
+      //  console.log(json);
       //var jsdata = eval('('+json+')');  
       var jsdata = json;
-      console.log(jsdata);
+      if(jsdata.result ==='failed'){
+        $('.loginbox .errormsg').show();
+        return false;
+      }
+      //  console.log(jsdata);
       fntA.playerName = jsdata.user_name;
       fntA.playerId = jsdata.user_id;
       fntA.playerAvatar = 'http://tnf-avatar.b0.upaiyun.com/'+jsdata.user_avatar;
@@ -172,38 +177,51 @@ function postLogin(){
       if(jsdata.user_avatar!==''){
         $('.playerinfoa img').attr('src',fntA.playerAvatar);
       }
+      $('.loginbox .errormsg').hide();
       
       //console.log('mid='+ jsdata.data.mid );
     },
     error: function(xhr, type){
-      console.log('Ajax error!')
+      //  console.log('Ajax error!')
+      $('.loginbox .errormsg').show();
     }
   });
   fntRun();
 }
 function postRegister(){
-  var userName  = $('#reguname').val()
-  ,   userMail  = $('#regumail').val()
+  var userName  = $('#regumail').val()
+  ,   userMail  = $('#reguname').val()
   ,   userPwd = $('#regupwd').val()
+  ,   userPwd2 = $('#regupwd2').val()
   ,   postData;
-  if (!userName || !userPwd || !userMail){
-    alert("请完整填写信息！")
+  if (!userName || !userPwd || !userMail || !userPwd2){
+    $('.registerbox .errormsg').html('请完整填写信息！').show();
     return false;
   }
+  if(userPwd!==userPwd2){
+    $('.registerbox .errormsg').html('请确认两次输入密码相同！').show();
+    return false;
+  }
+  $('.loginbox .errormsg').hide();
   var reMail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-  console.log('post register, regumail=' + userMail + ', valmail=' + userMail.match(reMail));
+  //  console.log('post register, regumail=' + userMail + ', valmail=' + userMail.match(reMail));
   // if(userMail.match(reMail)){
   //   alert("请正确填写邮箱信息！")
   //   return false;
   // }
   postData = 'name=' + userName + '&email=' + userMail + '&password=' + userPwd ;
-  console.log(postData);
+  //  console.log(postData);
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
   $.ajax({type:'POST',url: tempIp +'user/register',data:postData,
     success:function(json){
-      console.log(json);
-      var jsdata = eval('('+json+')');  
-      console.log('status='+ jsdata.status);
+      //  console.log(json);
+      //var jsdata = eval('('+json+')');
+      var jsdata = json;
+      if(jsdata.result ==='failed'){
+        $('.registerbox .errormsg').html('很抱歉，请检查您填写的信息。').show();
+        return false;
+      }
+      //console.log('status='+ jsdata.result);
       fntA.playerName = jsdata.user_name;
       fntA.playerId = jsdata.user_id;
       fntA.playerAvatar = jsdata.user_avatar;
@@ -212,10 +230,10 @@ function postRegister(){
       //console.log('mid='+ jsdata.data.mid );
     },
     error: function(xhr, type){
-      console.log('Ajax error!')
+      //  console.log('Ajax error!')
     }
-  })
-
+  });
+  fntRun();
 }
 function funMapload(){
 	fntA.imgArr = [
@@ -343,6 +361,11 @@ function fntRun(){
     y3 = 0;
     y4 = -1*fntA.h;
     y5 = -2*fntA.h;
+    if(!fntA.playerName){
+    }else{
+      $('.playerinfoa .playername').html(fntA.playerName);
+    }
+    
 
     //the hard game level
     var defLevel = fRandomBy(1,100);
@@ -380,7 +403,7 @@ function fntRun(){
             fntA.mapPathArr.push(txt);
           }
         };
-        console.log(fntA.mapArr);
+        //  console.log(fntA.mapArr);
       }
       //set map image
       fntA.image0.src = fntA.mapArr[0];  
@@ -424,7 +447,7 @@ function fntRun(){
       cpx1.drawImage(fntA.path3,0,y3,fntA.w,fntA.h);  
       cpx1.drawImage(fntA.path4,0,y4,fntA.w,fntA.h);  
       cpx1.drawImage(fntA.path5,0,y5,fntA.w,fntA.h); 
-      console.log('draw default map image');
+      //  console.log('draw default map image');
     }, 40);
 
 
@@ -486,19 +509,19 @@ function fntRun(){
         y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
-        console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
+        //  console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
         y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
+        //  console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
         y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
+        //  console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       //draw now
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
@@ -518,19 +541,19 @@ function fntRun(){
         y3 = Math.min(y4,y5) - fntA.h; 
         fntA.alltimesB++;
         fntA.image3.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))]; 
-        console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
+        //  console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y4>=fntA.h){  
         y4 = Math.min(y3,y5) - fntA.h; 
         fntA.alltimesB++;
         fntA.image4.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
-        console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
+        //  console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y5>=fntA.h){  
         y5 = Math.min(y3,y4) - fntA.h;
         fntA.alltimesB++; 
         fntA.image5.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
-        console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
+        //  console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
       ctx1.drawImage(fntA.image4,0,y4,fntA.w,fntA.h);  
@@ -561,7 +584,7 @@ function fntRun(){
 
       //game resort
       if( fntA.gameFinish ){
-        console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
+        //  console.log("stop running at " + time + ", and allmoveA = " + fntA.allmoveA + ",fntA.alltimes= " +fntA.alltimes);
         stop();
         showSubMask('gamemask','loading');
         if(fntA.allmoveA>=fntA.allmoveB){ 
@@ -610,7 +633,7 @@ function fntRun(){
       //player go as path
       var newP1X = getPlayerX('path1') - 20
       ,   newP2X = getPlayerX('path2') + 396  ;
-      console.log('newP1X:'+ newP1X + ',newP2X:' + newP2X);
+      //  console.log('newP1X:'+ newP1X + ',newP2X:' + newP2X);
       $('.playera').css('left',newP1X+'px');
       $('.playerb').css('left',newP2X+'px');
 
@@ -693,12 +716,14 @@ $(document).ready(function(){
 	var pageUrl = window.location.href;
 	pageUrl=pageUrl.replace(/index.html#\/run/g,"m.html");
   pageUrl=pageUrl.replace(/index.html#run/g,"m.html");
+  pageUrl=pageUrl.replace(/index.html#\/reg/g,"m.html");
+  pageUrl=pageUrl.replace(/index.html#reg/g,"m.html");
   pageUrl=pageUrl.replace(/index.html/g,"m.html");
 
 	fntA.gameLevel = 1;
 	fntA.shakerecord = 0;
-  fntA.playerId = '277454';
-  fntA.playerName = 'rayfox';
+  fntA.playerId = '278400';
+  fntA.playerName = 'vxx11';
   fntA.gameOn = false ;
   fntA.gameOn = false ;
 
@@ -708,7 +733,7 @@ $(document).ready(function(){
 	
   var newUrl = pageUrl +"?key=" +fntA.key;
 	$("#qrcode").append("<img src='http://chart.apis.google.com/chart?chs=320x320&cht=qr&chld=H|2&chl="+ newUrl + "&choe=UTF-8' />");
-  console.log( newUrl);
+  //  console.log( newUrl);
   //postRegiste
   $(".btn_register").on("click", function(){
     postRegister();

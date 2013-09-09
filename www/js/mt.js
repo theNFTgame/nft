@@ -59,7 +59,7 @@ function showSubFrame(framename,subframename) {
   $('.' + framename + ' .' + subframename).show();
 }
 function showMask(framename) {
-  if(!framename){ framename = 'gamemask'}
+  if(!framename){ $('.maskbox').hide();}
     $('.maskbox').hide();
   //if(framename !=='homepage' ){ };
   $('.' + framename ).show();
@@ -167,6 +167,7 @@ function postLogin(){
       fntA.playerAvatar = 'http://tnf-avatar.b0.upaiyun.com/'+jsdata.user_avatar;
       router.navigate('run');
       showSubFrame('runbox','qrcodebox');
+
       $('.playerinfoa .playername').html(fntA.playerName);
       if(jsdata.user_avatar!==''){
         $('.playerinfoa img').attr('src',fntA.playerAvatar);
@@ -231,6 +232,19 @@ function funMapload(){
 		'img/map/map_b_c.jpg' ,
 		'img/map/map_c_a.jpg' ,
     'img/player-mini.png'];
+  fntA.pathArr = [
+    'img/map/map_a_01.gif',
+    'img/map/map_a_02.gif',
+    'img/map/map_a_03.gif',
+    'img/map/map_b_01.gif',
+    'img/map/map_b_02.gif',
+    'img/map/map_b_03.gif',
+    'img/map/map_c_01.gif',
+    'img/map/map_c_02.gif',
+    'img/map/map_c_03.gif',
+    'img/map/map_a_b.gif' ,
+    'img/map/map_b_c.gif' ,
+    'img/map/map_c_a.gif'];
   fntA.pcplayerName = [
     '何川',
     '李北基',
@@ -245,7 +259,7 @@ function funMapload(){
     '魏广广' ,
     '运艳桥' ,
     '周鹏' ,
-    '邢如伶' ];
+    '邢如伶'  ];
 }
 
 //main run
@@ -258,9 +272,15 @@ function fntRun(){
   fntA.image3 = new Image();  
   fntA.image4 = new Image();  
   fntA.image5 = new Image();
+  fntA.path0 = new Image();  
+  fntA.path1 = new Image();  
+  fntA.path2 = new Image();
+  fntA.path3 = new Image();  
+  fntA.path4 = new Image();  
+  fntA.path5 = new Image();
   fntA.imageMini = new Image();
   fntA.w = 320;  
-  fntA.h = 490; 
+  fntA.h = 491; 
   var ctx0,ctx1;  
   var y0,y1,y2,y3,y4,y5;  
   fntA.gameLevel = 1;
@@ -312,8 +332,11 @@ function fntRun(){
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
     ctx1 =  document.getElementById('canvas2').getContext('2d');
+    cpx0 =  document.getElementById('path1').getContext('2d');
+    cpx1 =  document.getElementById('path2').getContext('2d');
     ctxMini =  document.getElementById('minimap').getContext('2d');
     fntA.mapArr = new Array();
+    fntA.mapPathArr = new Array();
     y0 = 0;
     y1 = -1*fntA.h;
     y2 = -2*fntA.h;
@@ -323,7 +346,7 @@ function fntRun(){
 
     //the hard game level
     var defLevel = fRandomBy(1,100);
-    if(defLevel>70){
+    if(defLevel>49){
       fntA.gameLevel = 2;
     }
     //the hard game level
@@ -333,16 +356,28 @@ function fntRun(){
         for (var i = fntA.mapitem - 1; i >= 0; i--) {
           if (i === 9){
             fntA.mapArr.push(fntA.imgArr[9]);
+            fntA.mapPathArr.push(fntA.pathArr[9]);
           }else if (i === 4){
             fntA.mapArr.push(fntA.imgArr[10]);
+            fntA.mapPathArr.push(fntA.pathArr[10]);
           }else if (i === 0){
             fntA.mapArr.push(fntA.imgArr[11]);
+            fntA.mapPathArr.push(fntA.pathArr[9]);
           }else if (i>9){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
+            var txt = fntA.imgArr[fRandomBy(0,2)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
           }else if (i<9 && i>4){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
+            var txt = fntA.imgArr[fRandomBy(3,5)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
           }else if (i<4){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
+            var txt = fntA.imgArr[fRandomBy(6,8)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
           }
         };
         console.log(fntA.mapArr);
@@ -354,11 +389,24 @@ function fntRun(){
       fntA.image3.src = fntA.mapArr[0];  
       fntA.image4.src = fntA.mapArr[1];
       fntA.image5.src = fntA.mapArr[2];
+      fntA.path0.src = fntA.mapPathArr[0];
+      fntA.path1.src = fntA.mapPathArr[1]; 
+      fntA.path2.src = fntA.mapPathArr[2];
+      fntA.path3.src = fntA.mapPathArr[0];  
+      fntA.path4.src = fntA.mapPathArr[1];  
+      fntA.path5.src = fntA.mapPathArr[2];
       fntA.imageMini.src = fntA.imgArr[12];
     var i = fntA.pcplayerName.length;
     var t = fRandomBy(0,i);
-    $('.playerinfob .playername').html('TNF运动员  '+fntA.pcplayerName[t]);
-    $('.playerinfob img').attr('src','img/player/' + fntA.pcplayerName[t] + '.jpg');
+    if(!fntA.pcplayerName[t]){
+      $('.playerinfob .playername').html('TNF运动员  李北基');
+      $('.playerinfob img').attr('src','img/player/李北基.jpg');
+    }else{
+      $('.playerinfob .playername').html('TNF运动员  '+fntA.pcplayerName[t]);
+      $('.playerinfob img').attr('src','img/player/' + fntA.pcplayerName[t] + '.jpg');
+    }
+      
+
 
 
     setTimeout(function () {
@@ -370,6 +418,12 @@ function fntRun(){
       ctx1.drawImage(fntA.image5,0,y5,fntA.w,fntA.h); 
       ctxMini.drawImage( fntA.imageMini,9,430,29,28);
       ctxMini.drawImage( fntA.imageMini,59,430,29,28);
+      cpx0.drawImage(fntA.path0,0,y0,fntA.w,fntA.h);  
+      cpx0.drawImage(fntA.path1,0,y1,fntA.w,fntA.h);  
+      cpx0.drawImage(fntA.path2,0,y2,fntA.w,fntA.h);
+      cpx1.drawImage(fntA.path3,0,y3,fntA.w,fntA.h);  
+      cpx1.drawImage(fntA.path4,0,y4,fntA.w,fntA.h);  
+      cpx1.drawImage(fntA.path5,0,y5,fntA.w,fntA.h); 
       console.log('draw default map image');
     }, 40);
 
@@ -417,6 +471,8 @@ function fntRun(){
       ctx0.clearRect(0,0,fntA.w,fntA.h);
       ctx1.clearRect(0,0,fntA.w,fntA.h); 
       ctxMini.clearRect(0,0,fntA.w,fntA.h);
+      cpx0.clearRect(0,0,fntA.w,fntA.h);
+      cpx1.clearRect(0,0,fntA.w,fntA.h);
       //draw now
       var move = Math.floor(fntA.moveA);
       var moveB = Math.floor(fntA.moveB);
@@ -448,6 +504,9 @@ function fntRun(){
       ctx0.drawImage(fntA.image0,0,y0,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image1,0,y1,fntA.w,fntA.h);  
       ctx0.drawImage(fntA.image2,0,y2,fntA.w,fntA.h);
+      cpx0.drawImage(fntA.path0,0,y0,fntA.w,fntA.h);  
+      cpx0.drawImage(fntA.path1,0,y1,fntA.w,fntA.h);  
+      cpx0.drawImage(fntA.path2,0,y2,fntA.w,fntA.h);
 
       //ctx b
       y3 = y3 + moveB;  
@@ -475,7 +534,10 @@ function fntRun(){
       }  
       ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
       ctx1.drawImage(fntA.image4,0,y4,fntA.w,fntA.h);  
-      ctx1.drawImage(fntA.image5,0,y5,fntA.w,fntA.h); 
+      ctx1.drawImage(fntA.image5,0,y5,fntA.w,fntA.h);
+      cpx1.drawImage(fntA.path3,0,y3,fntA.w,fntA.h);  
+      cpx1.drawImage(fntA.path4,0,y4,fntA.w,fntA.h);  
+      cpx1.drawImage(fntA.path5,0,y5,fntA.w,fntA.h); 
 
       //set requestId
       fntA.requestId = window.requestAFrame(render);
@@ -516,18 +578,21 @@ function fntRun(){
         if( (fntA.allmoveA - fntA.allmoveB) >100 ){
           fntA.moveB = fntA.moveB * 1.10;
         }
-        if( (fntA.allmoveB - fntA.allmoveA) >350 ){
+        if( (fntA.allmoveB - fntA.allmoveA) >650 ){
           fntA.moveB = fntA.moveB * 0.9992;
         }
         fntA.moveB = Math.min( 5, Math.max(1,fntA.moveB));
       }else if(fntA.gameLevel ===2){
-        if( (fntA.allmoveA - fntA.allmoveB) >30 ){
-          fntA.moveB = fntA.moveB * 1.15;
+        if( (fntA.allmoveA - fntA.allmoveB) >20 ){
+          fntA.moveB = fntA.moveB * 1.05;
         }
-        if( (fntA.allmoveB - fntA.allmoveA) >800 ){
+        if( (fntA.allmoveA - fntA.allmoveB) >250 ){
+          fntA.moveB = fntA.moveB * 1.19;
+        }
+        if( (fntA.allmoveB - fntA.allmoveA) >600 ){
           fntA.moveB = fntA.moveB * 0.9992;
         }
-        fntA.moveB = Math.min( 6, Math.max(4,fntA.moveB));
+        fntA.moveB = Math.min( 7, Math.max(4,fntA.moveB));
       }
       // var tmpPlayerTopa , tmpPlayerTopb;
       // tmpPlayerTopa = 320 - fntA.moveA*8;
@@ -541,6 +606,30 @@ function fntRun(){
       //console.log('tmpMinib:' +tmpMinia+',tmpMinib:' + tmpMinia);
       ctxMini.drawImage( fntA.imageMini,9,tmpMinia,29,28);
       ctxMini.drawImage( fntA.imageMini,59,tmpMinib,29,28);
+
+      //player go as path
+      var newP1X = getPlayerX('path1') - 20
+      ,   newP2X = getPlayerX('path2') + 396  ;
+      console.log('newP1X:'+ newP1X + ',newP2X:' + newP2X);
+      $('.playera').css('left',newP1X+'px');
+      $('.playerb').css('left',newP2X+'px');
+
+      function getPlayerX(canvasName) {
+        var x = 150
+        ,   imageData = cpx0.getImageData(0, 320, 300,1);
+        if( canvasName == "path2"){
+          imageData = cpx1.getImageData(0, 320, 300,1);
+        }
+        var pix = imageData.data;
+        //console.log(pix);
+        for (var i = 0, n = pix.length; i < n; i += 4) {  
+          if (pix[i] >250 && pix[i+1] >250 && pix[i+2] >250 ){
+            x = i/4 ;
+            break;
+          }
+        }
+        return x;
+      }
 
     }
     // handle multiple browsers for requestAnimationFrame()
@@ -563,8 +652,10 @@ function fntRun(){
       // when open m.page，call enter event，then show the game
       case fntA.key + "_enter":
         setTimeout(function () {
-          showSubFrame('runbox','rundivbox');
-          showSubMask('gamemask','howplay');
+          if(fntA.allmoveB==0){
+            showSubFrame('runbox','rundivbox');
+            showSubMask('gamemask','howplay');
+          }
         }, 500);
         break;
       // shake event
@@ -582,8 +673,9 @@ function fntRun(){
         if(fntA.shakeEng<3 && fntA.moveA <1){
           fntA.moveA = 2;
         }
-        fntA.shakeEng = fntA.shakeEng + 4 ;
-        
+        if(fntA.shakeEng<50){
+          fntA.shakeEng = fntA.shakeEng + 4 ;
+        }
 
         break;
     }

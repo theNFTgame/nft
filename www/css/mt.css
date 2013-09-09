@@ -15,7 +15,7 @@ body
  -webkit-text-size-adjust: none;
  height: 100%;
  min-height: 500px;
- background:#fcfcfc url(../img/mt_body_bg.jpg) top center no-repeat;
+ background:#fcfcfc url(../img/bg_home.jpg) center center no-repeat;
 }
 h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
 p img { margin: 0 ; padding: 0; }
@@ -31,11 +31,12 @@ ul{
 -webkit-padding-start: 0px;
 
 }
+.yahei {font-family:"Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu}
 /** @group core body **/  
 #pagebody {  
-    position: relative;   
+    position: relative;
     width: 928px;  
-    background: url(../img/mt_pagebody_bg.jpg) 32px 0px no-repeat; 
+    background: url(../img/bg_home2.png) 86px 10px no-repeat;
     display: block; 
     margin: 0 auto; 
     /*overflow: hidden;*/

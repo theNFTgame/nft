@@ -114,19 +114,19 @@ function fRandomBy(under, over){
 } 
 function funMapload(){
 	fntA.imgArr = [
-    'img/map/map_a_01.jpg',
-    'img/map/map_a_02.jpg',
-    'img/map/map_a_03.jpg',
-    'img/map/map_b_01.jpg',
-    'img/map/map_b_02.jpg',
-    'img/map/map_b_03.jpg',
-    'img/map/map_c_01.jpg',
-    'img/map/map_c_02.jpg',
-    'img/map/map_c_03.jpg',
-    'img/map/map_a_b.jpg' ,
-    'img/map/map_b_c.jpg' ,
-    'img/map/map_c_a.jpg' ,
-    'img/player-mini.png'];
+    'img/map/map_a_01.jpg',//0
+    'img/map/map_a_02.jpg',//1
+    'img/map/map_a_03.jpg',//2
+    'img/map/map_b_01.jpg',//3
+    'img/map/map_b_02.jpg',//4
+    'img/map/map_b_03.jpg',//5
+    'img/map/map_c_01.jpg',//6
+    'img/map/map_c_02.jpg',//7
+    'img/map/map_c_03.jpg',//8
+    'img/map/map_a_b.jpg' ,//9
+    'img/map/map_b_c.jpg' ,//10
+    'img/map/map_c_a.jpg' ,//11
+    'img/player-mini.png'];//12
 }
 
 function fntRun(){
@@ -153,24 +153,40 @@ function fntRun(){
     y1 = -1*fntA.h;
     y2 = -2*fntA.h;
       //generat map
-
-        for (var i = fntA.mapitem - 1; i >= 0; i--) {
-          if (i === 9){
-            fntA.mapArr.push(fntA.imgArr[9]);
-          }else if (i === 4){
-            fntA.mapArr.push(fntA.imgArr[10]);
-          }else if (i === 0){
-            fntA.mapArr.push(fntA.imgArr[11]);
-          }else if (i>9){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          }else if (i<9 && i>4){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
-          }else if (i<4){
-            fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
-          }
-
-        console.log(fntA.mapArr);
+      console.log(fntA.gameLevel);
+    if(fntA.gameLevel==1){
+      for (var i = fntA.mapitem - 1; i >= 0; i--) {
+        fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
       }
+    }
+    if (fntA.gameLevel==2){
+      for (var i = fntA.mapitem - 1; i >= 0; i--) {
+        if (i === 0){
+          fntA.mapArr.push(fntA.imgArr[10]);
+        }else if (i>0){
+          fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
+        }
+      }
+    }
+    if (fntA.gameLevel==3){
+      for (var i = fntA.mapitem - 1; i >= 0; i--) {
+        if (i === 9){
+          fntA.mapArr.push(fntA.imgArr[9]);
+        }else if (i === 4){
+          fntA.mapArr.push(fntA.imgArr[10]);
+        }else if (i === 0){
+          fntA.mapArr.push(fntA.imgArr[11]);
+        }else if (i>9){
+          fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
+        }else if (i<9 && i>4){
+          fntA.mapArr.push(fntA.imgArr[fRandomBy(3,5)]);
+        }else if (i<4){
+          fntA.mapArr.push(fntA.imgArr[fRandomBy(6,8)]);
+        }
+      }
+    }
+
+      console.log(fntA.mapArr);
       //set map image
       fntA.image0.src = fntA.mapArr[0];  
       fntA.image1.src = fntA.mapArr[1];
@@ -280,18 +296,7 @@ function fntRun(){
 
 //window.addEventListener('shake', shakeEventDidOccur, false);
 //define a custom method to fire when shake occurs.
-function shakeEventDidOccur () {
-  //put your own code here etc.
 
-  fntA.shakerecord = fntA.shakerecord + 1;
-
-  if (fntA.shakerecord === 1 ){
-    showSubFrame('energybox','powerbox');
-  }
-  var opacity = fntA.shakerecord / newColor*fntA.gameLevel ;
-  $('.redbg').css('opacity',opacity);
-
-}
 
 
 function loadPower(secs) {
@@ -300,6 +305,37 @@ function loadPower(secs) {
 
     window.addEventListener('shake', shakeEventDidOccur, false);
 	  //define a custom method to fire when shake occurs.
+
+}
+
+function doUpdateTime(num) {
+  //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
+  //alert(num);
+  var opacity = ((fntA.gameLevel*10 - num + 0.1) / fntA.gameLevel*10)/100  ;
+  console.log('fntA.gameLevel:'+ fntA.gameLevel + ',opacity:' + opacity);
+  $('.redbg').css('opacity',opacity);
+  $('.debuginfo').html( num + '秒,power:' + fntA.shakerecord );
+  $('.powerbox .countdown').html( num );
+  
+  if (num == 0) {
+    console.log("shake remove!");
+    $('.debuginfo').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
+    window.removeEventListener('shake', shakeEventDidOccur, false);
+    showSubFrame('energybox','readybox');
+  }
+}
+function shakeEventDidOccur () {
+  //put your own code here etc.
+
+  fntA.shakerecord = fntA.shakerecord + 1;
+
+  if (fntA.shakerecord === 1 ){
+    showSubFrame('energybox','powerbox');
+  }
+  
+
+  if (fntA.shakerecord === 2 ){
+    var secs = fntA.gameLevel*10;
     for (var i = secs; i >= 0; i--) {
       (function(index) {
         setTimeout(function(){
@@ -309,19 +345,9 @@ function loadPower(secs) {
   }
 }
 
-function doUpdateTime(num) {
-  //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
-  //alert(num);
-  $('.debuginfo').html( num + '秒,power:' + fntA.shakerecord );
-  $('.powerbox .countdown').html( num );
-  
-  if (num == 0) {
-  	console.log("shake remove!");
-  	$('.debuginfo').html('<a class="navlink linkrun" href="#/run">Run with power:'+ fntA.shakerecord +'</a>');
-    window.removeEventListener('shake', shakeEventDidOccur, false);
-    showSubFrame('energybox','readybox');
-  }
 }
+
+
 
 
 $(document).ready(function(){

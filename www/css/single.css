@@ -83,7 +83,7 @@ body {
 .couponbox { background: url('../img/s_ward_01_x2.png') no-repeat;background-size: 231px 257px;}
 .nocouponbox { { background: url('../img/s_ward_02_x2.png') no-repeat;}background-size: 231px 257px;}
 .mi { color: #cc0000; font-weight: bold; font-size: 30px; padding: 58px 0 0 30px; width: 120px; text-align: right; }
-.px { color: #ffffff; font-weight: bold; font-size: 26px; width: 138px; padding: 10px 0 0 26px; text-align: right; }
+.px { color: #ffffff; font-weight: bold; font-size: 26px; width: 72px; padding: 10px 0 0 90px; text-align: center; }
 
 
 

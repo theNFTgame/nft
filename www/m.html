@@ -28,8 +28,9 @@ body
  word-wrap: break-word;
  -webkit-text-size-adjust: none;
  height: 100%;
- min-height: 500px;
+ min-height: 460px;
  background:#fcfcfc url(img/m_bg.jpg) top center no-repeat;
+ background-size: 320px 462px;
 }
 h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
 p img { float: left; margin: 0 10px 5px 0; padding: 0; }
@@ -38,8 +39,8 @@ img { border: 0; max-width: 100%; }
 table { width:auto; border-collapse: collapse;border-spacing: 0; }
 a { color: #3c3c3c; text-decoration: underline;}
 /** @group core body **/  
-.gameinfo { width: 320px; height: 366px; background:#fcfcfc url(img/m_01.jpg) top center no-repeat; margin: 0 auto;}
-.gamestart {background-image:url(img/m_02.jpg);}
+.gameinfo { width: 320px; height: 366px; background:#fcfcfc url(img/m_bg.jpg) top center no-repeat; margin: 0 auto;background-size: 320px 462px;}
+.gamestart {background-image:url(img/m_bg.jpg);}
 	</style>
 	<script type="text/javascript">
 
@@ -70,9 +71,9 @@ a { color: #3c3c3c; text-decoration: underline;}
 				key: theKey,
 				act: "changebg"
 			});
-			if(shakerecord ==5){
-				$('.gameinfo').addClass('gamestart');
-			}
+			// if(shakerecord ==5){
+			// 	$('.gameinfo').addClass('gamestart');
+			// }
 			shakerecord = shakerecord +1 ;
 		}
 		function loadPower(secs) {

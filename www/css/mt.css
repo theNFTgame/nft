@@ -1,21 +1,21 @@
 /* CSS Mobile Reset */
-html, body
-{
+html, body {
  margin: 0;
  padding: 0; 
  border: 0;
 }
-body 
-{
- font-family:Arial,  sans-serif;
- line-height:1.5;
- font-size:16px;
- color: #000;
- word-wrap: break-word;
- -webkit-text-size-adjust: none;
- height: 100%;
- min-height: 500px;
- background:#fcfcfc url(../img/bg_home.jpg) center center no-repeat;
+body {
+    font-family:Arial, "Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu, sans-serif;
+    line-height:1.5;
+    font-size:16px;
+    color: #000;
+    word-wrap: break-word;
+    -webkit-text-size-adjust: none;
+    height: 100%;
+    min-height: 500px;
+    background:#fcfcfc url(../img/bg_home.jpg) no-repeat center center fixed;
+    -moz-background-size: cover;
+    background-size: cover;
 }
 h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
 p img { margin: 0 ; padding: 0; }
@@ -111,6 +111,8 @@ line-height: 50px; text-align: center; color: #fff;}
 .gamemask .connection { background: url(../img/bg_howplay.jpg) no-repeat;}
 .gamemask .howplay { background: url(../img/bg_connection.jpg) no-repeat;}
 .gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat; font-weight: bold; font-size: 40px; color: #fff; text-align: center; line-height: 200px;}
+.gamemask .countdown .pao { width: 370px; height: 260px; background: url(../img/bg_countdown_pao.png) center center no-repeat;}
+
 .gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;margin-top: 60px;}
 .gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;margin-top: 60px;}
 .gamemask .lost { width:440px; height:350px; background: url(../img/bg_lost.jpg) no-repeat;margin-top: 60px;}
@@ -118,7 +120,6 @@ line-height: 50px; text-align: center; color: #fff;}
 
 .gamemask .playagain { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
 .gamemask .gameshear { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
-.winwithoutpoint .gameshear { width: 100%;}
 
 /**/
 

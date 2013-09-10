@@ -25,16 +25,27 @@ var AppRouter = Backbone.Router.extend({
   	showFrame('energybox');
   },
   runfunc : function (action){
-    if(action === 'replay'){
-      fntA.gameOn =  false;
-      fntA.gameFinish =  false;
-      fntA.shakerecord = 0;
-      fntA.shakeEng = 0;
-      $('.playrecord').html('0米');
-      router.navigate('run');
+    console.log('fntA.playerId=' + fntA.playerId);
+    if(!fntA.playerId){
+      router.navigate('index');
+      showFrame('homepage');
+      showSubFrame('homepage','loginbox');
+    }else{
+      console.log(action);
+      if(action == 'replay'){
+        fntA.gameOn =  false;
+        fntA.gameFinish =  false;
+        fntA.shakerecord = 0;
+        fntA.shakeEng = 0;
+        $('.playrecord').html('0米');
+        router.navigate('run');
+        $('.gamemask .countdown').html('');
+        var ctxMini =  document.getElementById('minimap').getContext('2d');
+        ctxMini.clearRect(0,0,320,456);
+      }
+      showSubFrame('runbox','qrcodebox');
+      fntRun();
     }
-  	showSubFrame('runbox','qrcodebox');
-  	fntRun();
   },
   renderError : function(error) {  
     //  console.log('URL错误, 错误信息: ' + error); 
@@ -218,13 +229,14 @@ function postRegister(){
       //var jsdata = eval('('+json+')');
       var jsdata = json;
       if(jsdata.result ==='failed'){
-        $('.registerbox .errormsg').html('很抱歉，请检查您填写的信息。').show();
+        $('.registerbox .errormsg').html('注册失败，您的邮箱或昵称已被注册').show();
         return false;
       }
       //console.log('status='+ jsdata.result);
       fntA.playerName = jsdata.user_name;
       fntA.playerId = jsdata.user_id;
       fntA.playerAvatar = jsdata.user_avatar;
+      $('.playerinfoa .playername').html(fntA.playerName);
       router.navigate('run');
       showSubFrame('runbox','qrcodebox');
       //console.log('mid='+ jsdata.data.mid );
@@ -320,10 +332,27 @@ function fntRun(){
     }
   }
   function doUpdateTime(num) {
-    $('.gamemask .countdown').html('<span class="'+ num + '">' + num + '</span>');
+    if(num <= 9 && num >= 8){
+      showSubMask('gamemask','howplay');
+      $('.gamemask .countdown').html('');
+    }
+    if(num > 6 && num < 8 ){
+      showSubMask('gamemask','connection');
+      
+    }
+    if(num <= 6 && num > 4 ){
+      showSubMask('gamemask','countdown');
+    }
+    if(num <= 4 && num > 1){
+      $('.gamemask .countdown').html('<span class="'+ (num-1) + '">' + (num-1) + '</span>');
+    }
+    if(num === 1) {
+      $('.gamemask .countdown').html('<div class="pao"></div>');
+    }
     if(num === 0) {
       if(!fntA.startime){
         showSubMask('gamemask');
+        $('.gamemask .countdown').html();
         start();
       }
     }
@@ -361,12 +390,7 @@ function fntRun(){
     y3 = 0;
     y4 = -1*fntA.h;
     y5 = -2*fntA.h;
-    if(!fntA.playerName){
-    }else{
-      $('.playerinfoa .playername').html(fntA.playerName);
-    }
     
-
     //the hard game level
     var defLevel = fRandomBy(1,100);
     if(defLevel>49){
@@ -677,21 +701,24 @@ function fntRun(){
         setTimeout(function () {
           if(fntA.allmoveB==0){
             showSubFrame('runbox','rundivbox');
-            showSubMask('gamemask','howplay');
+            
+            if(!fntA.gameOn){
+              
+              fntA.gameOn = true;
+              countdownNewTime(9);
+            }
           }
         }, 500);
         break;
       // shake event
       case fntA.key + "_changebg":
         //console.log('fntA.gameOn:' + fntA.gameOn +'fntA.shakerecord:' + fntA.shakerecord +'fntA.gameFinish:' + fntA.gameFinish );
-        if(!fntA.gameOn && fntA.shakerecord<15){
-          showSubMask('gamemask','connection');
-          fntA.gameOn = true;
-        }else if(fntA.gameOn && fntA.shakerecord===15 && !fntA.gameFinish){
-          showSubMask('gamemask','countdown');
-          //console.log('call 1 countdown');
-          countdownNewTime(3);
-        }
+
+        // if(fntA.gameOn && fntA.shakerecord === 1 && !fntA.gameFinish){
+
+        //   //console.log('call 1 countdown');
+        //   countdownNewTime(6);
+        // }
         shakeEventDidOccur();
         if(fntA.shakeEng<3 && fntA.moveA <1){
           fntA.moveA = 2;
@@ -716,19 +743,17 @@ $(document).ready(function(){
 	var pageUrl = window.location.href;
 	pageUrl=pageUrl.replace(/index.html#\/run/g,"m.html");
   pageUrl=pageUrl.replace(/index.html#run/g,"m.html");
+  pageUrl=pageUrl.replace(/index.html#\/index/g,"m.html");
+  pageUrl=pageUrl.replace(/index.html#index/g,"m.html");
   pageUrl=pageUrl.replace(/index.html#\/reg/g,"m.html");
   pageUrl=pageUrl.replace(/index.html#reg/g,"m.html");
   pageUrl=pageUrl.replace(/index.html/g,"m.html");
-
 	fntA.gameLevel = 1;
-	fntA.shakerecord = 0;
-  fntA.playerId = '278400';
-  fntA.playerName = 'vxx11';
+	fntA.shakerecord = 0;  
   fntA.gameOn = false ;
   fntA.gameOn = false ;
 
   var loadedImages = 0;
-
 	//run
 	
   var newUrl = pageUrl +"?key=" +fntA.key;

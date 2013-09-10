@@ -25,13 +25,13 @@ var AppRouter = Backbone.Router.extend({
   	showFrame('energybox');
   },
   runfunc : function (action){
-    console.log('fntA.playerId=' + fntA.playerId);
+    // console.log('fntA.playerId=' + fntA.playerId);
     if(!fntA.playerId){
       router.navigate('index');
       showFrame('homepage');
       showSubFrame('homepage','loginbox');
     }else{
-      console.log(action);
+      // console.log(action);
       if(action == 'replay'){
         fntA.gameOn =  false;
         fntA.gameFinish =  false;

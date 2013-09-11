@@ -11,12 +11,12 @@ body {
  height: 100%;
  min-height: 430px;
  background:#fcfcfc url(../img/s_bg_home_x2.jpg) top left repeat;
- background-size: 320px 449px;
+ background-size: 320px 464px;
 }
 .notext { text-indent: -9999em;}
 /** @group core body **/  
 #pagebody { position: relative; }
-.frame { display: none; position: relative; margin:0; padding: 0px; min-height: 450px; width: 320px; margin: 0 auto;}
+.frame { display: none; position: relative; margin:0; padding: 0px; min-height: 462px; height: 100%; width: 320px; margin: 0 auto;}
 .subframe {display: none; height: 100%;min-height: 440px; }
 .frame .subframe:first-child { display: block;}
 
@@ -49,7 +49,7 @@ body {
 
 /*energybox*/
 .energybox { }
-.energybox_on { background:url('../img/s_bg_dark.jpg') no-repeat;}
+.energybox_on { background:url('../img/s_bg_dark.jpg') no-repeat; background-size: 320px 464px;}
 .energybox .redbg { width: 100%; height: 100%; position: absolute;z-index: 1; background:url('../img/s_bg_red.jpg') no-repeat;  opacity: 0}
 .energybox .subframe { width: 100%; height: 100%; position: absolute;z-index: 10; }
 .energybox .introbox { background: url('../img/s_bg_shadow.png') no-repeat;  }
@@ -70,7 +70,9 @@ body {
 
 
 /*mask*/
-
+.maskbg { display: none; width: 100%; height: 100%; margin: 0; position: absolute; top:0px; left:0px; z-index: 290; background:url('../img/s_bg_mask_dark.png') no-repeat center center fixed;
+    -moz-background-size: cover;
+    background-size: cover;}
 .mask { display: none; width: 230px; height: 352px; margin: 0; position: absolute; top:8px; left:45px; z-index: 300; }
 .mask .gameinfo { height: 270px; }
 
@@ -81,7 +83,7 @@ body {
 
 .recordbox { background: url('../img/s_ward_x2.png') no-repeat; background-size: 231px 257px;}
 .couponbox { background: url('../img/s_ward_01_x2.png') no-repeat;background-size: 231px 257px;}
-.nocouponbox { { background: url('../img/s_ward_02_x2.png') no-repeat;}background-size: 231px 257px;}
+.nocouponbox { background: url('../img/s_ward_02_x2.png') no-repeat; background-size: 231px 257px;}
 .mi { color: #cc0000; font-weight: bold; font-size: 30px; padding: 58px 0 0 30px; width: 120px; text-align: right; }
 .px { color: #ffffff; font-weight: bold; font-size: 26px; width: 72px; padding: 10px 0 0 90px; text-align: center; }
 

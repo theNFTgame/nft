@@ -533,18 +533,21 @@ function fntRun(){
         y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        fntA.path0.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
         y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
+        fntA.path1.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
         y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
+        fntA.path2.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       //draw now
@@ -564,19 +567,22 @@ function fntRun(){
       if(y3>=fntA.h){  
         y3 = Math.min(y4,y5) - fntA.h; 
         fntA.alltimesB++;
-        fntA.image3.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))]; 
+        fntA.image3.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
+        fntA.path3.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y4>=fntA.h){  
         y4 = Math.min(y3,y5) - fntA.h; 
         fntA.alltimesB++;
         fntA.image4.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
+        fntA.path4.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))];
         //  console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y5>=fntA.h){  
         y5 = Math.min(y3,y4) - fntA.h;
         fntA.alltimesB++; 
         fntA.image5.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
+        fntA.path5.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))];
         //  console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  

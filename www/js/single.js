@@ -5,7 +5,7 @@ var AppRouter = Backbone.Router.extend({
     '' : 'levelfun', 
     'index' : 'levelfun', 
     'intro' : 'levelfun',
-    'replay' : 'repowerfun',
+    'replay' : 'replayfun',
     'repower' : 'repowerfun',
     'level' : 'levelfun',
     'shake' : 'shakefun',
@@ -45,12 +45,18 @@ var AppRouter = Backbone.Router.extend({
     $('.logo').show();
     $('.mask').hide();
     $('.maskbg').hide();
+    $('.couponbox').hide();
+    $('.nocouponbox').hide();
     $('.redbg').css('opacity',0);
   }, 
   repowerfun : function() {
-    router.navigate('index');
+    router.navigate('shake/' + fntA.gameLevel);
     window.location.reload();
   }, 
+  replayfun : function() {
+    router.navigate('index');
+    window.location.reload();
+  },
   shakefun : function (level){
   	console.log('lelve:'+ level);
     fntA.gameLevel = level;
@@ -127,23 +133,23 @@ function fRandomBy(under, over){
 }
 
 function postGameRecordSingle(record){ 
+  /*
+  请先调用 game/save, 注意传入的game_type为1（单机游戏）和score，没有game_result。其它参数和双屏游戏相同。
+  然后在刮奖时调用  game/reward获得优惠券号码。
+
+  返回
+
+  失败：
+   {"result":"failed","message":"no game data found"}
+  成功：
+   {"result":"success","message":"","game_id":54,"user_id":"124578","user_name":"cgzhang2003","coupon_id":123,"coupon_code":xxx,"coupon_discount":null,"coupon_description":null}
+  ​
+  如果没有获奖则coupon_code为空。
+  */
   var postData = 'game_type=1&score='+record ;
-  //  console.log(postData);
-/*
-请先调用 game/save, 注意传入的game_type为1（单机游戏）和score，没有game_result。其它参数和双屏游戏相同。
-然后在刮奖时调用  game/reward获得优惠券号码。
+  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/';
+  console.log(postData);
 
-返回
-
-失败：
- {"result":"failed","message":"no game data found"}
-成功：
- {"result":"success","message":"","game_id":54,"user_id":"124578","user_name":"cgzhang2003","coupon_id":123,"coupon_code":xxx,"coupon_discount":null,"coupon_description":null}
-​
-如果没有获奖则coupon_code为空。
-*/
-
-  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/'
   $.ajax({type:'POST',url: tempIp +'game/save',data:postData,
     success:function(json){
         console.log(json);
@@ -151,24 +157,48 @@ function postGameRecordSingle(record){
       var jsdata = json;
         console.log('status='+ jsdata.status);
       if(jsdata.result==='success'){
-        if (jsdata.coupon_code != null){
-          $('.getcoupon').attr('url', '#/coupon');
-          $('.couponbox .cp').html(jsdata.coupon_code);
-        }else{
-          $('.getcoupon').attr('url', '#/nocouponbox');
-        } 
-      }else{
-        $('.getcoupon').attr('url', '#/nocouponbox');
+        if (jsdata.game_id != null){
+          fntA.game_id = jsdata.game_id;
+        }
       }
 
       //console.log('mid='+ jsdata.data.mid );
     },
     error: function(xhr, type){
-      $('.getcoupon').attr('url', '#/nocouponbox');
+      
     }
   });
 }
+//game/reward
+function postGameRewardSingle(record){ 
+  var postData = 'game_type=1&score='+record + '&game_id=' + fntA.game_id;
+  var tempIp = 'http://www.quyeba.com/event/explorerchallenge/';
+  console.log(postData);
 
+  $.ajax({type:'POST',url: tempIp +'game/reward',data:postData,
+    success:function(json){
+        console.log(json);
+      //var jsdata = eval('('+json+')');  
+      var jsdata = json;
+        console.log('status='+ jsdata.status);
+      if(jsdata.result==='success'){
+        if (jsdata.coupon_code != null){
+          $('.getcoupon').attr('href', '#/coupon');
+          $('.couponbox .cp').html(jsdata.coupon_code);
+        }else{
+          $('.getcoupon').attr('href', '#/nocouponbox');
+        } 
+      }else{
+        $('.getcoupon').attr('href', '#/nocouponbox');
+      }
+
+      //console.log('mid='+ jsdata.data.mid );
+    },
+    error: function(xhr, type){
+      $('.getcoupon').attr('href', '#/nocouponbox');
+    }
+  });
+}
 function funMapload(){
 	fntA.imgArr = [
     'img/map/map_a_01.jpg',//0
@@ -290,7 +320,7 @@ function fntRun(){
 
     function start() {
       runInit();
-      fntA.moveA = Math.max((fntA.gameLevel*2.9 - 0.6), 3);
+      fntA.moveA = Math.max((fntA.gameLevel*2.9 - 0.6), 4);
       fntA.allmove = 0;
       fntA.alltimes = 0;
       $('.player').addClass('running');
@@ -302,6 +332,7 @@ function fntRun(){
         fntA.startime = Date.now();
       // }
       fntA.requestId = window.requestAFrame(render);
+      postGameRecordSingle(fntA.shakerecord);
     }
     function stop() {
       if (fntA.requestId)
@@ -309,11 +340,11 @@ function fntRun(){
       $('.player').removeClass('running');       
     }
     function wayRoll(e) {
-      console.log('in='+e);
+      //console.log('in='+e);
       if((e+5) > fntA.mapitem ){
         e = (e+5) % fntA.mapitem;
       }
-      console.log('out='+e);
+      //console.log('out='+e);
       return e;
     }
     function render(time) {
@@ -368,7 +399,7 @@ function fntRun(){
       fntA.requestId = window.requestAFrame(render);
 
       //set stop process
-      if(fntA.allmove > fntA.shakerecord * fRandomBy(70,79)){
+      if(fntA.allmove > fntA.shakerecord * fRandomBy(35,41)){
         fntA.moveA = fntA.moveA * 0.98;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
@@ -380,9 +411,13 @@ function fntRun(){
         $('.maskbg').show();
         $('.logo').hide();
         $('.recordbox .mi').html(fntA.allmove);
-        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*5123));
-        $('.recordbox .px').html(newPx.toFixed(2)*100 + '%');
-        postGameRecordSingle(fntA.shakerecord);
+        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*4123));
+        newPx = newPx.toFixed(2)*100;
+        newPx = Math.min(newPx,99);
+        $('.recordbox .px').html(poseNewPx + '%');
+
+        //post reword
+        postGameRewardSingle(fntA.shakerecord);
       }
       fntA.allmove +=move; 
 

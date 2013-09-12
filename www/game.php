@@ -16,10 +16,10 @@
       $user_name = $request_user_name;
 	  $user_avatar = $request_user_avatar;
   }
-  /* 用$user_id 和 $user_name判断 */
+    /* 用$user_id 和 $user_name判断 
     echo $user_id;
     echo $user_name;
-    echo $user_avatar;
+    echo $user_avatar;*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
     <meta name="author" content="Vitrum.Zhu" />
   </head>
   <body>
-
+      <div class="userinfo" style="dislpay:none" data-userid="<%php echo $user_id; %>" data-username="<%php echo $user_name; %>" data-avatar="<%php echo $user_avatar; %>" ></div>
       <section id="intro" class="clearfix frame homepage">
         <div class="minisite">
           <div class="sitemask"></div>

@@ -79,14 +79,14 @@ body {
 .mask .navlink { width: 87px; height: 86px; background: url('../img/s_bg_btnx2.png')  no-repeat;background-size: 87px 86px; float: left; margin: 0 0 0 20px;}
 .replay span { width: 87px; height: 86px; background: url('../img/s_btn_replay.png') center center  no-repeat; background-size: 53px 11px; display: block;}
 .getcoupon span { width: 87px; height: 86px; background: url('../img/s_btn_getcoupon.png') center center  no-repeat; background-size: 64px 11px; display: block;}
-.getmore span { width: 87px; height: 86px; background: url('../img/s_btn_getmore.png') center center  no-repeat; background-size: 64px 11px; display: block;}
+.getmore span { width: 87px; height: 86px; background: url('../img/s_btn_getmore.png') center center  no-repeat; background-size: 53px 11px; display: block;}
 
 .recordbox { background: url('../img/s_ward_x2.png') no-repeat; background-size: 231px 257px;}
 .couponbox { background: url('../img/s_ward_01_x2.png') no-repeat;background-size: 231px 257px;}
 .nocouponbox { background: url('../img/s_ward_02_x2.png') no-repeat; background-size: 231px 257px;}
 .mi { color: #cc0000; font-weight: bold; font-size: 30px; padding: 58px 0 0 30px; width: 120px; text-align: right; }
 .px { color: #ffffff; font-weight: bold; font-size: 26px; width: 72px; padding: 10px 0 0 90px; text-align: center; }
-
+.cp { color: #000; font-weight: bold; font-size: 13px; width: 162px; padding: 147px 0 0 76px; text-align: left;}
 
 
 .debuginfo { color: #fff;}

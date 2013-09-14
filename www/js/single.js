@@ -291,7 +291,7 @@ function fntRun(){
         }else if (i === 17){
           fntA.mapArr.push(fntA.imgArr[10]);
           fntA.mapPathArr.push(fntA.pathArr[10]);
-        }else if (i === 10){
+        }else if (i === 13){
           fntA.mapArr.push(fntA.imgArr[11]);
           fntA.mapPathArr.push(fntA.pathArr[11]);
         }else if (i === 0){
@@ -307,12 +307,12 @@ function fntRun(){
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i<17 && i > 10){
+        }else if (i<17 && i > 13){
           var txt = fntA.imgArr[fRandomBy(6,8)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i< 10){
+        }else if (i< 13){
           var txt = fntA.imgArr[fRandomBy(0,2)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
@@ -426,7 +426,7 @@ function fntRun(){
         $('.maskbg').show();
         $('.logo').hide();
         $('.recordbox .mi').html(fntA.allmove);
-        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*3000));
+        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*2500));
         newPx = newPx.toFixed(2)*100;
         newPx = Math.floor(Math.max(5,Math.min(newPx,99)));
         $('.recordbox .px').html(newPx + '%');

@@ -182,20 +182,20 @@ function postGameRewardSingle(record){
       var jsdata = json;
         console.log('status='+ jsdata.status);
       if(jsdata.result==='success'){
-        if (jsdata.coupon_code != null){
+        if (jsdata.coupon_code !== ''){
           $('.getcoupon').attr('href', '#/coupon');
           $('.couponbox .cp').html(jsdata.coupon_code);
         }else{
-          $('.getcoupon').attr('href', '#/nocouponbox');
+          $('.getcoupon').attr('href', '#/nocoupon');
         } 
       }else{
-        $('.getcoupon').attr('href', '#/nocouponbox');
+        $('.getcoupon').attr('href', '#/nocoupon');
       }
 
       //console.log('mid='+ jsdata.data.mid );
     },
     error: function(xhr, type){
-      $('.getcoupon').attr('href', '#/nocouponbox');
+      $('.getcoupon').attr('href', '#/nocoupon');
     }
   });
 }
@@ -245,7 +245,8 @@ function fntRun(){
   // if( !fntA.gameLevel ){ fntA.gameLevel = 1; };
   fntA.allmove = 0;
   fntA.alltimes = 0;
-  fntA.mapitem = 40;
+  fntA.mapitem = 30;
+  fntA.mapArr = [];
   fntA.mapPathArr = [];
 
   funMapload();
@@ -253,7 +254,6 @@ function fntRun(){
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
     cpx0 =  document.getElementById('path1').getContext('2d');
-    fntA.mapArr = new Array();
     y0 = 0;
     y1 = -1*fntA.h;
     y2 = -2*fntA.h;
@@ -267,47 +267,62 @@ function fntRun(){
     }
     if (fntA.gameLevel==2){
       for (var i = fntA.mapitem - 1; i >= 0; i--) {
-        if (i === 0){
+        if (i === 24){
           fntA.mapArr.push(fntA.imgArr[10]);
           fntA.mapPathArr.push(fntA.pathArr[10]);
-        }else if (i>0){
-          fntA.mapArr.push(fntA.imgArr[fRandomBy(0,2)]);
-          fntA.mapPathArr.push(fntA.pathArr[fRandomBy(0,2)]);
+        }else if ( i > 24){
+          var txt = fntA.imgArr[fRandomBy(0,2)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
+        }else if ( i < 24){
+          var txt = fntA.imgArr[fRandomBy(3,5)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
         }
       }
     }
     if (fntA.gameLevel==3){
       for (var i = fntA.mapitem - 1; i >= 0; i--) {
-        if (i === 20){
+        if (i === 24){
           fntA.mapArr.push(fntA.imgArr[9]);
           fntA.mapPathArr.push(fntA.pathArr[9]);
-        }else if (i === 10){
+        }else if (i === 17){
           fntA.mapArr.push(fntA.imgArr[10]);
           fntA.mapPathArr.push(fntA.pathArr[10]);
-        }else if (i === 0){
+        }else if (i === 10){
           fntA.mapArr.push(fntA.imgArr[11]);
           fntA.mapPathArr.push(fntA.pathArr[11]);
-        }else if (i>20){
+        }else if (i === 0){
+          fntA.mapArr.push(fntA.imgArr[9]);
+          fntA.mapPathArr.push(fntA.pathArr[9]);
+        }else if (i>24){
           var txt = fntA.imgArr[fRandomBy(0,2)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i<20 && i>10){
+        }else if (i>17 && i<24){
           var txt = fntA.imgArr[fRandomBy(3,5)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i<10){
+        }else if (i<17 && i > 10){
           var txt = fntA.imgArr[fRandomBy(6,8)]
+            fntA.mapArr.push(txt);
+            txt = txt.replace(/jpg/g,"gif");
+            fntA.mapPathArr.push(txt);
+        }else if (i< 10){
+          var txt = fntA.imgArr[fRandomBy(0,2)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
         }
       }
     }
-      console.log(fntA.mapArr);
-      console.log(fntA.mapPathArr);
-      console.log(fntA.mapArr.length + ',' + fntA.mapPathArr.length);
+      // console.log(fntA.mapArr);
+      // console.log(fntA.mapPathArr);
+      // console.log(fntA.mapArr.length + ',' + fntA.mapPathArr.length + ',fntA.mapitem:' + fntA.mapitem);
 
       //set map image
       fntA.image0.src = fntA.mapArr[0];  
@@ -320,7 +335,7 @@ function fntRun(){
 
     function start() {
       runInit();
-      fntA.moveA = Math.max((fntA.gameLevel*2.9 - 0.6), 4);
+      fntA.moveA = Math.max((fntA.gameLevel*3.9 - 0.6), 12);
       fntA.allmove = 0;
       fntA.alltimes = 0;
       $('.player').addClass('running');
@@ -366,25 +381,25 @@ function fntRun(){
         y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
-        console.log("y0 new image:" + fntA.image0.src + ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+        // console.log("y0 new image:" + fntA.image0.src + ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path0.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log(fntA.path0.src);
+        // console.log(fntA.path0.src);
       }  
       if(y1>=fntA.h){  
         y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log("y1 new image:" + fntA.image1.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+        // console.log("y1 new image:" + fntA.image1.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path1.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log(fntA.path1.src);
+        // console.log(fntA.path1.src);
       }  
       if(y2>=fntA.h){  
         y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log("y2 new image:" + fntA.image2.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+        // console.log("y2 new image:" + fntA.image2.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path2.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
-        console.log(fntA.path2.src);
+        // console.log(fntA.path2.src);
       } 
 
       //draw now
@@ -399,7 +414,7 @@ function fntRun(){
       fntA.requestId = window.requestAFrame(render);
 
       //set stop process
-      if(fntA.allmove > fntA.shakerecord * fRandomBy(35,41)){
+      if(fntA.allmove > fntA.shakerecord * fRandomBy(21,24) + fRandomBy(10,300)){
         fntA.moveA = fntA.moveA * 0.98;
       }
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
@@ -411,10 +426,10 @@ function fntRun(){
         $('.maskbg').show();
         $('.logo').hide();
         $('.recordbox .mi').html(fntA.allmove);
-        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*4123));
+        var newPx = new Number(Number(fntA.allmove)/(Number(fntA.gameLevel)*3000));
         newPx = newPx.toFixed(2)*100;
-        newPx = Math.min(newPx,99);
-        $('.recordbox .px').html(poseNewPx + '%');
+        newPx = Math.floor(Math.max(5,Math.min(newPx,99)));
+        $('.recordbox .px').html(newPx + '%');
 
         //post reword
         postGameRewardSingle(fntA.shakerecord);
@@ -475,7 +490,7 @@ function doUpdateTime(num) {
   //document.getElementById('ShowDiv').innerHTML = '' + num + '秒';
   //alert(num);
   var opacity = ((fntA.gameLevel*10 - num + 0.1) / fntA.gameLevel*10)/100  ;
-  console.log('fntA.gameLevel:'+ fntA.gameLevel + ',opacity:' + opacity);
+  //console.log('fntA.gameLevel:'+ fntA.gameLevel + ',opacity:' + opacity);
   $('.redbg').css('opacity',opacity);
   $('.debuginfo').html( num + '秒,power:' + fntA.shakerecord );
   $('.powerbox .countdown').html( num );

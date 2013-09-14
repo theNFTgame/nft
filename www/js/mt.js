@@ -10,9 +10,20 @@ var AppRouter = Backbone.Router.extend({
     '*error' : 'renderError'  
   },
   mainfunc : function() {
-   //  console.log('mainfunc'); 
-   showSubFrame('homepage','loginbox');
-   $('.errormsg').hide();
+    //  console.log('mainfunc'); 
+    var echoUid = $('.userinfo').attr('data-userid');
+    var echoName = $('.userinfo').attr('data-username');
+    console.log(echoUid);
+    if(echoUid !==''){
+      fntA.playerId = echoUid;
+      fntA.playername = echoName;
+      //router.navigate('run');
+      showSubFrame('runbox','qrcodebox');
+      fntRun();
+    }else{
+      showSubFrame('homepage','loginbox');
+      $('.errormsg').hide();
+    }
   }, 
   regfunc : function() {
   	//alert("111");
@@ -313,11 +324,11 @@ function fntRun(){
   fntA.h = 491; 
   var ctx0,ctx1;  
   var y0,y1,y2,y3,y4,y5;  
-  fntA.gameLevel = 1;
+  //fntA.gameLevel = 1;
   fntA.allmoveA = 0;
   fntA.allmoveB = 0;
   fntA.alltimes = 0;
-  fntA.mapitem = 16;
+  fntA.mapitem = 40;
 
   funMapload();
   function countdownNewTime(secs) {
@@ -332,21 +343,20 @@ function fntRun(){
     }
   }
   function doUpdateTime(num) {
-    if(num <= 9 && num >= 8){
+    //console.log('now countdown number is :' + num);
+    if(num == 9 || num == 8){
       showSubMask('gamemask','howplay');
       $('.gamemask .countdown').html('');
     }
-    if(num > 6 && num < 8 ){
+    if(num == 6 || num == 7 || num == 5 ){
       showSubMask('gamemask','connection');
-      
     }
-    if(num <= 6 && num > 4 ){
+    if(num == 4 || num == 3 || num == 2 ){
       showSubMask('gamemask','countdown');
-    }
-    if(num <= 4 && num > 1){
       $('.gamemask .countdown').html('<span class="'+ (num-1) + '">' + (num-1) + '</span>');
     }
     if(num === 1) {
+      showSubMask('gamemask','countdown');
       $('.gamemask .countdown').html('<div class="pao"></div>');
     }
     if(num === 0) {
@@ -393,40 +403,42 @@ function fntRun(){
     
     //the hard game level
     var defLevel = fRandomBy(1,100);
-    if(defLevel>49){
+    if(defLevel>29){
       fntA.gameLevel = 2;
+    }else{
+      fntA.gameLevel = 1;
     }
     //the hard game level
 
       //generat map
       if(fntA.gameLevel != 3){
         for (var i = fntA.mapitem - 1; i >= 0; i--) {
-          if (i === 9){
+          if (i === 20){
             fntA.mapArr.push(fntA.imgArr[9]);
             fntA.mapPathArr.push(fntA.pathArr[9]);
-          }else if (i === 4){
+          }else if (i === 10){
             fntA.mapArr.push(fntA.imgArr[10]);
             fntA.mapPathArr.push(fntA.pathArr[10]);
           }else if (i === 0){
             fntA.mapArr.push(fntA.imgArr[11]);
-            fntA.mapPathArr.push(fntA.pathArr[9]);
-          }else if (i>9){
+            fntA.mapPathArr.push(fntA.pathArr[11]);
+          }else if (i>20){
             var txt = fntA.imgArr[fRandomBy(0,2)]
-            fntA.mapArr.push(txt);
-            txt = txt.replace(/jpg/g,"gif");
-            fntA.mapPathArr.push(txt);
-          }else if (i<9 && i>4){
+              fntA.mapArr.push(txt);
+              txt = txt.replace(/jpg/g,"gif");
+              fntA.mapPathArr.push(txt);
+          }else if (i<20 && i>10){
             var txt = fntA.imgArr[fRandomBy(3,5)]
-            fntA.mapArr.push(txt);
-            txt = txt.replace(/jpg/g,"gif");
-            fntA.mapPathArr.push(txt);
-          }else if (i<4){
+              fntA.mapArr.push(txt);
+              txt = txt.replace(/jpg/g,"gif");
+              fntA.mapPathArr.push(txt);
+          }else if (i<10){
             var txt = fntA.imgArr[fRandomBy(6,8)]
-            fntA.mapArr.push(txt);
-            txt = txt.replace(/jpg/g,"gif");
-            fntA.mapPathArr.push(txt);
+              fntA.mapArr.push(txt);
+              txt = txt.replace(/jpg/g,"gif");
+              fntA.mapPathArr.push(txt);
           }
-        };
+        }
         //  console.log(fntA.mapArr);
       }
       //set map image
@@ -481,7 +493,7 @@ function fntRun(){
     function start() {
       
       fntA.moveA = 1;
-      fntA.moveB = 2;
+      fntA.moveB = 5;
       fntA.allmoveA = 0;
       fntA.allmoveB = 0;
       fntA.alltimes = 0;
@@ -508,8 +520,8 @@ function fntRun(){
       ctxMini.clearRect(0,0,fntA.w,fntA.h);     
     }
     function wayRoll(e) {
-      if((e+1) > fntA.mapitem ){
-        e = e % fntA.mapitem;
+      if((e+5) > fntA.mapitem ){
+        e = (e+5) % fntA.mapitem;
       }
       return e;
     }
@@ -533,21 +545,21 @@ function fntRun(){
         y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
-        fntA.path0.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        fntA.path0.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y0 new image:" + fntA.image0.src + "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y1>=fntA.h){  
         y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        fntA.path1.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        fntA.path1.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y1 new image:" + fntA.image1.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       if(y2>=fntA.h){  
         y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        fntA.path2.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        fntA.path2.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y2 new image:" + fntA.image2.src+ "fntA.alltimes:"+fntA.alltimes);
       }  
       //draw now
@@ -568,21 +580,21 @@ function fntRun(){
         y3 = Math.min(y4,y5) - fntA.h; 
         fntA.alltimesB++;
         fntA.image3.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
-        fntA.path3.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))]; 
+        fntA.path3.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))]; 
         //  console.log("y3 new image:" + fntA.image3.src+ "fntA.alltimesB:"+fntA.alltimesB + ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y4>=fntA.h){  
         y4 = Math.min(y3,y5) - fntA.h; 
         fntA.alltimesB++;
         fntA.image4.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
-        fntA.path4.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))];
+        fntA.path4.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
         //  console.log("y4 new image:" + fntA.image4.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       if(y5>=fntA.h){  
         y5 = Math.min(y3,y4) - fntA.h;
         fntA.alltimesB++; 
         fntA.image5.src = fntA.mapArr[wayRoll((Number(fntA.alltimesB)+3))];
-        fntA.path5.src = fntA.pathArr[wayRoll((Number(fntA.alltimes)+3))];
+        fntA.path5.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
         //  console.log("y5 new image:" + fntA.image5.src+ "fntA.alltimesB:"+fntA.alltimesB+ ",image id:" + (Number(fntA.alltimesB)+3));
       }  
       ctx1.drawImage(fntA.image3,0,y3,fntA.w,fntA.h);  
@@ -595,13 +607,15 @@ function fntRun(){
       //set requestId
       fntA.requestId = window.requestAFrame(render);
       //set stop process
-      if(fntA.shakeEng < 3){
+      if(fntA.shakeEng < 6){
         fntA.moveA = fntA.moveA * 0.977;
         if (fntA.moveA<0.8) {fntA.moveA=0.8};
       }else{
-        if (fntA.moveA<6) {fntA.moveA = fntA.moveA * 1.12;}
-        
+        if (fntA.moveA<20) {fntA.moveA = fntA.moveA * 1.12;}
+        if (fntA.moveA>20 && fntA.moveA<50) {fntA.moveA = fntA.moveA * 1.13;}
+        if (fntA.moveA>=50) {fntA.moveA = fntA.moveA * 1.14;}
       }
+      fntA.moveA = Math.max(0.8, Math.min(12, fntA.moveA));
       //console.log("old: y0=" + y0 + ",y1=" + y1 + ",y2=" + y2 + ",move=" + move + ",fntA.alltimes=" + fntA.alltimes);
       //if(fntA.moveA<=4){
       fntA.allmoveA +=move; 
@@ -611,6 +625,7 @@ function fntRun(){
       if (fntA.allmoveA===fntA.allmoveB){fntA.allmoveA=fntA.allmoveA+1;}
       $(".playerinfoa .playrecord").html(fntA.allmoveA + '米');
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
+      console.log('fntA.shakeEng:' + fntA.shakeEng + ',fntA.moveA:' + fntA.moveA + ',fntA.allmoveA:' + fntA.allmoveA + ',fntA.gameLevel:' + fntA.gameLevel);
 
       //game resort
       if( fntA.gameFinish ){
@@ -628,24 +643,24 @@ function fntRun(){
       }
       //Game AI
       if(fntA.gameLevel ===1 ){
-        if( (fntA.allmoveA - fntA.allmoveB) >100 ){
-          fntA.moveB = fntA.moveB * 1.10;
-        }
-        if( (fntA.allmoveB - fntA.allmoveA) >650 ){
-          fntA.moveB = fntA.moveB * 0.9992;
-        }
-        fntA.moveB = Math.min( 5, Math.max(1,fntA.moveB));
-      }else if(fntA.gameLevel ===2){
         if( (fntA.allmoveA - fntA.allmoveB) >20 ){
           fntA.moveB = fntA.moveB * 1.05;
         }
-        if( (fntA.allmoveA - fntA.allmoveB) >250 ){
-          fntA.moveB = fntA.moveB * 1.19;
-        }
-        if( (fntA.allmoveB - fntA.allmoveA) >600 ){
+        if( (fntA.allmoveB - fntA.allmoveA) >100 ){
           fntA.moveB = fntA.moveB * 0.9992;
         }
-        fntA.moveB = Math.min( 7, Math.max(4,fntA.moveB));
+        fntA.moveB = Math.min( 12, Math.max(10,fntA.moveB));
+      }else if(fntA.gameLevel ===2){
+        if( (fntA.allmoveA - fntA.allmoveB) >5 ){
+          fntA.moveB = fntA.moveB * 1.05;
+        }
+        if( (fntA.allmoveA - fntA.allmoveB) >250 ){
+          fntA.moveB = fntA.moveB * 1.29;
+        }
+        if( (fntA.allmoveB - fntA.allmoveA) >1000 ){
+          fntA.moveB = fntA.moveB * 0.9992;
+        }
+        fntA.moveB = Math.min( 13, Math.max(6,fntA.moveB));
       }
       // var tmpPlayerTopa , tmpPlayerTopb;
       // tmpPlayerTopa = 320 - fntA.moveA*8;
@@ -654,8 +669,8 @@ function fntRun(){
       // $('.playerb').css('top',tmpPlayerTopb+'px');
       //the hard game level
       //mini map
-      var tmpMinia = 430 - (fntA.allmoveA * fntA.h/8600)
-      ,   tmpMinib = 430 - (fntA.allmoveB * fntA.h/8600);
+      var tmpMinia = 430 - (fntA.allmoveA * fntA.h/20000)
+      ,   tmpMinib = 430 - (fntA.allmoveB * fntA.h/20000);
       //console.log('tmpMinib:' +tmpMinia+',tmpMinib:' + tmpMinia);
       ctxMini.drawImage( fntA.imageMini,9,tmpMinia,29,28);
       ctxMini.drawImage( fntA.imageMini,59,tmpMinib,29,28);
@@ -729,8 +744,8 @@ function fntRun(){
         if(fntA.shakeEng<3 && fntA.moveA <1){
           fntA.moveA = 2;
         }
-        if(fntA.shakeEng<50){
-          fntA.shakeEng = fntA.shakeEng + 4 ;
+        if(fntA.shakeEng<30){
+          fntA.shakeEng = fntA.shakeEng + 8 ;
         }
 
         break;
@@ -746,15 +761,15 @@ function shakeEventDidOccur() {
 
 $(document).ready(function(){
 	fntA.key = NewGuid();
-	var pageUrl = window.location.href;
-	pageUrl=pageUrl.replace(/index.html#\/run/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html#run/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html#\/index/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html#index/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html#\/reg/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html#reg/g,"m.html");
-  pageUrl=pageUrl.replace(/index.html/g,"m.html");
-	fntA.gameLevel = 1;
+	var pageUrl = 'http://www.quyeba.com/event/explorerchallenge/m.html'; //window.location.href;
+	// pageUrl=pageUrl.replace(/index.html#\/run/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html#run/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html#\/index/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html#index/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html#\/reg/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html#reg/g,"m.html");
+ //  pageUrl=pageUrl.replace(/index.html/g,"m.html");
+	//fntA.gameLevel = 1;
 	fntA.shakerecord = 0;  
   fntA.gameOn = false ;
   fntA.gameOn = false ;

@@ -19,7 +19,6 @@ body {
 .frame { display: none; position: relative; margin:0; padding: 0px; min-height: 462px; height: 100%; width: 320px; margin: 0 auto;}
 .subframe {display: none; height: 100%;min-height: 440px; }
 .frame .subframe:first-child { display: block;}
-
 .logo { background: url('../img/s_bg_logo.png') 6px 0px no-repeat; position: absolute; display: block; top: 0px; left:0px; width: 80px; height: 70px; background-size: 59px 48px; z-index: 200; }
 /*runningbox*/
 .runningbox .player { width: 68px; height: 133px; background: url('../img/player/player_a.png') 0px 0px no-repeat; position: absolute; display: block; top: 250px; left:130px; }
@@ -45,8 +44,6 @@ body {
 .levelbox .levelnav span { width: 87px; height: 86px; background: url('../img/s_btn_l1.png') center center  no-repeat; background-size: 60px 63px; display: block;}
 .levelbox .levelnav a.level02 span { background-image:url('../img/s_btn_l2.png'); }
 .levelbox .levelnav a.level03 span { background-image:url('../img/s_btn_l3.png'); }
-
-
 /*energybox*/
 .energybox { }
 .energybox_on { background:url('../img/s_bg_dark.jpg') no-repeat; background-size: 320px 464px;}
@@ -87,12 +84,15 @@ body {
 .mi { color: #cc0000; font-weight: bold; font-size: 30px; padding: 58px 0 0 30px; width: 120px; text-align: right; }
 .px { color: #ffffff; font-weight: bold; font-size: 26px; width: 72px; padding: 10px 0 0 90px; text-align: center; }
 .cp { color: #000; font-weight: bold; font-size: 13px; width: 162px; padding: 147px 0 0 76px; text-align: left;}
-
-
 .debuginfo { color: #fff;}
-
-
-.horizontal {display: none; width: 100%; height: 100%; min-height: 320px; background: #1b1b1b; opacity: 0.9; position: fixed; bottom: 0; left: 0; padding-top: 60px; z-index: 9999; color: #fff; font-size: 200%; line-height: 320px; text-align: center;}
-@media screen and (min-width:568px) and (max-width:639px) {
-  .horizontal { display: block}
+.horizontal {display: none; width: 100%; height: 100%; min-height: 320px; background: #1b1b1b; opacity: 0.9; position: absolute; bottom: 0; left: 0; padding-top:0; z-index: 9999; color: #fff; font-size: 140%; line-height: 40px; text-align: center;}
+.horizontal .content { padding-top: 100px;}
+@media screen and (min-width:360px) and (max-width:440px) {
+  .mask {  left:85px; }
+  .logo { left:40px; }
+  body { background-size: 420px 580px; }
+}
+@media screen and (min-width:440px) and (max-width:639px) {
+  .horizontal { display: block; position: relative; width: 400px; margin: 0 auto;}
+  #pagebody { display: none;}
 }

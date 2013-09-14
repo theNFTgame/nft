@@ -1,25 +1,39 @@
 <?php
-  $user_id = '';
-  $user_name = '';
-  $user_avatar = '';
+if(isset($_REQUEST['uid'])){
+    $url = 'game.php';
+    $user_id = '';
+    $user_name = '';
+    $user_avatar = '';
 
-  $key = 'explorer1234!@';
-  $request_user_id = urldecode($_REQUEST['uid']);
-  $request_user_name = urldecode($_REQUEST['name']);
-  $request_user_avatar = urldecode($_REQUEST['head']);
-  $sign = $_REQUEST['sign'];
-  $expected_key = md5($request_user_id.$request_user_name.$request_user_avatar.$key);
-  //echo $request_user_id.$request_user_name.$request_user_avatar.$key;
-  //echo $expected_key;
-  if($expected_key == $sign || strtoupper($expected_key) == $sign){
-      $user_id = $request_user_id;
-      $user_name = $request_user_name;
-	  $user_avatar = $request_user_avatar;
-  }
-    /* 用$user_id 和 $user_name判断 
-    echo $user_id;
-    echo $user_name;
-    echo $user_avatar;*/
+    $key = 'explorer1234!@';
+    $request_user_id = urldecode($_REQUEST['uid']);
+    $request_user_name = urldecode($_REQUEST['name']);
+    $request_user_avatar = urldecode($_REQUEST['head']);
+    $sign = $_REQUEST['sign'];
+    $expected_key = md5($request_user_id.$request_user_name.$request_user_avatar.$key);
+    //echo $request_user_id.$request_user_name.$request_user_avatar.$key;
+    //echo $expected_key;
+    if($expected_key == $sign || strtoupper($expected_key) == $sign){
+        $user_id = $request_user_id;
+        $user_name = $request_user_name;
+        $user_avatar = $request_user_avatar;
+    }
+    session_start();
+    $_SESSION['user_id'] = $user_id;
+    $_SESSION['user_name'] = $user_name;
+    $_SESSION['user_avatar'] = $user_avatar;
+    header("Location: $url");
+}
+else{
+    session_start();
+    /* 用$user_id 和 $user_name判断 */
+    $user_id =  $_SESSION['user_id'];
+    $user_name =  $_SESSION['user_name'];
+    $user_avatar = $_SESSION['user_avatar'];
+    //echo $user_id;
+    //echo $user_name;
+    //echo $user_avatar;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,9 +44,22 @@
 
     <link rel="stylesheet" href="css/mt.css" media="screen" type="text/css" />
     <meta name="author" content="Vitrum.Zhu" />
+    <script type="text/javascript">
+      var _smq = _smq || [];
+      _smq.push(['_setAccount', '18A1A3A5', new Date()]);
+      _smq.push(['_setDirectoryIndex', '']);
+      _smq.push(['_setClickTimeOut', 200]);
+      _smq.push(['pageview']);
+
+      (function() {
+      var sm = document.createElement('script'); sm.type = 'text/javascript'; sm.async = true;
+      sm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdnmaster.com/sitemaster/sm.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sm, s);
+      })();
+    </script>
   </head>
   <body>
-      <div class="userinfo" style="dislpay:none" data-userid="<%php echo $user_id; %>" data-username="<%php echo $user_name; %>" data-avatar="<%php echo $user_avatar; %>" ></div>
+      <div class="userinfo" style="dislpay:none" data-userid="<?php echo $user_id; ?>" data-username="<?php echo $user_name; ?>" data-avatar="<?php echo $user_avatar; ?>" ></div>
       <section id="intro" class="clearfix frame homepage">
         <div class="minisite">
           <div class="sitemask"></div>
@@ -88,8 +115,8 @@
             <!-- <a class="startrun">Start Run!</a> -->
             <div class="header">
               <div class="playerinfo playerinfoa">
-                <img src="img/player/default.jpg" />
-                <span class="playername yahei">Mr_阿温</span>
+                <img src="<?php echo $user_avatar; ?>" />
+                <span class="playername yahei"><?php echo $user_name; ?></span>
                 <span class="playrecord"></span>
               </div>
               <div class="playerinfo playerinfob">
@@ -121,16 +148,16 @@
             <div class="submask countdown">
             </div>
             <div class="submask winwithpoint">
-              <a class="playagain" href="#/run/replay" title="再战一场">再战一场</a>
-              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e6%88%91%e5%88%9a%e5%ae%8c%e6%88%90%e4%ba%86%e4%b8%80%e6%ac%a1%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e5%9c%a8%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e4%b8%ad%e8%b6%85%e8%b6%8a%e4%ba%86%e5%af%b9%e6%89%8b%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fwww.quyeba.com%2fexplorer%2f%23_challenge&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩">分享成绩</a>
+              <a class="playagain" href="#/run/replay" title="再战一场" onclick=”_smq.push(['custom','完成游戏','再战一场']);”>再战一场</a>
+              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e6%88%91%e5%88%9a%e5%ae%8c%e6%88%90%e4%ba%86%e4%b8%80%e6%ac%a1%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e5%9c%a8%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e4%b8%ad%e8%b6%85%e8%b6%8a%e4%ba%86%e5%af%b9%e6%89%8b%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fc.admaster.com.cn%2fc%2fa15084%2cb200252008%2cc1620%2ci0%2cm101%2ch&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩" onclick=”_smq.push(['custom','完成游戏','分享成绩']);”>分享成绩</a>
             </div>
             <div class="submask winwithoutpoint">
-              <a class="playagain" href="#/run/replay" title="再战一场">再战一场</a>
-              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e6%88%91%e5%88%9a%e5%ae%8c%e6%88%90%e4%ba%86%e4%b8%80%e6%ac%a1%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e5%9c%a8%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e4%b8%ad%e8%b6%85%e8%b6%8a%e4%ba%86%e5%af%b9%e6%89%8b%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fwww.quyeba.com%2fexplorer%2f%23_challenge&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩">分享成绩</a>
+              <a class="playagain" href="#/run/replay" title="再战一场" onclick=”_smq.push(['custom','完成游戏','再战一场']);”>再战一场</a>
+              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e6%88%91%e5%88%9a%e5%ae%8c%e6%88%90%e4%ba%86%e4%b8%80%e6%ac%a1%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e5%9c%a8%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e4%b8%ad%e8%b6%85%e8%b6%8a%e4%ba%86%e5%af%b9%e6%89%8b%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fc.admaster.com.cn%2fc%2fa15084%2cb200252008%2cc1620%2ci0%2cm101%2ch&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩" onclick=”_smq.push(['custom','完成游戏','分享成绩']);”>分享成绩</a>
             </div>
             <div class="submask lost">
-              <a class="playagain" href="#/run/replay" title="再战一场">再战一场</a>
-              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e5%8f%aa%e5%b7%ae%e4%b8%80%e7%82%b9%e6%88%91%e5%b0%b1%e8%83%bd%e5%ae%8c%e6%88%90%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e6%88%91%e8%bf%98%e8%a6%81%e5%86%8d%e6%88%98%e4%b8%80%e6%ac%a1%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fwww.quyeba.com%2fexplorer%2f%23_challenge&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩">分享成绩</a>
+              <a class="playagain" href="#/run/replay" title="再战一场"  onclick=”_smq.push(['custom','完成游戏','再战一场']);” >再战一场</a>
+              <a class="gameshear" href="http://service.weibo.com/share/share.php?title=%e5%8f%aa%e5%b7%ae%e4%b8%80%e7%82%b9%e6%88%91%e5%b0%b1%e8%83%bd%e5%ae%8c%e6%88%90%ef%bc%83%e6%96%b0%e6%8e%a2%e7%b4%a2%e5%ae%a2%ef%bc%83%e6%8c%91%e6%88%98%ef%bc%8c%e6%88%91%e8%bf%98%e8%a6%81%e5%86%8d%e6%88%98%e4%b8%80%e6%ac%a1%ef%bc%81%40TheNorthFace+%e6%8e%a2%e7%b4%a2%e6%8c%91%e6%88%98%e4%b9%8b%e7%96%af%e7%8b%82%e8%b6%8a%e9%87%8e%e8%b7%91%e7%ad%89%e4%bd%a0%e6%9d%a5%e6%88%98%ef%bc%81%e5%bc%80%e5%90%af%e5%8f%8c%e5%b1%8f%e7%ab%9e%e8%b5%9b%e6%a8%a1%e5%bc%8f%ef%bc%8c%e4%b8%8e%e8%99%9a%e6%8b%9f%e8%b7%91%e8%80%85%e4%b8%80%e8%be%83%e9%ab%98%e4%b8%8b%ef%bc%8c%e6%b5%b7%e9%87%8f%e6%8e%a2%e7%b4%a2%e8%a3%85%e5%a4%87%e7%ad%89%e4%bd%a0%e8%b5%a2%e5%8f%96%e3%80%82&url=http%3a%2f%2fc.admaster.com.cn%2fc%2fa15084%2cb200252008%2cc1620%2ci0%2cm101%2ch&source=bookmark&appkey=&ralateUid=&pic=http%3a%2f%2fwww.quyeba.com%2fevent%2fexplorerchallenge%2fimg%2fshear.jpg" target="_blank" title="分享成绩"  onclick=”_smq.push(['custom','完成游戏','分享成绩']);” >分享成绩</a>
             </div>
             <div class="submask loading">
               
@@ -140,8 +167,8 @@
       </section>
       <div class="lefticon"></div>
       <div class="righticon">
-        <a class="link link_home" href="http://www.thenorthface.com.cn/explorer/" title="返回首页">返回首页</a>
-        <a class="link link_store" href="http://www.thenorthface.com.cn/" title="官方商城">官方商城</a>
+        <a class="link link_home" href="http://www.thenorthface.com.cn/explorer/" title="返回首页"  onclick=”_smq.push(['custom','右侧栏','返回首页']);;”>返回首页</a>
+        <a class="link link_store" href="http://www.thenorthface.com.cn/" title="官方商城"  onclick=”_smq.push(['custom','右侧栏','官方商城']);” >官方商城</a>
       </div>
     </div>
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>

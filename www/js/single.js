@@ -146,7 +146,7 @@ function postGameRecordSingle(record){
   ​
   如果没有获奖则coupon_code为空。
   */
-  var postData = 'game_type=1&score='+record ;
+  var postData = 'type=1&score='+record ;
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/';
   console.log(postData);
 
@@ -171,7 +171,7 @@ function postGameRecordSingle(record){
 }
 //game/reward
 function postGameRewardSingle(record){ 
-  var postData = 'game_type=1&score='+record + '&game_id=' + fntA.game_id;
+  var postData = 'type=1&score='+record + '&game_id=' + fntA.game_id;
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/';
   console.log(postData);
 

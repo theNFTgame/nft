@@ -403,7 +403,7 @@ function fntRun(){
     
     //the hard game level
     var defLevel = fRandomBy(1,100);
-    if(defLevel>29){
+    if(defLevel>39){
       fntA.gameLevel = 2;
     }else{
       fntA.gameLevel = 1;
@@ -493,9 +493,9 @@ function fntRun(){
     function start() {
       
       fntA.moveA = 1;
-      fntA.moveB = 5;
+      fntA.moveB = 20;
       fntA.allmoveA = 0;
-      fntA.allmoveB = 0;
+      fntA.allmoveB = 80;
       fntA.alltimes = 0;
       fntA.alltimesB = 0;
       fntA.shakeEng = 0;
@@ -643,24 +643,51 @@ function fntRun(){
       }
       //Game AI
       if(fntA.gameLevel ===1 ){
-        if( (fntA.allmoveA - fntA.allmoveB) >20 ){
-          fntA.moveB = fntA.moveB * 1.05;
-        }
-        if( (fntA.allmoveB - fntA.allmoveA) >100 ){
-          fntA.moveB = fntA.moveB * 0.9992;
-        }
-        fntA.moveB = Math.min( 12, Math.max(10,fntA.moveB));
+        if (fntA.allmoveB < 2000) {
+          if( (fntA.allmoveA - fntA.allmoveB) >200 ){
+            fntA.moveB = fntA.moveB * 1.05;
+            fntA.moveB = Math.min( 16, Math.max(12,fntA.moveB));
+          }
+          if( (fntA.allmoveB - fntA.allmoveA) >100 ){
+            fntA.moveB = fntA.moveB * 0.9992;
+            fntA.moveB = Math.min( 18, Math.max(5,fntA.moveB));
+          }
+        }else{
+          if( (fntA.allmoveA - fntA.allmoveB) >1000 ){
+            fntA.moveB = fntA.moveB * 1.05;
+            fntA.moveB = Math.min( 14, Math.max(8,fntA.moveB));
+          }
+          if( (fntA.allmoveB - fntA.allmoveA) >100 ){
+            fntA.moveB = fntA.moveB * 0.9992;
+            fntA.moveB = Math.min( 12, Math.max(5,fntA.moveB));
+          }
+          fntA.moveB = Math.min( 14, Math.max(5,fntA.moveB));
+        };
+        
+        
       }else if(fntA.gameLevel ===2){
-        if( (fntA.allmoveA - fntA.allmoveB) >5 ){
-          fntA.moveB = fntA.moveB * 1.05;
+        if (fntA.allmoveB < 1600) {
+          if( (fntA.allmoveA - fntA.allmoveB) >200 ){
+            fntA.moveB = fntA.moveB * 1.05;
+            fntA.moveB = Math.min( 16, Math.max(12,fntA.moveB));
+          }
+          if( (fntA.allmoveB - fntA.allmoveA) >100 ){
+            fntA.moveB = fntA.moveB * 0.9992;
+            fntA.moveB = Math.min( 18, Math.max(5,fntA.moveB));
+          }
+        }else{
+          if( (fntA.allmoveA - fntA.allmoveB) >5 ){
+            fntA.moveB = fntA.moveB * 1.05;
+          }
+          if( (fntA.allmoveA - fntA.allmoveB) >150 ){
+            fntA.moveB = fntA.moveB * 1.29;
+          }
+          if( (fntA.allmoveB - fntA.allmoveA) >200 ){
+            fntA.moveB = fntA.moveB * 0.9992;
+          }
+          fntA.moveB = Math.min( 14, Math.max(6,fntA.moveB));
         }
-        if( (fntA.allmoveA - fntA.allmoveB) >250 ){
-          fntA.moveB = fntA.moveB * 1.29;
-        }
-        if( (fntA.allmoveB - fntA.allmoveA) >1000 ){
-          fntA.moveB = fntA.moveB * 0.9992;
-        }
-        fntA.moveB = Math.min( 13, Math.max(6,fntA.moveB));
+ 
       }
       // var tmpPlayerTopa , tmpPlayerTopb;
       // tmpPlayerTopa = 320 - fntA.moveA*8;
@@ -745,7 +772,7 @@ function fntRun(){
           fntA.moveA = 2;
         }
         if(fntA.shakeEng<30){
-          fntA.shakeEng = fntA.shakeEng + 8 ;
+          fntA.shakeEng = fntA.shakeEng + 6 ;
         }
 
         break;

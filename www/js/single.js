@@ -288,10 +288,10 @@ function fntRun(){
         if (i === 24){
           fntA.mapArr.push(fntA.imgArr[9]);
           fntA.mapPathArr.push(fntA.pathArr[9]);
-        }else if (i === 17){
+        }else if (i === 20){
           fntA.mapArr.push(fntA.imgArr[10]);
           fntA.mapPathArr.push(fntA.pathArr[10]);
-        }else if (i === 13){
+        }else if (i === 16){
           fntA.mapArr.push(fntA.imgArr[11]);
           fntA.mapPathArr.push(fntA.pathArr[11]);
         }else if (i === 0){
@@ -302,17 +302,17 @@ function fntRun(){
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i>17 && i<24){
+        }else if (i>20 && i<24){
           var txt = fntA.imgArr[fRandomBy(3,5)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i<17 && i > 13){
+        }else if (i<20 && i > 16){
           var txt = fntA.imgArr[fRandomBy(6,8)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
             fntA.mapPathArr.push(txt);
-        }else if (i< 13){
+        }else if (i< 16){
           var txt = fntA.imgArr[fRandomBy(0,2)]
             fntA.mapArr.push(txt);
             txt = txt.replace(/jpg/g,"gif");
@@ -320,7 +320,7 @@ function fntRun(){
         }
       }
     }
-      // console.log(fntA.mapArr);
+       console.log(fntA.mapArr);
       // console.log(fntA.mapPathArr);
       // console.log(fntA.mapArr.length + ',' + fntA.mapPathArr.length + ',fntA.mapitem:' + fntA.mapitem);
 
@@ -356,8 +356,8 @@ function fntRun(){
     }
     function wayRoll(e) {
       //console.log('in='+e);
-      if((e+5) > fntA.mapitem ){
-        e = (e+5) % fntA.mapitem;
+      if((e+1) > fntA.mapitem ){
+        e = (e+1) % fntA.mapitem;
       }
       //console.log('out='+e);
       return e;
@@ -381,7 +381,7 @@ function fntRun(){
         y0 = Math.min(y1,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image0.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))]; 
-        // console.log("y0 new image:" + fntA.image0.src + ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+         console.log("y0 new image:" + fntA.image0.src + ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path0.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
         // console.log(fntA.path0.src);
       }  
@@ -389,7 +389,7 @@ function fntRun(){
         y1 = Math.min(y0,y2) - fntA.h;
         fntA.alltimes++;
         fntA.image1.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        // console.log("y1 new image:" + fntA.image1.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+         console.log("y1 new image:" + fntA.image1.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path1.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
         // console.log(fntA.path1.src);
       }  
@@ -397,7 +397,7 @@ function fntRun(){
         y2 = Math.min(y0,y1) - fntA.h;
         fntA.alltimes++; 
         fntA.image2.src = fntA.mapArr[wayRoll((Number(fntA.alltimes)+3))];
-        // console.log("y2 new image:" + fntA.image2.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
+         console.log("y2 new image:" + fntA.image2.src+ ",imageitem:"+ wayRoll((Number(fntA.alltimes)+3)) +",fntA.alltimes:"+fntA.alltimes);
         fntA.path2.src = fntA.mapPathArr[wayRoll((Number(fntA.alltimes)+3))];
         // console.log(fntA.path2.src);
       } 

@@ -268,8 +268,8 @@ function fntRun(){
     if (fntA.gameLevel==2){
       for (var i = fntA.mapitem - 1; i >= 0; i--) {
         if (i === 24){
-          fntA.mapArr.push(fntA.imgArr[10]);
-          fntA.mapPathArr.push(fntA.pathArr[10]);
+          fntA.mapArr.push(fntA.imgArr[9]);
+          fntA.mapPathArr.push(fntA.pathArr[9]);
         }else if ( i > 24){
           var txt = fntA.imgArr[fRandomBy(0,2)]
             fntA.mapArr.push(txt);

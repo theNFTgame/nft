@@ -64,7 +64,7 @@ else{
         <div class="minisite">
           <div class="sitemask"></div>
           <div class="iframbox">
-            <iframe src="http://www.quyeba.com/explorer/#_challenge" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+            <iframe src="" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
           </div>
         </div>
         <div class="acountbox">

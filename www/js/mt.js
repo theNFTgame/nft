@@ -20,9 +20,12 @@ var AppRouter = Backbone.Router.extend({
       //router.navigate('run');
       showSubFrame('runbox','qrcodebox');
       fntRun();
+      $('.iframbox iframe').attr('src','');
     }else{
       showSubFrame('homepage','loginbox');
       $('.errormsg').hide();
+      $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
+      //http://www.quyeba.com/explorer/#_challenge
     }
   }, 
   regfunc : function() {
@@ -41,6 +44,7 @@ var AppRouter = Backbone.Router.extend({
       router.navigate('index');
       showFrame('homepage');
       showSubFrame('homepage','loginbox');
+      $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
     }else{
       // console.log(action);
       if(action == 'replay'){
@@ -56,6 +60,7 @@ var AppRouter = Backbone.Router.extend({
       }
       showSubFrame('runbox','qrcodebox');
       fntRun();
+      $('.iframbox iframe').attr('src','');
     }
   },
   renderError : function(error) {  
@@ -403,7 +408,7 @@ function fntRun(){
     
     //the hard game level
     var defLevel = fRandomBy(1,100);
-    if(defLevel>39){
+    if(defLevel>60){
       fntA.gameLevel = 2;
     }else{
       fntA.gameLevel = 1;

@@ -146,7 +146,7 @@ function postGameRecordSingle(record){
   ​
   如果没有获奖则coupon_code为空。
   */
-  var postData = 'type=1&score='+record ;
+  var postData = 'game_type=1&score='+record ;
   var tempIp = 'http://www.quyeba.com/event/explorerchallenge/';
   console.log(postData);
 
@@ -249,7 +249,7 @@ function fntRun(){
   fntA.mapArr = [];
   fntA.mapPathArr = [];
 
-  funMapload();
+  //funMapload();
 
   function runInit() {
     ctx0 =  document.getElementById('canvas').getContext('2d');
@@ -483,7 +483,15 @@ function loadPower(secs) {
 
     window.addEventListener('shake', shakeEventDidOccur, false);
 	  //define a custom method to fire when shake occurs.
-
+    //preload image
+    funMapload();
+    var loadImage = fntA.imgArr.length;
+    for (var i = 0; i < loadImage - 1 ; i++) {
+      var loadImageSrc = new Image();
+      loadImageSrc.src = fntA.imgArr[i];
+      var cpx0 =  document.getElementById('path1').getContext('2d');
+      cpx0.drawImage(loadImageSrc,0,-500,1,1); 
+    };
 }
 
 function doUpdateTime(num) {

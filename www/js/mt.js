@@ -21,10 +21,12 @@ var AppRouter = Backbone.Router.extend({
       showSubFrame('runbox','qrcodebox');
       fntRun();
       $('.iframbox iframe').attr('src','');
+      _smq.push(['pageview', '/qrcode', '扫描二维码']);
     }else{
       showSubFrame('homepage','loginbox');
       $('.errormsg').hide();
       $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
+      _smq.push(['pageview', '/login', '登陆']);
       //http://www.quyeba.com/explorer/#_challenge
     }
   }, 
@@ -32,6 +34,7 @@ var AppRouter = Backbone.Router.extend({
   	//alert("111");
   	//console.log('levelfunc'); 
   	showSubFrame('homepage','registerbox');
+    _smq.push(['pageview', '/reg', '注册']);
   }, 
   shakefunc : function (level){
   	if(!level){ fntA.level = 1 };
@@ -45,6 +48,7 @@ var AppRouter = Backbone.Router.extend({
       showFrame('homepage');
       showSubFrame('homepage','loginbox');
       $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
+      _smq.push(['pageview', '/login', '登陆']);
     }else{
       // console.log(action);
       if(action == 'replay'){
@@ -57,10 +61,13 @@ var AppRouter = Backbone.Router.extend({
         $('.gamemask .countdown').html('');
         var ctxMini =  document.getElementById('minimap').getContext('2d');
         ctxMini.clearRect(0,0,320,456);
+        _smq.push(['pageview', '/replay', '再战一次']);
       }
       showSubFrame('runbox','qrcodebox');
       fntRun();
-      $('.iframbox iframe').attr('src','');
+      $('.iframbox').html('');
+      //$('.iframbox iframe').attr('src','');
+      _smq.push(['pageview', '/run', '跑步']);
     }
   },
   renderError : function(error) {  
@@ -334,6 +341,8 @@ function fntRun(){
   fntA.allmoveB = 0;
   fntA.alltimes = 0;
   fntA.mapitem = 40;
+
+  $('.iframbox iframe').remove();
 
   funMapload();
   function countdownNewTime(secs) {

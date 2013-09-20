@@ -1,5 +1,6 @@
 
 var fntA = new Object();
+fntA.key = NewGuid();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
     '' : 'mainfunc', 
@@ -13,7 +14,7 @@ var AppRouter = Backbone.Router.extend({
     //  console.log('mainfunc'); 
     var echoUid = $('.userinfo').attr('data-userid');
     var echoName = $('.userinfo').attr('data-username');
-    console.log(echoUid);
+    // console.log(echoUid);
     if(echoUid !==''){
       fntA.playerId = echoUid;
       fntA.playername = echoName;
@@ -639,7 +640,7 @@ function fntRun(){
       if (fntA.allmoveA===fntA.allmoveB){fntA.allmoveA=fntA.allmoveA+1;}
       $(".playerinfoa .playrecord").html(fntA.allmoveA + '米');
       $(".playerinfob .playrecord").html(fntA.allmoveB + '米');
-      console.log('fntA.shakeEng:' + fntA.shakeEng + ',fntA.moveA:' + fntA.moveA + ',fntA.allmoveA:' + fntA.allmoveA + ',fntA.gameLevel:' + fntA.gameLevel);
+      // console.log('fntA.shakeEng:' + fntA.shakeEng + ',fntA.moveA:' + fntA.moveA + ',fntA.allmoveA:' + fntA.allmoveA + ',fntA.gameLevel:' + fntA.gameLevel);
 
       //game resort
       if( fntA.gameFinish ){
@@ -750,13 +751,20 @@ function fntRun(){
       stop();
     });
   // NodeJS Server
-  var nodejs_server = "222.73.241.58:8081";
+  var nodejs_server = "222.73.241.58:8082";
   // connect
   var socket = io.connect("http://" + nodejs_server);
 
+  socket.emit("send", {
+      key: fntA.key,
+      act: "pcenter"
+  });
+
+
+
   socket.on("get_response", function (b) {
     var combine = b.key + "_" + b.act;
-    //console.log(combine);
+    // console.log(combine);
     switch (combine) {
       // when open m.page，call enter event，then show the game
       case fntA.key + "_enter":
@@ -801,8 +809,9 @@ function shakeEventDidOccur() {
 
 
 $(document).ready(function(){
-	fntA.key = NewGuid();
-	var pageUrl = 'http://www.quyeba.com/event/explorerchallenge/m.html'; //window.location.href;
+	
+	 var pageUrl = 'http://www.quyeba.com/event/explorerchallenge/m.html'; 
+ //  var pageUrl = window.location.href;
 	// pageUrl=pageUrl.replace(/index.html#\/run/g,"m.html");
  //  pageUrl=pageUrl.replace(/index.html#run/g,"m.html");
  //  pageUrl=pageUrl.replace(/index.html#\/index/g,"m.html");

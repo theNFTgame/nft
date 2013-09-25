@@ -9,7 +9,7 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
 	<meta name="author" content="Vitrum.Zhu" />
 	<script type="text/javascript" src="js/lib/zepto.min.js"></script>
-	<script src="http://222.73.241.58:8081/socket.io/socket.io.js" type="text/javascript"></script>
+	<script src="http://222.73.241.60:8082/socket.io/socket.io.js" type="text/javascript"></script>
 	<script type="text/javascript" src="js/shake.js"></script>
 	<style>
 	/* CSS Mobile Reset */
@@ -71,7 +71,7 @@ a { color: #3c3c3c; text-decoration: underline;}
 	$(document).ready(function() {
 		var theKey = getQueryStringRegExp('key');
 
-		var socket = io.connect("http://222.73.241.58:8082");
+		var socket = io.connect("http://222.73.241.60:8082");
 
 		var shakerecord = 0;
 

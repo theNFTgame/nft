@@ -174,7 +174,7 @@ else{
     <script type="text/javascript" src="js/lib/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/backbone-min.js"></script>
-    <script src="http://222.73.241.58:8081/socket.io/socket.io.js" type="text/javascript"></script>
+    <script src="http://222.73.241.60:8082/socket.io/socket.io.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/mt.js"></script>
     <script type="text/javascript" src="http://www.quyeba.com/sites/all/libraries/js/s_code.js?men2yk"></script>
   <!-- SiteCatalyst code version: H.25.2. Copyright 1996-2013 Adobe, Inc. All Rights Reserved More info available at http://www.omniture.com -->

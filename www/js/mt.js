@@ -751,7 +751,7 @@ function fntRun(){
       stop();
     });
   // NodeJS Server
-  var nodejs_server = "222.73.241.58:8082";
+  var nodejs_server = "222.73.241.60:8082";
   // connect
   var socket = io.connect("http://" + nodejs_server);
 

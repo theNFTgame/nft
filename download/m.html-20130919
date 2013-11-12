@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="去野吧是The North Face®品牌精心为你打造的一站式购买，分享，摄影，旅游，户外的平台。这里还有最新的社交机制，你向寻找自己，贴近自然踏出的每一步，The North Face®都准备了惊喜和激励，与你的户外旅程一起成长。" />
+    <title>TheNorthFace</title>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+	<meta name="author" content="Vitrum.Zhu" />
+	<script type="text/javascript" src="js/lib/zepto.min.js"></script>
+	<script src="http://222.73.241.58:8081/socket.io/socket.io.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/shake.js"></script>
+	<style>
+	/* CSS Mobile Reset */
+html, body
+{
+ margin: 0;
+ padding: 0; 
+ border: 0;
+}
+body 
+{
+ font-family:Arial,  sans-serif;
+ line-height:1.5;
+ font-size:16px;
+ color: #000;
+ word-wrap: break-word;
+ -webkit-text-size-adjust: none;
+ height: 100%;
+ min-height: 510px;
+ background:#fcfcfc url(img/m_bg.jpg) top center no-repeat;
+ background-size: 320px 510px;
+}
+h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
+p img { float: left; margin: 0 10px 5px 0; padding: 0; }
+li {list-style-type: none;}
+img { border: 0; max-width: 100%; }
+table { width:auto; border-collapse: collapse;border-spacing: 0; }
+a { color: #3c3c3c; text-decoration: underline;}
+/** @group core body **/  
+.gameinfo { width: 320px; height: 366px;  margin: 0 auto;background-size: 320px 462px;}
+.gamestart {}
+@media screen and (min-width:321px) and (max-width:360px) {
+  body {background-size: 360px 520px;}
+}
+
+
+	</style>
+	<script type="text/javascript">
+	  var _smq = _smq || [];
+	  _smq.push(['_setAccount', '18A1A3A5', new Date()]);
+	  _smq.push(['_setDirectoryIndex', '']);
+	  _smq.push(['_setClickTimeOut', 200]);
+	  _smq.push(['pageview']);
+
+	  (function() {
+	  var sm = document.createElement('script'); sm.type = 'text/javascript'; sm.async = true;
+	  sm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdnmaster.com/sitemaster/sm.js';
+	  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sm, s);
+	  })();
+	</script>
+	<script type="text/javascript">
+
+
+	function getQueryStringRegExp(name)
+	{
+		var reg = new RegExp("(^|\\?|&)"+ name +"=([^&]*)(\\s|&|$)", "i");  
+		if (reg.test(location.href)) return unescape(RegExp.$2.replace(/\+/g, " ")); return "";
+	};
+	$(document).ready(function() {
+		var theKey = getQueryStringRegExp('key');
+
+		var socket = io.connect("http://222.73.241.58:8081");
+
+		var shakerecord = 0;
+
+		"undefined" != typeof console && console.log("user enter via mobile");
+
+		"undefined" != typeof console && console.log("enter mobile page");
+		socket.emit("send", {
+			key: theKey,
+			act: "enter"
+		});
+
+		function shakeEventDidOccur () {
+			"undefined" != typeof console && console.log("send change color command");
+			socket.emit("send", {
+				key: theKey,
+				act: "changebg"
+			});
+			// if(shakerecord ==5){
+			// 	$('.gameinfo').addClass('gamestart');
+			// }
+			shakerecord = shakerecord +1 ;
+		}
+		function loadPower(secs) {
+			secs = Number(secs);
+			window.addEventListener('shake', shakeEventDidOccur, false);
+
+    }
+    loadPower(10);
+	})
+</script>
+</head>
+<body>
+	<div class="gameinfo">
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+

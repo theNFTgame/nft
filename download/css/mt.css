@@ -1,0 +1,196 @@
+/* CSS Mobile Reset */
+html, body {
+ margin: 0;
+ padding: 0; 
+ border: 0;
+}
+body {
+    font-family:Arial, "Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu, sans-serif;
+    line-height:1.5;
+    font-size:16px;
+    color: #000;
+    word-wrap: break-word;
+    -webkit-text-size-adjust: none;
+    height: 100%;
+    min-height: 500px;
+    background:#fcfcfc url(../img/bg_home.jpg) no-repeat center center fixed;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+h1, h2, h3, h4, h5, h6{ font-weight: normal; padding: 0; margin: 0; }
+p img { margin: 0 ; padding: 0; }
+li {list-style-type: none;}
+img { border: 0; max-width: 100%; }
+table { width:auto; border-collapse: collapse;border-spacing: 0; }
+a { color: #3c3c3c; text-decoration: underline;}
+ul{
+    -webkit-margin-before: 0em;
+-webkit-margin-after: 0em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+-webkit-padding-start: 0px;
+
+}
+.yahei {font-family:"Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu}
+/** @group core body **/  
+#pagebody {  
+    position: relative;
+    width: 928px;  
+    background: url(../img/bg_home2.png) 86px 10px no-repeat;
+    display: block; 
+    margin: 0 auto; 
+    /*overflow: hidden;*/
+}  
+.txt {
+	padding: 10px 0;
+}
+#menu-btn { 
+	width: 40px; height: 40px; display: block; float:left;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	background-color: #60b044;
+	background-image: -moz-linear-gradient(#8add6d, #60b044);
+	background-image: -webkit-linear-gradient(#8add6d, #60b044);
+	background-image: linear-gradient(#8add6d, #60b044);
+	background-repeat: repeat-x;
+	border-color: #5ca941;
+}
+/**/
+#pagebody section {   }
+.frame {display: none; position: relative;  padding: 34px 0 0 68px; width: 780px; height: 600px; margin: 0 auto; }
+.subframe {display: none;}
+.frame .subframe:first-child { display: block;}
+
+/**/
+#qrcode { width: 338px; height: 338px; text-align: center; line-height: 338px;
+    background: url(../img/qr_bg.png) no-repeat; padding-top: 10px; margin: 20px auto 0;
+}
+#qrcode img { width: 320px; height: 320px; }
+.qrcodebox {}
+.qrcodebox .qrinfo { width: 610px; height: 162px; background: url(../img/qr_info.png) no-repeat; margin: 0 auto;}
+
+/*runningbox*/
+.runningbox { width: 760px; height: 534px; position: relative; margin: 10px auto;}
+.runningbox .header { width: 760px; height: 59px; position: relative; overflow: hidden;}
+
+.header .playerinfo { width: 300px; height: 50px; float: left; line-height: 20px; }
+.header .playerinfo img { float: left; width: 50px; height: 50px; margin-right: 10px;}
+
+.header .playerinfob { float: right; text-align: right; }
+.header .playerinfob img { float: right; margin: 0 0 0 10px; }
+.header .playrecord { font-size: 140%; color: red; display: block; line-height: 32px;}
+
+/*gametime*/
+.gametime { width: 105px; height: 50px; background: url(../img/header_time_bg.jpg) no-repeat; position: absolute; top: 0; left: 327px; font-size: 32px;
+line-height: 50px; text-align: center; color: #fff;}
+
+/**/
+.runningbox .map { padding: 10px 0 0 10px; background: url(../img/mt_run_bg.jpg) no-repeat; width: 760px; height: 475px;}
+.runningbox .map canvas { display: block; float: left;}
+#minimap {width: 100px; height: 456px; background: url(../img/bg_minmap.jpg) no-repeat;}
+/**/
+.runningbox .player { width: 68px; height: 133px; background: url('../img/player/player_a.png') 0px 0px no-repeat; position: absolute; display: block; top: 320px; left:148px; }
+.runningbox .playerb { left:564px; background: url('../img/player/player_b.png') 0px 0px no-repeat;}
+.runningbox .running {     
+    -webkit-animation: play .8s steps(6) infinite;
+            animation: play .8s steps(6) infinite;
+}
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -400px; }
+}
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -400px; }
+}
+
+
+/**/
+.maskbox { display: none; }
+.gamemask { width: 760px; height: 475px; position: absolute; top: 104px; left: 78px; background: url(../img/bg_gamemask.png); }
+.submask { display: none; width: 370px; height: 260px; margin: 100px auto 0; background: #fff; opacity: 1; }
+.gamemask .connection { background: url(../img/bg_howplay.jpg) no-repeat;}
+.gamemask .howplay { background: url(../img/bg_connection.jpg) no-repeat;}
+.gamemask .countdown { background: url(../img/bg_countdown.jpg) no-repeat; font-weight: bold; font-size: 40px; color: #fff; text-align: center; line-height: 200px;}
+.gamemask .countdown .pao { width: 370px; height: 260px; background: url(../img/bg_countdown_pao.png) center center no-repeat;}
+
+.gamemask .winwithpoint { width:440px; height:350px; background: url(../img/bg_winwithpoint.jpg) no-repeat;margin-top: 60px;}
+.gamemask .winwithoutpoint { width:440px; height:350px; background: url(../img/bg_winwithoutpoint.jpg) no-repeat;margin-top: 60px;}
+.gamemask .lost { width:440px; height:350px; background: url(../img/bg_lost.jpg) no-repeat;margin-top: 60px;}
+.gamemask .loading { background: url(../img/load.gif) center center no-repeat;}
+
+.gamemask .playagain { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
+.gamemask .gameshear { width: 48%; height: 100%; float: left; text-indent: -9999em; cursor: pointer;}
+
+/**/
+
+.lefticon { position: absolute; left: -30px; background: url(../img/icon.png) no-repeat; width: 130px; height: 212px; top: 30px;}
+.righticon { position: absolute; right: -45px;background: url(../img/icon.png) right top no-repeat; width:78px; height: 212px; top: 30px;}
+.righticon .link { width: 78px; display: block; height: 82px; text-indent: -9999em;}
+
+
+/*homepage*/
+.minisite { position: relative; width: 100%; height: 100%; background: #fff;}
+.sitemask { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 20; background: #000; opacity: 0.7;}
+.iframbox { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 10;}
+.acountbox {position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 50;}
+.homepage { position: absolute; width: 100%; height: 100%; background: #3c3c3c; z-index: 20; margin: 0; padding: 0}
+.homepage .subframe { width: 512px; height: 336px; margin:120px auto; background: #fff; }
+
+.homepage .loginbox { background: url(../img/bg_login.gif) no-repeat; position: relative;}
+.homepage  ul {display: block; padding: 80px 0 20px 0;}
+.homepage  li { height: 64px;}
+.homepage label {display: none;}
+.homepage input {
+    padding-left: 10px;
+    width: 290px;
+    height: 32px;
+    margin-left: 102px;
+    line-height: 32px;
+    background: #fff;
+    border: solid 1px #c8c8c8;
+    font-size: 13px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    outline: none;
+
+}
+
+.homepage .btn_login , .homepage .btn_register{
+    display: block;
+    width: 165px;
+    height: 50px;
+    font-size: 18px;
+    color: #fff;
+    background: url(http://s.qybimg.com/sites/all/themes/custom/img/btn-login.png) no-repeat;
+    align-items: flex-start;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 102px;
+    float: left;
+}
+.homepage .btn_login:hover {}
+.homepage  .navlink { font-size: 80%; line-height: 50px; float: left; margin-left: 10px;}
+
+.loginbox .errormsg { color: red; position: absolute; display: block; top:196px; left: 100px; font-size: 12px; display: none;}
+
+.homepage .registerbox { width: 510px; height: 525px; background: url(../img/bg_reg.gif) no-repeat; position: relative;}
+.homepage .registerbox input { margin-left: 170px; width: 236px;}
+.homepage .registerbox li.tiaokuanli { height: 32px}
+.homepage .registerbox li.repwdli { height: 48px}
+.homepage .registerbox input.ext-button {width: 20px; display: block; float: left; height: 28px;}
+.homepage .registerbox label.tiaokuan {display: block;font-size: 12px; color: #3c3c3c; float: left; line-height: 32px;}
+.homepage .btn_register {margin-left: 170px;}
+.registerbox .errormsg { color: red; position: absolute; display: block; top:348px; left: 170px; font-size: 12px; display: none;}
+
+
+
+
+
+
+

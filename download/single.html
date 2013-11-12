@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">  
+    <meta name="description" content="去野吧是The North Face®品牌精心为你打造的一站式购买，分享，摄影，旅游，户外的平台。这里还有最新的社交机制，你向寻找自己，贴近自然踏出的每一步，The North Face®都准备了惊喜和激励，与你的户外旅程一起成长。" />
+    <title>TheNorthFace</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="css/single.css" media="screen" type="text/css" />
+    <script type="text/javascript">
+      var _smq = _smq || [];
+      _smq.push(['_setAccount', '18A1A3A5', new Date()]);
+      _smq.push(['_setDirectoryIndex', '']);
+      _smq.push(['_setClickTimeOut', 200]);
+      _smq.push(['pageview']);
+
+      (function() {
+      var sm = document.createElement('script'); sm.type = 'text/javascript'; sm.async = true;
+      sm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdnmaster.com/sitemaster/sm.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sm, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="horizontal">
+      <div class="content">
+        请保持屏幕竖直<br />
+        建议锁定屏幕继续游戏
+        <img class="bufferimg" src="image/ajax-loader.gif" width="0" height="0" />
+      </div>
+    </div>
+    <div id="pagebody">  
+      <section id="intro" class="clearfix frame homepage">
+<!--         <div class="subframe introbox">
+          <p>intro</p>
+          <a class="navlink linklevel" href="#/level">start game</a>
+        </div> -->
+        <div class="subframe levelbox">
+          <p class="title notext">select level</p>
+          <div class="levelnav">
+            <a class="navlink linkshake level01 notext" href="#/shake/1"><span>level 1</span></a>
+            <a class="navlink linkshake level02 notext" href="#/shake/2"><span>level 2</span></a>
+            <a class="navlink linkshake level03 notext" href="#/shake/3"><span>level 3</span></a>
+          </div>
+          <p class="intro notext">intro</p>
+        </div>
+      </section> 
+      <section id="energy" class="clearfix frame energybox">
+        <div class="redbg"></div>
+        <div class="subframe introbox">
+          <div class="txt1 notext"></div>
+          <div class="txt2 notext"></div>
+          <div class="txt3 notext"></div>
+        </div>
+        <div class="subframe powerbox">
+          <div class="countdown">摇</div>
+          <a class="reload notext" href="#/repower"><span></span></a>
+          <div class="debuginfo" style="display:none"></div>
+        </div>
+        <div class="subframe readybox">
+          <a class="btn startrun notext">Start Run!</a>
+          <a class="reload notext" href="#/repower"><span></span></a>
+          <div class="debuginfo" style="display:none"></div>
+        </div>
+      </section>
+      <section id="run" class="clearfix frame runbox">
+        <div class="runningbox">
+          <div class="map"><canvas id="canvas" width="320" height="510"></canvas><canvas id="path1" width="320" height="462" style="display:none"></canvas></div>
+          <div class="player"></div>
+        </div> 
+      </section>
+      <section id="share" class="clearfix mask recordbox">
+        <div class="gameinfo">
+          <div class="mi"></div>
+          <div class="px"></div>
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getcoupon notext" href="#/nocoupon"><span></span></a></li>
+        </ul>
+      </section>
+      <section id="coupon" class="clearfix mask couponbox">
+        <div class="gameinfo">
+          <div class="cp"></div>
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getmore notext" href="http://www.quyeba.com/explorer/#_challenge" target="_blank"><span></span></a></li>
+        </ul>
+      </section>
+      <section id="nocoupon" class="clearfix mask nocouponbox">
+        <div class="gameinfo">
+        </div>
+        <ul>
+          <li><a class="navlink replay notext" href="#/replay"><span></span></a></li>
+          <li><a class="navlink getmore notext" href="http://www.quyeba.com/explorer/#_challenge" target="_blank"><span></span></a></li>
+        </ul>
+      </section>
+      <div class="maskbg"></div>
+      <div class="logo"></div>
+    </div>
+
+    <script type="text/javascript" src="js/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="js/lib/underscore-min.js"></script>
+    <script type="text/javascript" src="js/lib/backbone-min.js"></script>
+    <script type="text/javascript" src="js/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="js/shake.js"></script>
+    <script type="text/javascript" src="js/single.js"></script>
+  </body>
+</html>  

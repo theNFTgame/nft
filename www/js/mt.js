@@ -24,10 +24,12 @@ var AppRouter = Backbone.Router.extend({
       $('.iframbox iframe').attr('src','');
       _smq.push(['pageview', '/qrcode', '扫描二维码']);
     }else{
-      showSubFrame('homepage','loginbox');
-      $('.errormsg').hide();
-      $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
-      _smq.push(['pageview', '/login', '登陆']);
+      fntA.playerId = '111';
+      fntA.playerName = '111';
+      // showSubFrame('homepage','loginbox');
+      // $('.errormsg').hide();
+      // $('.iframbox iframe').attr('src','http://www.quyeba.com/explorer/#_challenge');
+      // _smq.push(['pageview', '/login', '登陆']);
       //http://www.quyeba.com/explorer/#_challenge
     }
   }, 

@@ -1,15 +1,15 @@
-
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
     '' : 'mainfun', 
     'index' : 'mainfun', 
+    'wechat_redirect': 'mainfun', 
     'intro' : 'mainfun',
     'level' : 'levelfun',
     'shake' : 'shakefun',
     'shake/:level' : 'shakefun',
     'run':'runfun',
-    '*error' : 'renderError'  
+    '*error' : 'mainfun'  
   },
   mainfun : function() {
    console.log('mainfun'); 

@@ -1,4 +1,3 @@
-
 var fntA = new Object();
 var AppRouter = Backbone.Router.extend({  
   routes : {  
@@ -14,7 +13,7 @@ var AppRouter = Backbone.Router.extend({
     'coupon':'couponfun',
     'nocoupon':'nocouponfun',
     'more':'morefun',
-    '*error' : 'renderError'  
+    '*error' : 'levelfun'  
   },
   mainfun : function() {
 
